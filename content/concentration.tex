@@ -1,0 +1,596 @@
+\section{测度集中}
+
+\epigraph{A random variable that depends (in a ‘smooth’ way) on the influence of many independent variables (but not too much on any of them) is essentially constant.}{---Michel Talagrand (1996)}
+
+驯服随机! 
+
+在大尺度上, 无界随机变量的概率分布函数通常有着纤细、绵长的尾部, 这意味着集中现象: 
+
+例如正态分布的$3 \sigma$原则告诉我们, “几乎所有”的值都在平均值正负三个标准差的范围内 (若$X \sim \cN(\mu, \sigma^2)$, 则$\P(|X - \mu| \leq 3 \sigma) \approx 0.9973$). 
+
+经典的结果是(广义)Markov不等式和Chebyshev不等式.
+设函数$f \colon \R \to \R^*$单调增, 对任意$t > 0$, 注意到
+\begin{equation*}
+	\E f(X) 
+		\geq \E \left[f(X); X \geq t \right]
+		\geq \E \left[f(t) \I{X \geq t} \right] 
+		= f(t) \cdot \P[X \geq t].
+\end{equation*}
+于是我们有随机变量的\emph{Markov不等式}: 
+\begin{equation}\label{eq:Markov'sInequality}
+	\P[X \geq t] \leq \frac{\E f(X)}{f(t)}.
+\end{equation}
+特别地, 取$f(u) = u^2$, $X = |Y - \E Y|$, 有\emph{Chebyshev不等式}: 
+\begin{equation*}
+	\P[|Y - \E Y| \geq t] 
+	\leq \frac{\var Y}{t^2}.
+\end{equation*}
+
+更一般的, 考虑多个独立随机变量的函数$f(X_1, \dots, X_n)$的集中不等式
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Chernoff方法}
+
+可以看到, Markov不等式 \eqref{eq:Markov'sInequality} 中尾部概率由$f$的增长速度所控制——这意味着选取增长速度最快的函数, 可以得到更有效的尾部概率不等式. 
+自然地, 我们考虑指数函数. 
+
+若随机变量$X$在$0$的某个邻域$I$内有\emph{中心矩母函数}, 即在$\lambda \in I$上有$\varphi_X(\lambda) := \E[e^{\lambda (X - \E X)}] < \infty$, 那么$\lambda \in I^* := I \cap [0, \infty)$时, 取$f(u) = e^{\lambda u}$可以得到下述的\emph{Chernoff不等式}: 
+\begin{equation*}
+	\P[X - \E X \geq t] 
+	\leq \frac{\E[e^{\lambda(X - \E X)}]}{e^{\lambda t}},\;
+	\forall \lambda \in I^*.
+\end{equation*}
+通过选取最优的$\lambda$, 我们可以得到\emph{Chernoff界}
+\begin{equation*}
+	\P[X \geq \E X + t]
+	\leq \exp \left[ \inf_{\lambda \in I^*} \left\{ \log \E[e^{\lambda(X - \E X)}] - \lambda t \right\} \right]. 
+\end{equation*}
+
+\begin{example}[Gauss随机变量的上偏差不等式]
+	考虑最经典的Gauss随机变量$X \sim N(\mu, \sigma^2)$, 其矩母函数
+	\begin{equation}
+		\E[e^{\lambda X}] = e^{\frac{\sigma^2 \lambda^2}{2} + \mu \lambda} 		
+	\end{equation}
+	对于$\lambda \in \R$总是存在. 
+	通过简单的求导可以看到最优的$\lambda^* = \frac{t}{\sigma^2}$, 于是有
+	\begin{equation}\label{eq:UpperDeviationOfSubGuassianRV}
+		\P[X \geq \mu + t] \leq e^{- \frac{t^2}{2 \sigma^2}},\; \forall t \geq 0. 
+	\end{equation}
+\end{example}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{次高斯随机变量}
+
+我们将Gauss随机变量作为“模版”来研究其他随机变量: 如果某个随机变量的中心矩母函数能被中心Gauss随机变量的矩母函数所控制, 利用Chernoff方法, 它的尾概率也会被中心Gauss随机变量的尾概率控制. 
+
+\begin{definition}[次高斯随机变量]
+	称期望为$\mu$的随机变量$X$为次高斯的, 如果存在$\sigma > 0$, 使得
+	\begin{equation*}
+		\E[e^{\lambda(X - \mu)}] \leq e^{\sigma^2 \lambda^2 /2},\; \forall \lambda \in \R. 
+	\end{equation*}
+	称$\sigma$为$X$的次高斯参数. 
+\end{definition}
+可以看到, 参数为$\sigma$的次高斯随机变量$X$总是满足上偏差不等式 \eqref{eq:UpperDeviationOfSubGuassianRV}.  
+此外, 由于$-X$也是次高斯随机变量, 可以得到下偏差不等式$\P[X \leq \mu - t] \leq e^{- \frac{t^2}{2 \sigma^2}}$对任意$t \geq 0$成立, 于是次高斯随机变量满足\emph{集中不等式}
+\begin{equation}\label{eq:SubGuassianConcentration}
+	\P[|X - \mu| \geq t] \leq 2 e^{- \frac{t^2}{2 \sigma^2}},\; \forall t > 0. 
+\end{equation}
+
+直观上, 一个有界随机变量没有无限的尾部, 因此具有集中性质. 
+事实上, 若$X \in [a,b]$ a.e., 那么它是参数为$b-a$的次高斯随机变量. 
+
+\begin{proposition}[Hoeffding界]
+	设$\{X_i\}_{i=1}^n$为均值为$\mu_i$, 参数为$\sigma_i$的独立次高斯随机变量, 我们有
+	\begin{equation}
+		\P \left[ \sum_{i=1}^n (X_i - \mu_i) \geq t \right]
+		\leq \exp \left( - \frac{t^2}{2 \sum_{i=1}^n \sigma_i^2} \right ),\; 
+		\forall t \geq 0.
+	\end{equation}
+\end{proposition}
+
+\begin{theorem}[次高斯随机变量定义的等价性]
+	对任意均值为$0$的随机变量$X$, 下述几条命题等价: 
+	\begin{enumerate}[label=(\Roman*)]
+		\item 存在常数$\sigma \geq 0$使得
+			\begin{equation*}
+				\E[e^{\lambda X} ] \leq e^{\frac{\lambda^2 \sigma^2}{2}},\; \forall \lambda \in \R; 
+			\end{equation*}
+		\item 存在常数$c \geq 0$和$Z \sim \cN(0, \tau^2)$使得
+			\begin{equation*}
+				\P[|X| \geq s] \leq c \P[|Z| \geq s],\; \forall s \geq 0; 
+			\end{equation*}
+		\item 存在常数$\theta \geq 0$使得
+			\begin{equation*}
+				\E[X^{2k}] \leq \frac{(2k)!}{2^k k!} \theta^{2k}, \forall k = 1,2,\dots;
+			\end{equation*}
+		\item 存在常数$\sigma \geq 0$使得
+			\begin{equation*}
+				\E\left[ \exp\left(\frac{\lambda X^2}{2 \sigma^2}\right) \right] \leq \frac{1}{\sqrt{1 - \lambda}},\; \forall \lambda \in [0,1).
+			\end{equation*}
+	\end{enumerate}
+\end{theorem}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{次指数随机变量}
+
+很多时候随机变量的中心矩母函数只会在$0$的某个邻域内存在, 相应地, 我们将次高斯随机变量的条件放宽如下. 
+\begin{definition}[次指数随机变量]
+	称期望为$\mu$的随机变量$X$为次指数的, 如果存在非负参数对$(\nu, \alpha)$使得
+	\begin{equation*}
+		\E[ e^{\lambda(X - \mu)} ] 
+		\leq e^{\frac{\nu^2 \lambda^2}{2}},\; 
+		\forall |\lambda| < \frac{1}{\alpha}. 
+	\end{equation*}
+\end{definition}
+\noindent
+如果记$+\infty = \frac10$, 那么参数为$\sigma$的次高斯随机变量是$(\sigma, 0)$-次指数的——参数$\alpha$衡量了次指数随机变量与次高斯随机变量相差“多大”. 
+和次高斯随机变量类似, 我们利用Chernoff方法可以得到它的尾部不等式
+
+\begin{theorem}[次指数随机变量的上偏差不等式]\label{thm:UpperDeviationOfSubExpRV}
+	设$X$是参数为$(\nu, \alpha)$的次指数随机变量, 那么
+	\begin{equation*}
+		\P[X \geq \E X + t] \leq 
+		\begin{cases}
+			e^{-\frac{t^2}{2 \nu^2}}, & 0 \leq t \leq \frac{\nu^2}{\alpha}, \\
+			e^{-\frac{t}{2 \alpha}}, & t > \frac{\nu^2}{\alpha}.
+		\end{cases}
+	\end{equation*}
+\end{theorem}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{鞅方法}
+
+之前我们讨论了独立随机变量和$f(X_1, \dots, X_n) = \sum_i X_i$的一些尾概率界. 对于更一般的函数$f$，经典的求尾概率界方法是鞅的分解，我们先回顾一些概念. 
+
+给定概率空间$(\Omega, \cF_0, \P)$, 子$\sigma$-域$\cF \subset \cF_0$, 随机变量$X \in \cF_0$可积. 
+称$Y$为$X$关于$\cF$的\emph{条件期望}, 如果
+\begin{center}
+	(1) $Y \in \cF$; \quad
+	(2) 对任意$A \in \cF$, $\E(Y;A) = \E(X;A)$. 
+\end{center}
+可以证明这样的的$Y$存在唯一(a.s.), 且$E|Y| < \infty$, 记做$\E(X|\cF)$. 
+条件期望具有许多性质, 这里我们主要使用以下几个: 
+	\begin{enumerate}[label=(\roman*)]
+		\item 特别地, 如果$X \in \cF$, 则$\E(X|\cF) = X$ a.s.;
+		\item \textbf{(全期望公式)} $\E(\E(X|\cF)) = \E X$; (取$A = \Omega \in \cF$即可)
+		\item \textbf{(Jensen不等式)} 若$\varphi$为凸函数且$\E X, \E \varphi(X) < \infty$, 则$\E(\varphi(X) | \cF) \geq \varphi(\E(X|\cF))$; 
+		\item \textbf{(塔性质)} 若$\cF_1 \subset \cF_2$, 则$\E(\E(X|\cF_1)|\cF_2) = \E(X|\cF_1) = \E(\E(X|\cF_2)|\cF_1)$. 
+	\end{enumerate}
+随机变量序列$\{X_k\}$是适应于$\{\cF_k\}$的\emph{鞅}, 如果满足
+\begin{center}
+	(1) $\E |X_k| < \infty$; \quad
+	(2) $X_k \in \cF_k$; \quad
+	(3) $\E(X_{k+1}|\cF_k) = X_k$.
+\end{center}
+如果我们记$D_k := X_k - X_{k-1}$, 容易验证$\{D_k\}$期望为$0$, 并且也是适应于$\{\cF_k\}$的鞅, 我们称其为\emph{鞅差}. 
+
+设$\{X_k\}_{k=1}^n$为一列独立随机变量, 记$\bm X = (X_1, \dots, X_n)$, $\bm X_1^k = (X_1, \dots, X_k)$. 
+对于函数$f \colon \R^n \to \R$, 考虑随机变量序列$Y_0 = \E f(\bm X)$, $Y_k = \E[f(\bm X)|\bm X_1^k]$, $k = 1, \dots, n$. 
+由条件期望的性质易见$Y_n = f(\bm X)$. 
+这样的$\{Y_k\}_{k=1}^n$构成了关于$\{\bm X_1^k\}_{k=1}^n$鞅: 
+\begin{itemize}
+	\item 由Jensen不等式和重期望公式, 
+		\begin{equation*}
+			\E |Y_k| 
+			= \E\left[\left|\E[f(\bm X)|\bm X_1^k]\right|\right] 
+			\leq \E\left[\E[|f(\bm X)||\bm X_1^k] \right]
+			= \E |f(\bm X)|
+			< \infty
+		\end{equation*}
+	\item $\E[Y_{k+1}|\bm X_1^k] = \E\left[\E[f(\bm X)|\bm X_1^{k+1}] \big|\bm X_1^k\right] = \E[f(\bm X) | X_1^k] = Y_k$. 
+\end{itemize}
+从而$f(\bm X)$和$\E f(\bm X)$的偏差可以表示为鞅差分解
+\begin{equation*}
+	f(\bm X) - \E f(\bm X) 
+	= Y_n - Y_0 
+	= \sum_{k=1}^n (Y_k - Y_{k-1})
+	=: \sum_{k=1}^n D_k.
+\end{equation*}
+
+我们先来证明一个一般的鞅差序列的Bernstein型不等式界. 
+\begin{theorem}
+	设鞅差序列$\{(D_k, \cF_k)\}_{k=1}^{\infty}$满足次指数条件
+	\begin{equation*}
+		\E \left[ e^{\lambda D_k} | \cF_{k-1} \right] 
+		\leq e^{\frac{\lambda^2 \nu_k^2}{2}} \text{ a.e. },\; \forall |\lambda| < \frac{1}{\alpha_k}, 
+	\end{equation*}
+	那么
+	\begin{enumerate}[label=(\arabic*)]
+		\item 和式$\sum_k D_k$是参数为$\left( \sqrt{\sum_k \nu_k^2}, \alpha_* \right)$的次指数随机变量, 其中$\alpha_* := \max_k \alpha_k$; 
+		\item 和式$\sum_k D_k$满足集中不等式
+			\begin{equation*}
+				\P \left[ \left| \sum_{k=1}^n D_k \right| \geq t \right] \leq 
+				\begin{cases}
+					2 \exp\left( -\frac{t^2}{2 \sum_k \nu_k^2} \right), & 0 \leq t \leq \alpha_*^{-1} \sum_k \nu_k^2, \\
+					2 \exp\left(- \frac{t}{2 \alpha_*}\right), & t > \alpha_*^{-1} \sum_k \nu_k^2.
+				\end{cases}
+			\end{equation*}
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	我们首先使用控制鞅差和的标准方法, 对于$|\lambda| < \alpha_*^{-1}$, 
+	\begin{align*}
+		\E\left[ e^{\lambda \sum_k D_k} \right]
+		&= \E\left[ \E\left[ e^{\lambda \sum_k D_k} \bigg| \cF_{n-1} \right] \right] 
+		= \E \left[ e^{\lambda \sum_{k=1}^{n-1} D_k} \E [e^{\lambda D_n} | \cF_{n-1}] \right] \\
+		&\leq \E \left[ e^{\lambda \sum_{k=1}^{n-1} D_k} \right]  e^{\frac{\lambda^2 \nu_n^2}{2}} 
+		\leq \cdots
+		\leq e^{\lambda^2 \sum_k \nu^2 / 2}
+	\end{align*}
+	于是$\sum_k D_k$是次指数随机变量, 再沿用Chernoff方法, 可以得到集中不等式. 
+\end{proof}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{熵方法}
+设随机变量$X \sim \P$, 给定凸函数$\phi \colon \R \to \R$, 若$X$和$\phi(X)$的期望存在, 则概率分布空间上的泛函
+\begin{equation*}
+	\cH_\phi(X) := \E \phi(X) - \phi(\E X) \geq 0, 
+\end{equation*}
+称为$X$的$\phi$熵. 
+这样的泛函衡量了随机变量随机性的大小: 
+\begin{itemize}
+	\item 若$X = C$ a.e., 那么$\cH_\phi (X) = 0$; 
+	\item 特别地, 取$\phi(u) = u^2$时, 此时熵$\cH_\phi(X) = \E X^2 - (\E X)^2$就是方差, 根据Chebyshev不等式, 我们可以利用熵来控制尾部概率; 
+	\item 此外, 取$\phi(u) = - \log u$, 随机变量$Z = e^{\lambda X}$时, 
+		\begin{equation*}
+			\cH_\phi(Z) 
+			= - \lambda \E X + \log \E[e^{\lambda X}] 
+			= \log \E[e^{\lambda(X - \E X)}], 
+		\end{equation*}
+		这样的熵对应的是中心化的矩母函数, 可以利用这样的熵来计算尾部概率的Chernoff界. 
+\end{itemize}
+
+之后, 我们总是考虑一个具体的凸函数$\phi \colon [0, \infty) \to \R$: 
+\begin{equation*}
+	\phi(u) = 
+	\begin{cases}
+		u \log u, & u > 0; \\ 0, & u = 0. 
+	\end{cases}
+\end{equation*}
+对于非负随机变量$Z \geq 0$, 它的$\phi$熵为
+\begin{equation}
+	\cH(Z) = \E[Z \log Z] - \E[Z] \log \E[Z], 
+\end{equation}
+这里我们略去下标$\phi$. 
+对于随机变量$Z = e^{\lambda X}$, 不难看出此时熵可以由矩母函数$\varphi_X(\lambda) = \E[e^{\lambda X}]$来表示: 
+\begin{equation}\label{eq:EntropyByMGF}
+	\cH(e^{\lambda X}) 
+	= \lambda \varphi_X'(\lambda) - \varphi_X(\lambda) \log \varphi_X(\lambda). 
+\end{equation}
+
+\begin{example}[Gauss随机变量的熵]
+	对于$X \sim \cN(\mu, \sigma^2)$, 其矩母函数为$\varphi_X(\lambda) = e^{\lambda^2 \sigma^2 / 2 + \lambda \mu}$, 于是
+	\begin{equation}\label{eq:EntropyOfGaussianRV}
+		\cH(e^{\lambda X}) 
+		= (\lambda^2 \sigma^2 + \lambda \mu) \varphi_X(\lambda) - \left(\frac{\lambda^2 \sigma^2}{2} + \lambda\mu\right) \varphi_X(\lambda) 
+		= \frac{\lambda^2 \sigma^2}{2} \cdot \varphi_X(\lambda). 
+	\end{equation}
+\end{example}
+
+\subsubsection{将次高斯、次指数随机变量作为比较对象}
+
+和次高斯随机变量的想法类似, 如果$e^{\lambda X}$的熵能被Gauss随机变量的熵所控制, 相应的矩母函数、尾部概率也会被控制.
+\begin{theorem}[Herbst方法]\label{thm:HerbstArgument}
+	若对任意的$\lambda \in I$ (这里$I$取$[0, \infty)$或者$\R$)总有熵$\cH(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \varphi_X(\lambda)$, 那么
+	\begin{equation*}
+		\log \E\left[e^{\lambda(X - \E X)}\right] 
+		\leq \frac{\lambda^2 \sigma^2}{2} ,\; 
+		\forall \lambda \in I. 
+	\end{equation*}
+\end{theorem}
+\begin{proof}
+	对于$\lambda \in I \backslash \{0\}$, 令$G(\lambda) := \frac{\log \varphi_X(\lambda)}{\lambda}$. 
+	结合 \eqref{eq:EntropyByMGF}, 条件$\cH(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \varphi_X(\lambda)$意味着
+	\begin{equation*}
+		G'(\lambda) \leq \frac{\sigma^2}{2},\; \forall \lambda \in I \backslash \{0\}. 
+	\end{equation*}
+	当$\lambda > 0$时, 对任意的$0 < \lambda_0 < \lambda$, 在区间$[\lambda_0, \lambda]$上积分有$G(\lambda) - G(\lambda_0) \leq \frac{\sigma^2 (\lambda - \lambda_0)}{2}$. 
+	再令$\lambda_0 \to 0^+$有
+	\begin{equation*}
+		\log \E\left[e^{\lambda(X - \E X)}\right]
+		= \lambda(G(\lambda) - \E X)
+		\leq \frac{\lambda^2 \sigma^2}{2} ,\; 
+		\forall \lambda \geq 0. 
+	\end{equation*}
+	其中
+	\begin{equation*}
+		G(0) 
+		= \lim_{\lambda \to 0} G(\lambda) 
+		= \lim_{\lambda \to 0} \frac{\varphi_X'(\lambda)}{\varphi_X(\lambda)}
+		= \E X. 
+	\end{equation*}
+	类似的, 我们可以证明目标不等式在$\lambda \leq 0$时成立. 
+\end{proof}
+\begin{corollary}
+	若熵$\cH(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \varphi_X(\lambda)$在$I = [0, \infty)$上成立时, $X$满足次高斯随机变量的上偏差不等式. 
+	进一步地, 若$I = \R$, $X$满足集中不等式 \eqref{eq:SubGuassianConcentration}. 
+\end{corollary}
+
+自然地, 我们可以将上述方法由次高斯随机变量推广至次指数随机变量. 
+\begin{proposition}[Bernstein熵的界]\label{thm:BernsteinEntropyBd}
+	若存在正常数$b$, $\sigma$使得
+	\begin{equation*}
+		\cH(e^{\lambda X}) 
+		\leq \lambda^2 \left[ b \varphi_X'(\lambda) + \varphi_X(\lambda)(\sigma^2 - b \E X) \right],\;
+		\forall \lambda \in [0, 1/b), 
+	\end{equation*}
+	那么$X$满足上界
+	\begin{equation*}
+		\log \E \left[ e^{\lambda(X - \E X)}\right] 
+		\leq \sigma^2 \lambda^2 (1 - b \lambda)^{-1},\; 
+		\forall \lambda \in [0, 1/b). 
+	\end{equation*}
+\end{proposition}
+\begin{proof}
+	类似地, 命题中的条件意味着
+	\begin{equation*}
+		G'(\lambda) 
+		\leq \sigma^2 - b \E X + b \cdot \frac{\varphi_X'(\lambda)}{\varphi_X(\lambda)}. 
+	\end{equation*}
+	在任意的区间$[\lambda_0, \lambda] \subseteq (0, 1/b)$上积分有
+	\begin{equation*}
+		G(\lambda) - G(\lambda_0) 
+		\leq (\sigma^2 - b \E X)(\lambda - \lambda_0) + b(\log \varphi_X(\lambda) - \log \varphi_X(\lambda_0)). 
+	\end{equation*}
+	再令$\lambda_0 \to 0^+$有$G(\lambda) - \E X \leq \lambda \sigma^2 + b \lambda (G(\lambda) - \E X)$, 于是
+	\begin{equation*}
+		\log \E\left[e^{\lambda(X - \E X)}\right]
+		= \lambda(G(\lambda) - \E X)
+		\leq \frac{\lambda^2 \sigma^2}{1 - b \lambda} ,\; 
+		\forall \lambda \in [0, 1/b). 
+	\end{equation*}
+\end{proof}
+\begin{corollary}
+	利用Chernoff方法, 命题 \ref{thm:BernsteinEntropyBd} 中的熵条件意味着$X$满足上偏差不等式
+	\begin{equation*}
+		\P[X \geq \E X + t] 
+		\leq \exp \left(- \frac{t^2}{4 \sigma^2 + 2b t} \right),\;
+		\forall t \geq 0. 
+	\end{equation*}
+\end{corollary}
+
+\subsubsection{熵的张量化}
+
+多变量函数的熵可以被适当的单变量的熵的和控制上界. 
+\begin{lemma}[熵的张量化]
+	设$f \colon \R^n \to \R$, $\{X_i\}_{i=1}^n$为独立随机变量, 那么
+	\begin{equation*}
+		\cH\left(e^{\lambda f(X_1, \cdots, X_n)}\right)
+		\leq \E \left[ \sum_{k=1}^n \cH \left(e^{\lambda f_k(X_k)} \big| X_k \right) \right],\; 
+		\forall \lambda > 0. 
+	\end{equation*}
+\end{lemma}
+\begin{proof}
+	
+\end{proof}
+
+
+下面我们说明, 熵方法
+
+称函数$f \colon \R^n \to \R$为\emph{可分凸函数}, 如果对任意指标$k \in \{1, \dots, n\}$, 给定向量$(x_1, \dots, x_{k-1}, x_{k+1}, \dots x_n) \in \R^{n-1}$, 单变量函数
+\begin{equation*}
+	y_k \mapsto f(x_1, \dots x_{k-1}, y_k, x_{k+1}, \dots x_n)
+\end{equation*}
+总是凸函数. 
+凸函数总是可分凸的, 
+\begin{theorem}
+	令$\{X_i\}_{i=1}^n$为区间$[a, b]$上的独立随机变量, $f \colon \R^n \to \R$为可分凸函数且关于$2$范数为$L$-Lipschitz的, 那么对任意$t \geq 0$, 成立
+	\begin{equation*}
+		\P[f(X) \geq \E f(X) + t] 
+		\leq \exp \left( - \frac{t^2}{4L^2 (b-a)^2} \right). 
+	\end{equation*}
+\end{theorem}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{集中的几何观点}
+
+\subsubsection{经典等周不等式}
+
+经典的等周不等式断言, 欧氏空间$(\R^n, \rho)$中相同体积的子集中, 球的表面积最小. 
+一种等价表述是, 使得给定体积的子集的(一致) \emph{$\epsilon$-扩张}
+\begin{equation*}
+	A^{\epsilon} := \left\{ x \in \cX \colon \rho(x, A) < \epsilon \right\}
+\end{equation*}
+的体积(作为$\epsilon$的函数)最小的集合$A$一定是球体\footnote{直观上, 膨胀得最慢的是球体.}.  
+这种表述避免了表面积的概念, 并且可以推广至任意度量空间$(\cX, \rho)$上. 
+
+Minkowski将空间的向量加法这一代数结构同凸体的体积这一几何结构联系在一起, 提出了\emph{Minkowski和}的概念: 
+对于$\R^n$中的凸体$C$和$D$, 它们的Minkowski和定义为
+\begin{equation*}
+	\lambda C + (1 - \lambda) D := \left\{ \lambda c + (1 - \lambda) d \colon c \in C,\; d \in D \right\}, 
+\end{equation*}
+并证明了混合体积的\emph{Brunn-Minkowski不等式}
+\begin{equation*}
+	\left[ \vol(\lambda C + (1-\lambda) D)  \right]^{\frac1n}
+	\geq \lambda [\vol(C)]^{\frac1n} + (1-\lambda) [\vol(D)]^{\frac1n},\;
+	\forall \lambda \in [0,1]. 
+\end{equation*}
+从这一定理出发, 很容易证明经典等周不等式: 对任意$A \subseteq \R^n$满足$\vol(A) = \vol(\B^n)$, 
+\begin{align*}
+	[\vol(A^{\epsilon})]^{\frac1n}
+	&= [\vol(A + \epsilon \B^n)]^{\frac1n}
+	= (1+\epsilon) \left[\vol\left(\frac{1}{1+\epsilon} A + \frac{\epsilon}{1+\epsilon} \B^n\right)\right]^{\frac1n} \\
+	&\geq [\vol(A)]^{\frac1n} + \epsilon [\vol(\B^n)]^{\frac1n} 
+	= (1+\epsilon) [\vol(\B^n)]^{\frac1n} 
+	= \left[ \vol((\B^n)^{\epsilon}) \right]^{\frac1n}. 
+\end{align*}
+
+\subsubsection{Lipschitz函数的集中性}
+
+赋予$(\cX, \rho)$赋予一个概率测度$\P$, 我们称三元组$(\cX, \rho, \P)$为\emph{度量测度空间}. 
+考虑随机变量$X \sim \P$,  此时等周不等式表述为, 确定满足$\P[X \in A] \geq 1/2$、使得测度$\P[X \in A^{\epsilon}]$最小的集合$A \subseteq \cX$.
+
+我们引入$(\cX, \rho, \P)$上的集中度函数$\alpha \colon \R^* \to [0, 1/2]$
+\begin{equation*}
+	\alpha_{\P}(\epsilon)
+	:= \sup_{A \subseteq \cX \colon \P[A] \geq 1/2} \left\{ 1 - \P[A^{\epsilon}] \right\}. 
+\end{equation*}
+于是等周不等式相当于确定$\alpha_{\P}$的上界. 
+
+下面的定理说明, 集中度函数可以控制Lipschitz函数的尾部. 
+回忆$f(X)$的\emph{中位数}是指满足$\P[f(X) \geq m_f] \geq 1/2$, $\P[f(X) \leq m_f] \geq 1/2$的某个常数$m_f$. 
+
+\begin{theorem}[Lévy不等式]
+	设$f \colon \cX \to \R$关于$\rho$是$L$-Lipschitz连续的函数, $X \sim \P$, 有$\P[ |f(X) - m_f| \geq \epsilon] \leq 2 \alpha(\epsilon / L)$. 
+	特别地, 当$f$是$1$-Lipschitz连续函数时, 我们有
+	\begin{equation*}
+		\P[ |f(X) - m_f| \geq \epsilon] \leq 2 \alpha(\epsilon / L). 
+	\end{equation*}
+\end{theorem}
+\begin{proof}
+	令$A := \{x \in \cX \colon f(x) \leq m_f\}$, 于是$\P[A] \geq 1/2$. 
+	由扩张的定义, 对任意$x \in A^{\epsilon / L}$, 存在$y \in A$使得$\rho(x,y) < \epsilon / L$. 
+	于是$f(x) < f(y) + |f(x) - f(y)| < m_f + \varepsilon$, 进一步地, 我们有$\P[A^{\epsilon / L}] \leq \P[f(X) < m_f + \epsilon]$. 
+	取余集可以得到
+	\begin{equation*}
+		\P[f(X) \geq m_f + \epsilon] 
+		\leq 1 - \P[A^{\epsilon / L}] 
+		\leq \alpha_{\P}(\epsilon / L). 
+	\end{equation*}
+	对$-f$运用相同的方法可以得到下偏差不等式, 结合起来可得集中不等式. 
+\end{proof}
+
+反过来, Lipschitz函数的集中不等式也蕴含着等周不等式. 
+换而言之, 两种对尾部的控制是等价的. 
+
+\begin{theorem}
+	若存在函数$\beta \colon \R^* \to [0, 1]$使得对任意的$(\cX, \rho)$上的$1$-Lipschitz函数都有
+	\begin{equation*}
+		\P[f(X) \geq \E f(X) + \epsilon] \leq \beta(\epsilon),\; \forall \epsilon \geq 0, 
+	\end{equation*}
+	那么$\alpha_{\P}(\epsilon) \leq \beta(\epsilon / 2)$. 
+\end{theorem}
+\begin{proof}
+	对任意$\cX$中满足$\P[A] \geq 1/2$的可测集$A$, 构造$f_A(x) := \rho(x, A) \wedge \epsilon$. 
+	注意到在$A$上有$f_A = 0$, 在$A$外有$f_A \leq \epsilon$, 所以$\E f_A(X) \leq \epsilon (1 - \P[A]) \leq \epsilon / 2$. 
+	于是我们有
+	\begin{equation*}
+		1 - \P[A^\epsilon]
+		= \P[X \in \bar A^{\epsilon}]
+		= \P[f_A(X) \geq \epsilon] 
+		\leq \P\left[f_A(X) \geq \E f_A(X) + \frac{\epsilon}{2}\right]
+		\leq \beta\left( \frac{\epsilon}{2} \right),  
+	\end{equation*}
+	再对满足条件$\P[A] \geq 1/2$的$A$取上确界即可. 
+	其中最后一个不等式是由于$f_A$是一个$1$-Lipschitz函数: 
+	\begin{itemize}
+		\item 若$x, y \in A^{\epsilon}$, 则$|f_A(x) - f_A(y)| = |\rho(x, A) - \rho(y, A) | \leq  \rho(x, y)$; 
+		\item 若$x, y \in \bar A^{\epsilon}$, 则$|f_A(x) - f_A(y)| = |\epsilon - \epsilon| = 0 \leq \rho(x, y)$;
+		\item 若$x \in A^{\epsilon}$, $y \in \bar A^{\epsilon}$, 此时$\rho(x, A) \geq \rho(y, A) - \rho(x, y) \geq \epsilon - \rho(x, y)$, 则$|f_A(x) - f_A(y)| =  \epsilon - \rho(x, A) \leq \epsilon - (\epsilon - \rho(x, y)) = \rho(x, y)$.
+	\end{itemize}
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Wasserstein距离和信息不等式}
+
+
+
+给定$(\cX, \rho)$上的两个概率分布$\Q$和$\P$, 它们之间的\emph{Wasserstein距离}为
+\begin{equation*}
+	W_{\rho}(\Q, \P) 
+	:= \sup_{\|f\|_{Lip} \leq 1} \left[ \E_{\Q} f - \E_{\P} f \right]
+	= \sup_{\|f\|_{Lip} \leq 1} \int f (\dd \Q - \dd \P). 
+\end{equation*}
+可以证明这样的$W_{\rho}$构成了一个度量: 
+存在满足$\|f\|_{Lip} \leq 1$的$f$使得$W_{\rho}(\Q, \P) = \int f (\dd \Q - \dd \P)$, 于是$W_{\rho}(\P, \Q) \geq \int (-f) (\dd \P - \dd \Q) = W_{\rho}(\Q, \P)$. 
+类似地, 还有$W_{\rho}(\Q, \P) \geq W_{\rho}(\P, \Q)$, 从而二者相等. 
+我们将其称为$\rho$诱导的Wasserstein度量. 
+
+Wasserstein距离
+
+
+\begin{example}[Hamming度量和全变差距离]
+	关于Hamming度量的Wasserstein距离$W_{Ham}(\Q, \P)$等价于全变差距离$\|\Q - \P\|_{TV} := \sup_{A \subseteq \cX} |\Q(A) - \P(A)|$. 
+	
+	此时$f$是关于Hamming度量的$1$-Lipschitz连续函数等价于$f$值域为某个区间$[c, c+1]$, 不失一般性地, 我们假定$c = 0$. 
+	记$\Q$和$\P$关于Lebesgue测度$\nu$的密度分别为$q$, $p$, 集合$A = \{x \in \cX \colon q(x) \geq p(x)\} $, 于是有
+	\begin{equation*}
+		W_{Ham}(\Q, \P)
+		= \sup_{f \colon \cX \to [0, 1]} \int_{\cX} f (q - p) \dd \nu 
+		\leq \int_A (\dd \Q - \dd \P)
+		\leq \|\Q - \P\|_{TV}. 
+	\end{equation*}
+	另一方面, 对任意可测集$B \subseteq \cX$, 注意到$\mathbb{I}_B$是$1$-Lipschitz连续的, 于是
+	\begin{equation*}
+		\Q(B) - \P(B) 
+		= \int \mathbb{I}_B (\dd \Q - \dd \P) 
+		\leq W_{Ham}(\Q, \P). 
+	\end{equation*}
+	于是有$\|\Q - \P\|_{TV} \leq W_{Ham}(\Q, \P)$, 从而二者等价. 
+\end{example}
+
+\subsubsection{Kantorovich–Rubinstein对偶}
+
+\begin{equation*}
+	\inf_{\M \in \Pi(\Q, \P)} \E_{\M} \left[ \rho(X, X') \right]
+	= \inf_{\M \in \Pi(\Q, \P)} \int_{\cX \times \cX} \rho(x, x') \dd \M(x, x'). 
+\end{equation*}
+
+\subsubsection{信息不等式}
+
+给定$(\cX, \rho)$上的分布$\Q \ll \P$, 它们之间的Kullback–Leibler散度(相对熵)定义为
+\begin{equation}
+	D(\Q \| \P)
+	:= \E_{\Q} \left[ \log \frac{\dd \Q}{\dd \P} \right]
+	= \int_{\cX} q(x) \log \frac{q(x)}{p(x)} \nu(\dd x), 
+\end{equation}
+其中$q, p$为$\Q, \P$的密度, $\nu$为$\cX$上的Lebesgue测度. 
+它不是一个度量: 不满足对称性、三角不等式. 
+ 
+ 称$(\cX, \rho)$上的概率测度$\P$满足参数为$\gamma > 0$的\emph{$\rho$-传输成本不等式}, 如果对任意的概率测度$\Q$总有
+ \begin{equation}\label{eq:TransportationCostInequality}
+ 	W_{\rho} (\Q, \P) \leq \sqrt{2 \gamma D(\Q \| \P)}.
+ \end{equation}
+
+\begin{theorem}
+	若度量测度空间$(\cX, \rho, \P)$中的概率测度满足$\rho$-传输成本不等式\eqref{eq:TransportationCostInequality}, 那么它的集中度满足
+	\begin{equation}\label{eq:ConcetrationByTransportationCost}
+		\alpha_{\P}(\epsilon) \leq 2 \exp \left(- \frac{\epsilon^2}{2 \gamma} \right).
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	考虑任意满足$\P[A] \geq \frac12$的集合$A$和$\epsilon > 0$, 只需证明$B := \bar A^{\epsilon}$的测度总是小于不等式\eqref{eq:ConcetrationByTransportationCost}的右侧. 
+	若$\P[B] = 0$, 则不等式显然成立, 下面我们总假设$\P[B] > 0$. 
+	
+	考虑$\P_A$, $\P_B$为在$A$和$B$上的条件分布, $\M$为它们的任意耦合, 于是
+	\begin{align*}
+		\int_{\cX \times \cX} \rho(x, x') \dd \M(x, x')
+		&= \int_{A \times B} \rho(x, x') \dd \M(x, x') \\
+		&\geq \rho(A, B) \int_{A \times B} \dd \M 
+		= \rho(A, B) 
+		\geq \epsilon. 
+	\end{align*}
+	对所有可能的耦合取下确界, 可得$W_{\rho}(A, B) \geq \epsilon$. 
+	再由三角不等式和$\rho$-传输成本不等式, 我们有(这里根号下似乎少了个2)
+	\begin{align*}
+		\epsilon 
+		&\leq W_{\rho}(\P, \P_A) + W_{\rho}(\P, \P_B) 
+		\leq \sqrt{\gamma D(\P_A \| \P)} + \sqrt{\gamma D(\P_B \| \P)} \\
+		&\leq \sqrt{2 \gamma} \left[ D(\P_A \| \P) + D(\P_B \| \P) \right]^{1/2}.
+	\end{align*}
+	另一方面, $\P_A$的密度为$p_A(x) = \frac{p(x) \mathbb I_A(x)}{\P[A]}$, 于是$D(\P_A \| \P) = - \log \P[A]$, $D(\P_B \| \P) = -\log \P[B]$, 从而有$\epsilon^2 \leq -  2 \gamma \log (\P[A] \P[B])$, 等价地
+	\begin{equation*}
+		 \P[B] 
+		 \leq (\P[A])^{-1} \exp\left(- \frac{\epsilon^2}{2 \gamma} \right) 
+		 \leq 2 \exp\left(- \frac{\epsilon^2}{2 \gamma} \right). 
+	\end{equation*}
+\end{proof}
+
+
+
+\subsubsection{非对称耦合成本}
+
+定义
+\begin{align*}
+	\cC(\Q, \P)
+	= \sqrt{\int\left(1 - \frac{\dd \Q}{\dd \P} \right)_+^2 \dd \P}
+\end{align*}

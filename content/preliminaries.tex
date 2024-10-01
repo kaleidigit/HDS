@@ -1,0 +1,108 @@
+\section{预备知识}
+
+\subsection{矩的另一种求法}
+
+\begin{lemma}\label{lemma:trickOfExpectation}
+	若非负随机变量$X \in L^p$, $p > 0$, 则有
+	\begin{equation}
+		\E X^p = \int_0^{\infty} p x^{p-1} \P(X > x) \dd x. 
+	\end{equation}
+	特别的, 对于$X \geq 0$, 有
+	\begin{equation*}
+		\E X = \int_0^{\infty} \P(X > x) \dd x. 
+	\end{equation*}
+	进一步地, 若$X$取值范围为$\N$, 则有
+	\begin{equation*}
+		\E X = \sum_{k=0}^{\infty} \P(X \geq k). 
+	\end{equation*}
+\end{lemma}
+\begin{proof}
+	\begin{align*}
+		\E X^p 
+		&= \int_\Omega X^p \dd \P 
+		= \int_\Omega \int_0^Y p x^{p-1} \dd x \dd \P 
+		= \int_\Omega \int_0^{\infty} p x^{p-1} \I{X > x} \dd x \dd \P \\
+		&= \int_0^{\infty} p x^{p-1} \int_\Omega \I{X > x} \dd \P \dd x
+		= \int_0^{\infty} p x^{p-1} \P(X > x) \dd x.
+	\end{align*}
+\end{proof}
+
+\begin{theorem}[Rademacher]
+	
+\end{theorem}
+
+\subsection{方差的表示}
+
+\begin{lemma}[方差的变分表示]
+	设随机变量$X \in L^2$, 那么
+	\begin{equation*}
+		\var X = \inf_{a \in \R} \E (X - a)^2. 
+	\end{equation*}
+\end{lemma}
+\begin{proof}
+	记$f(a) =  \E (X - a)^2 = a^2 - 2 \E X \cdot a + \E X^2$为二次函数, 不难看出$f$在$\E X$有最小值$- (\E X)^2 + \E X^2 = \var X$. 
+\end{proof}
+
+\begin{lemma}[独立复制]
+	设随机变量$X \in L^2$, $X'$为$X$的独立复制, 那么
+	\begin{equation*}
+		\var X = \frac12 \E (X - X')^2
+		= \E (X - X')_+^2 = \E (X - X')_-^2. 
+	\end{equation*}
+\end{lemma}
+\begin{proof}
+	由独立性, $\E (X - X')^2 = \E X - 2 \E X \cdot \E X + \E X^2 = 2 \var X$. 
+	另一方面, $X - X'$和$X' - X$有相同的分布, 于是$\E(X - X')_+^2 = \E(X - X')_-^2$且两者之和即$\E (X - X')^2$. 
+\end{proof}
+
+
+\subsection{Randon-Nikodym导数}
+
+Randon-Nikodym导数是定义密度和条件概率的关键. 
+
+设$\mu$, $\nu$为可测空间$(\cX, \cA)$上的两个概率测度. 
+称$\nu$关于$\mu$\emph{绝对连续}, 如果$\mu$-零集一定是$\nu$-零集, 即对于满足$\mu(A) = 0$的$A \in \cA$, 一定有$\nu(A) = 0$, 记做$\nu \ll \mu$. 
+称$\mu$和$\nu$\emph{相互奇异}, 如果存在$A \in \cA$使得$\mu(A) = 0$, $\nu(\cX \backslash A) = 0$
+
+\begin{theorem}[Lebesgue分解定理]
+	设$\mu$和$\nu$为$(\cX, \cA)$上$\sigma$-有限测度, 那么$\nu$可以唯一地分解为关于$\mu$绝对连续的部分$\nu_a$和与$\mu$相互奇异的部分$\nu_s$. 
+\end{theorem}
+
+\begin{example}[分布的密度]
+	随机变量$X \colon (\cX, \cA, \P) \to (\R, \cB, \mu)$的分布是前推测度$X_* \P (A) := \P \circ X^{-1} (A) = \P[X \in A]$, 它的密度由Randon-Nikodym导数给出: 
+	\begin{equation*}
+		f_X = \frac{\dd X_* \P}{\dd \mu}. 
+	\end{equation*}
+	从而
+	\begin{equation*}
+		\P[X \in A] 
+		= \int_{X^{-1}(A)} \dd \P 
+		= \int_A \dd X_* \P 
+		= \int_A f_X \dd \mu
+		= \E[f_X; A]
+	\end{equation*}
+	\begin{equation*}
+		\E[f(X); A]
+		= \int_A f \dd X_* \P 
+		= \int_A f(x) f_X(x) \dd \mu(x)
+	\end{equation*}
+\end{example}
+
+
+
+\subsection{耦合}
+
+耦合是一种应用广泛的概率技术: 比较两个概率测度$\Q$, $\P$, 我们可以考虑具有边缘分布$\Q$, $\P$的乘积概率空间. 
+
+为了比较概率空间$\cX$上两个概率测度$\Q$, $\P$, 我们可以
+
+很多情况下, 构造乘积空间
+
+的\emph{耦合}, 是指$\cX \times \cX$上的联合分布$\M$, 其边缘分布满足
+
+满足第一和第二坐标的边缘分布分别是$\Q$和$\P$.
+
+
+显然乘积测度$\Q \otimes \P$是$(\Q, \P)$的耦合, 
+
+耦合并不唯一, 记为$\Pi(\Q, \P)$. 
