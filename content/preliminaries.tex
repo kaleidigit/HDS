@@ -31,29 +31,7 @@
 	
 \end{theorem}
 
-\subsection{方差的表示}
 
-\begin{lemma}[方差的变分表示]
-	设随机变量$X \in L^2$, 那么
-	\begin{equation*}
-		\var X = \inf_{a \in \R} \E (X - a)^2. 
-	\end{equation*}
-\end{lemma}
-\begin{proof}
-	记$f(a) =  \E (X - a)^2 = a^2 - 2 \E X \cdot a + \E X^2$为二次函数, 不难看出$f$在$\E X$有最小值$- (\E X)^2 + \E X^2 = \var X$. 
-\end{proof}
-
-\begin{lemma}[独立复制]
-	设随机变量$X \in L^2$, $X'$为$X$的独立复制, 那么
-	\begin{equation*}
-		\var X = \frac12 \E (X - X')^2
-		= \E (X - X')_+^2 = \E (X - X')_-^2. 
-	\end{equation*}
-\end{lemma}
-\begin{proof}
-	由独立性, $\E (X - X')^2 = \E X - 2 \E X \cdot \E X + \E X^2 = 2 \var X$. 
-	另一方面, $X - X'$和$X' - X$有相同的分布, 于是$\E(X - X')_+^2 = \E(X - X')_-^2$且两者之和即$\E (X - X')^2$. 
-\end{proof}
 
 
 \subsection{Randon-Nikodym导数}
@@ -87,6 +65,89 @@ Randon-Nikodym导数是定义密度和条件概率的关键.
 		= \int_A f(x) f_X(x) \dd \mu(x)
 	\end{equation*}
 \end{example}
+
+\subsection{条件期望、鞅、鞅差}
+
+给定概率空间$(\Omega, \cF_0, \mathbb{P})$, 子$\sigma$-域$\cF \subset \cF_0$, 随机变量$X \in \cF_0$可积. 
+称$Y$为$X$关于$\cF$的\emph{条件期望}, 如果
+\begin{center}
+	(1) $Y \in \cF$; \quad
+	(2) 对任意$A \in \cF$, $\E(Y;A) = \E(X;A)$. 
+\end{center}
+可以证明这样的的$Y$存在唯一(a.s.), 且$E|Y| < \infty$, 记做$\E(X|\cF)$. 
+条件期望具有许多性质, 这里我们主要使用以下几个: 
+	\begin{enumerate}[label=(\roman*)]
+		\item 特别地, 如果$X \in \cF$, 则$\E(X|\cF) = X$ a.s.;
+		\item \textbf{(全期望公式)} $\E(\E(X|\cF)) = \E X$; (取$A = \Omega \in \cF$即可)
+		\item \textbf{(Jensen不等式)} 若$\varphi$为凸函数且$\E X, \E \varphi(X) < \infty$, 则$\E(\varphi(X) | \cF) \geq \varphi(\E(X|\cF))$; 
+		\item \textbf{(塔性质)} 若$\cF_1 \subset \cF_2$, 则$\E(\E(X|\cF_1)|\cF_2) = \E(X|\cF_1) = \E(\E(X|\cF_2)|\cF_1)$. 
+	\end{enumerate}
+随机变量序列$\{X_k\}$是适应于$\{\cF_k\}$的\emph{鞅}, 如果满足
+\begin{center}
+	(1) $\E |X_k| < \infty$; \quad
+	(2) $X_k \in \cF_k$; \quad
+	(3) $\E(X_{k+1}|\cF_k) = X_k$.
+\end{center}
+如果我们记$D_k := X_k - X_{k-1}$, 容易验证$\{D_k\}$期望为$0$, 并且也是适应于$\{\cF_k\}$的鞅, 我们称其为\emph{鞅差}. 
+
+\subsection{方差的表示}
+
+方差的通常计算方式为$\var X = \E[X - \E X]^2 = \E X^2 - (\E X)^2$, 这里我们介绍两种其他的表示方式. 
+
+\begin{lemma}[方差的变分表示]
+	设随机变量$X \in L^2$, 那么
+	\begin{equation*}
+		\var X = \inf_{a \in \R} \E (X - a)^2. 
+	\end{equation*}
+\end{lemma}
+\begin{proof}
+	记$f(a) =  \E (X - a)^2 = a^2 - 2 \E X \cdot a + \E X^2$为二次函数, 不难看出$f$在$\E X$有最小值$- (\E X)^2 + \E X^2 = \var X$. 
+\end{proof}
+
+\begin{lemma}[独立复制]
+	设随机变量$X \in L^2$, $X'$为$X$的独立复制, 那么
+	\begin{equation*}
+		\var X = \frac12 \E (X - X')^2
+		= \E (X - X')_+^2 = \E (X - X')_-^2. 
+	\end{equation*}
+\end{lemma}
+\begin{proof}
+	由独立性, $\E (X - X')^2 = \E X - 2 \E X \cdot \E X + \E X^2 = 2 \var X$. 
+	另一方面, $X - X'$和$X' - X$有相同的分布, 于是$\E(X - X')_+^2 = \E(X - X')_-^2$且两者之和即$\E (X - X')^2$. 
+\end{proof}
+
+\subsection{方差的张量化}
+
+术语“张量化”源于这样一个事实：独立随机变量的概率测度是边缘分布的（张量）乘积
+
+我们熟知, 独立的随机变量$X_1, \dots, X_n$之和$Z := f(X_1, \cdots, X_n) = \sum_i X_i$的方差是$X_i$方差之和. 
+对于更为一般的(可测)函数$f \colon \R^n \to \R$, 我们希望控制每个$X_i$的贡献来控制$\var Z$(这里假定了$Z$平方可积). 
+
+\begin{definition}[逐坐标期望]
+	逐坐标期望算子$\E_i$在保持$(X_j, j \neq i)$的同时, 计算关于$X_i$的期望, 即$\E_i Z 
+		= \E\left[ Z | X_1, \dots, X_{i-1}, X_{i+1}, \dots, X_n \right]$. 
+	这一记号隐含地要求了$(X_i)$之间是相互独立的. 
+\end{definition}
+
+由条件期望的性质, 不难看出逐坐标期望算子满足:  
+	\begin{enumerate}[label=(\roman*)]
+		\item \textbf{(幂等性)} $\E_i[\E_i Z] = \E_i Z$; 
+		\item \textbf{(交换性)} $\E_i[\E_j Z] = \E_j [\E_i Z]$; 
+	\end{enumerate}
+
+\begin{theorem}[方差的张量化]
+	在上述的假设和记号下, $\var Z \leq \E \left[ \sum_i \var_i X_i \right]$
+\end{theorem}
+
+\begin{remark}
+	这是对独立随机变量和的方差的推广: 当$f$为求和函数时, 由独立性
+	\begin{align*}
+		\var_i Z 
+		&= \E \left[ (Z - \E Z)^2 | X_1, \dots, X_{i-1}, X_{i+1}, \dots, X_n \right] \\
+		&= \var X_i + \sum_{j \neq i} \E \left[ (X_j - \E[X_j | X_j] )^2 | X_j \right]
+		= \var X_i. 
+	\end{align*}
+\end{remark}
 
 
 

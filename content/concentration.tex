@@ -6,7 +6,7 @@
 
 在大尺度上, 无界随机变量的概率分布函数通常有着纤细、绵长的尾部, 这意味着集中现象: 
 
-例如正态分布的$3 \sigma$原则告诉我们, “几乎所有”的值都在平均值正负三个标准差的范围内 (若$X \sim \cN(\mu, \sigma^2)$, 则$\P(|X - \mu| \leq 3 \sigma) \approx 0.9973$). 
+例如正态分布的$3 \sigma$原则告诉我们, “几乎所有”的值都在平均值正负三个标准差的范围内 (若$X \sim \cN(\mu, \sigma^2)$, 则$\mathbb{P}(|X - \mu| \leq 3 \sigma) \approx 0.9973$). 
 
 经典的结果是(广义)Markov不等式和Chebyshev不等式.
 设函数$f \colon \R \to \R^*$单调增, 对任意$t > 0$, 注意到
@@ -14,15 +14,15 @@
 	\E f(X) 
 		\geq \E \left[f(X); X \geq t \right]
 		\geq \E \left[f(t) \I{X \geq t} \right] 
-		= f(t) \cdot \P[X \geq t].
+		= f(t) \cdot \mathbb{P}[X \geq t].
 \end{equation*}
 于是我们有随机变量的\emph{Markov不等式}: 
 \begin{equation}\label{eq:Markov'sInequality}
-	\P[X \geq t] \leq \frac{\E f(X)}{f(t)}.
+	\mathbb{P}[X \geq t] \leq \frac{\E f(X)}{f(t)}.
 \end{equation}
 特别地, 取$f(u) = u^2$, $X = |Y - \E Y|$, 有\emph{Chebyshev不等式}: 
 \begin{equation*}
-	\P[|Y - \E Y| \geq t] 
+	\mathbb{P}[|Y - \E Y| \geq t] 
 	\leq \frac{\var Y}{t^2}.
 \end{equation*}
 
@@ -37,13 +37,13 @@
 
 若随机变量$X$在$0$的某个邻域$I$内有\emph{中心矩母函数}, 即在$\lambda \in I$上有$\varphi_X(\lambda) := \E[e^{\lambda (X - \E X)}] < \infty$, 那么$\lambda \in I^* := I \cap [0, \infty)$时, 取$f(u) = e^{\lambda u}$可以得到下述的\emph{Chernoff不等式}: 
 \begin{equation*}
-	\P[X - \E X \geq t] 
+	\mathbb{P}[X - \E X \geq t] 
 	\leq \frac{\E[e^{\lambda(X - \E X)}]}{e^{\lambda t}},\;
 	\forall \lambda \in I^*.
 \end{equation*}
 通过选取最优的$\lambda$, 我们可以得到\emph{Chernoff界}
 \begin{equation*}
-	\P[X \geq \E X + t]
+	\mathbb{P}[X \geq \E X + t]
 	\leq \exp \left[ \inf_{\lambda \in I^*} \left\{ \log \E[e^{\lambda(X - \E X)}] - \lambda t \right\} \right]. 
 \end{equation*}
 
@@ -55,7 +55,7 @@
 	对于$\lambda \in \R$总是存在. 
 	通过简单的求导可以看到最优的$\lambda^* = \frac{t}{\sigma^2}$, 于是有
 	\begin{equation}\label{eq:UpperDeviationOfSubGuassianRV}
-		\P[X \geq \mu + t] \leq e^{- \frac{t^2}{2 \sigma^2}},\; \forall t \geq 0. 
+		\mathbb{P}[X \geq \mu + t] \leq e^{- \frac{t^2}{2 \sigma^2}},\; \forall t \geq 0. 
 	\end{equation}
 \end{example}
 
@@ -72,9 +72,9 @@
 	称$\sigma$为$X$的次高斯参数. 
 \end{definition}
 可以看到, 参数为$\sigma$的次高斯随机变量$X$总是满足上偏差不等式 \eqref{eq:UpperDeviationOfSubGuassianRV}.  
-此外, 由于$-X$也是次高斯随机变量, 可以得到下偏差不等式$\P[X \leq \mu - t] \leq e^{- \frac{t^2}{2 \sigma^2}}$对任意$t \geq 0$成立, 于是次高斯随机变量满足\emph{集中不等式}
+此外, 由于$-X$也是次高斯随机变量, 可以得到下偏差不等式$\mathbb{P}[X \leq \mu - t] \leq e^{- \frac{t^2}{2 \sigma^2}}$对任意$t \geq 0$成立, 于是次高斯随机变量满足\emph{集中不等式}
 \begin{equation}\label{eq:SubGuassianConcentration}
-	\P[|X - \mu| \geq t] \leq 2 e^{- \frac{t^2}{2 \sigma^2}},\; \forall t > 0. 
+	\mathbb{P}[|X - \mu| \geq t] \leq 2 e^{- \frac{t^2}{2 \sigma^2}},\; \forall t > 0. 
 \end{equation}
 
 直观上, 一个有界随机变量没有无限的尾部, 因此具有集中性质. 
@@ -83,7 +83,7 @@
 \begin{proposition}[Hoeffding界]
 	设$\{X_i\}_{i=1}^n$为均值为$\mu_i$, 参数为$\sigma_i$的独立次高斯随机变量, 我们有
 	\begin{equation}
-		\P \left[ \sum_{i=1}^n (X_i - \mu_i) \geq t \right]
+		\mathbb{P} \left[ \sum_{i=1}^n (X_i - \mu_i) \geq t \right]
 		\leq \exp \left( - \frac{t^2}{2 \sum_{i=1}^n \sigma_i^2} \right ),\; 
 		\forall t \geq 0.
 	\end{equation}
@@ -98,7 +98,7 @@
 			\end{equation*}
 		\item 存在常数$c \geq 0$和$Z \sim \cN(0, \tau^2)$使得
 			\begin{equation*}
-				\P[|X| \geq s] \leq c \P[|Z| \geq s],\; \forall s \geq 0; 
+				\mathbb{P}[|X| \geq s] \leq c \mathbb{P}[|Z| \geq s],\; \forall s \geq 0; 
 			\end{equation*}
 		\item 存在常数$\theta \geq 0$使得
 			\begin{equation*}
@@ -131,7 +131,7 @@
 \begin{theorem}[次指数随机变量的上偏差不等式]\label{thm:UpperDeviationOfSubExpRV}
 	设$X$是参数为$(\nu, \alpha)$的次指数随机变量, 那么
 	\begin{equation*}
-		\P[X \geq \E X + t] \leq 
+		\mathbb{P}[X \geq \E X + t] \leq 
 		\begin{cases}
 			e^{-\frac{t^2}{2 \nu^2}}, & 0 \leq t \leq \frac{\nu^2}{\alpha}, \\
 			e^{-\frac{t}{2 \alpha}}, & t > \frac{\nu^2}{\alpha}.
@@ -144,29 +144,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{鞅方法}
 
-之前我们讨论了独立随机变量和$f(X_1, \dots, X_n) = \sum_i X_i$的一些尾概率界. 对于更一般的函数$f$，经典的求尾概率界方法是鞅的分解，我们先回顾一些概念. 
-
-给定概率空间$(\Omega, \cF_0, \P)$, 子$\sigma$-域$\cF \subset \cF_0$, 随机变量$X \in \cF_0$可积. 
-称$Y$为$X$关于$\cF$的\emph{条件期望}, 如果
-\begin{center}
-	(1) $Y \in \cF$; \quad
-	(2) 对任意$A \in \cF$, $\E(Y;A) = \E(X;A)$. 
-\end{center}
-可以证明这样的的$Y$存在唯一(a.s.), 且$E|Y| < \infty$, 记做$\E(X|\cF)$. 
-条件期望具有许多性质, 这里我们主要使用以下几个: 
-	\begin{enumerate}[label=(\roman*)]
-		\item 特别地, 如果$X \in \cF$, 则$\E(X|\cF) = X$ a.s.;
-		\item \textbf{(全期望公式)} $\E(\E(X|\cF)) = \E X$; (取$A = \Omega \in \cF$即可)
-		\item \textbf{(Jensen不等式)} 若$\varphi$为凸函数且$\E X, \E \varphi(X) < \infty$, 则$\E(\varphi(X) | \cF) \geq \varphi(\E(X|\cF))$; 
-		\item \textbf{(塔性质)} 若$\cF_1 \subset \cF_2$, 则$\E(\E(X|\cF_1)|\cF_2) = \E(X|\cF_1) = \E(\E(X|\cF_2)|\cF_1)$. 
-	\end{enumerate}
-随机变量序列$\{X_k\}$是适应于$\{\cF_k\}$的\emph{鞅}, 如果满足
-\begin{center}
-	(1) $\E |X_k| < \infty$; \quad
-	(2) $X_k \in \cF_k$; \quad
-	(3) $\E(X_{k+1}|\cF_k) = X_k$.
-\end{center}
-如果我们记$D_k := X_k - X_{k-1}$, 容易验证$\{D_k\}$期望为$0$, 并且也是适应于$\{\cF_k\}$的鞅, 我们称其为\emph{鞅差}. 
+之前我们讨论了独立随机变量和$f(X_1, \dots, X_n) = \sum_i X_i$的一些尾概率界. 对于更一般的函数$f$，经典的求尾概率界方法是鞅的分解. 
 
 设$\{X_k\}_{k=1}^n$为一列独立随机变量, 记$\bm X = (X_1, \dots, X_n)$, $\bm X_1^k = (X_1, \dots, X_k)$. 
 对于函数$f \colon \R^n \to \R$, 考虑随机变量序列$Y_0 = \E f(\bm X)$, $Y_k = \E[f(\bm X)|\bm X_1^k]$, $k = 1, \dots, n$. 
@@ -203,7 +181,7 @@
 		\item 和式$\sum_k D_k$是参数为$\left( \sqrt{\sum_k \nu_k^2}, \alpha_* \right)$的次指数随机变量, 其中$\alpha_* := \max_k \alpha_k$; 
 		\item 和式$\sum_k D_k$满足集中不等式
 			\begin{equation*}
-				\P \left[ \left| \sum_{k=1}^n D_k \right| \geq t \right] \leq 
+				\mathbb{P} \left[ \left| \sum_{k=1}^n D_k \right| \geq t \right] \leq 
 				\begin{cases}
 					2 \exp\left( -\frac{t^2}{2 \sum_k \nu_k^2} \right), & 0 \leq t \leq \alpha_*^{-1} \sum_k \nu_k^2, \\
 					2 \exp\left(- \frac{t}{2 \alpha_*}\right), & t > \alpha_*^{-1} \sum_k \nu_k^2.
@@ -229,41 +207,38 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{熵方法}
-设随机变量$X \sim \P$, 给定凸函数$\phi \colon \R \to \R$, 若$X$和$\phi(X)$的期望存在, 则概率分布空间上的泛函
+设随机变量$X \sim \mathbb{P}$, 给定凸函数$\Phi \colon \R \to \R$, 若$X$和$\Phi(X)$的期望存在, 则概率分布空间上的泛函
 \begin{equation*}
-	\cH_\phi(X) := \E \phi(X) - \phi(\E X) \geq 0, 
+	\cH_\Phi(X) := \E \Phi(X) - \Phi(\E X) \geq 0, 
 \end{equation*}
-称为$X$的$\phi$熵. 
-这样的泛函衡量了随机变量随机性的大小: 
+称为$X$的$\Phi$熵. 
+这样的泛函可以衡量随机变量随机性的大小: 
 \begin{itemize}
-	\item 若$X = C$ a.e., 那么$\cH_\phi (X) = 0$; 
-	\item 特别地, 取$\phi(u) = u^2$时, 此时熵$\cH_\phi(X) = \E X^2 - (\E X)^2$就是方差, 根据Chebyshev不等式, 我们可以利用熵来控制尾部概率; 
-	\item 此外, 取$\phi(u) = - \log u$, 随机变量$Z = e^{\lambda X}$时, 
+	\item 若$X = C$ a.e., 那么$\cH_\Phi (X) = 0$; 
+	\item 特别地, 取$\Phi(u) = u^2$时, 此时熵$\cH_\Phi(X) = \E X^2 - (\E X)^2$就是方差. 根据Chebyshev不等式, 我们可以利用方差熵来控制尾部概率; 
+	\item 此外, 取$\Phi(u) = - \log u$, 随机变量$Z = e^{\lambda X}$时, 
 		\begin{equation*}
-			\cH_\phi(Z) 
+			\cH_\Phi(Z) 
 			= - \lambda \E X + \log \E[e^{\lambda X}] 
 			= \log \E[e^{\lambda(X - \E X)}], 
 		\end{equation*}
 		这样的熵对应的是中心化的矩母函数, 可以利用这样的熵来计算尾部概率的Chernoff界. 
 \end{itemize}
 
-之后, 我们总是考虑一个具体的凸函数$\phi \colon [0, \infty) \to \R$: 
+之后, 我们总是考虑非负随机变量$e^{\lambda X}$由凸函数$\Phi \colon [0, \infty) \to \R$: 
 \begin{equation*}
-	\phi(u) = 
+	\Phi(u) = 
 	\begin{cases}
 		u \log u, & u > 0; \\ 0, & u = 0. 
 	\end{cases}
 \end{equation*}
-对于非负随机变量$Z \geq 0$, 它的$\phi$熵为
-\begin{equation}
-	\cH(Z) = \E[Z \log Z] - \E[Z] \log \E[Z], 
-\end{equation}
-这里我们略去下标$\phi$. 
-对于随机变量$Z = e^{\lambda X}$, 不难看出此时熵可以由矩母函数$\varphi_X(\lambda) = \E[e^{\lambda X}]$来表示: 
+诱导的熵: 
 \begin{equation}\label{eq:EntropyByMGF}
 	\cH(e^{\lambda X}) 
-	= \lambda \varphi_X'(\lambda) - \varphi_X(\lambda) \log \varphi_X(\lambda). 
+	= \lambda \E[ X e^{\lambda X}] - \E[e^{\lambda X}] \log \E[e^{\lambda X}]
+	= \lambda \varphi_X'(\lambda) - \varphi_X(\lambda) \log \varphi_X(\lambda), 
 \end{equation}
+其中$\varphi_X(\lambda) = \E[e^{\lambda X}]$为矩母函数. 
 
 \begin{example}[Gauss随机变量的熵]
 	对于$X \sim \cN(\mu, \sigma^2)$, 其矩母函数为$\varphi_X(\lambda) = e^{\lambda^2 \sigma^2 / 2 + \lambda \mu}$, 于是
@@ -274,16 +249,17 @@
 	\end{equation}
 \end{example}
 
-\subsubsection{将次高斯、次指数随机变量作为比较对象}
+\subsubsection{Herbst方法}
 
 和次高斯随机变量的想法类似, 如果$e^{\lambda X}$的熵能被Gauss随机变量的熵所控制, 相应的矩母函数、尾部概率也会被控制.
 \begin{theorem}[Herbst方法]\label{thm:HerbstArgument}
 	若对任意的$\lambda \in I$ (这里$I$取$[0, \infty)$或者$\R$)总有熵$\cH(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \varphi_X(\lambda)$, 那么
 	\begin{equation*}
-		\log \E\left[e^{\lambda(X - \E X)}\right] 
-		\leq \frac{\lambda^2 \sigma^2}{2} ,\; 
+		\E\left[e^{\lambda(X - \E X)}\right] 
+		\leq \exp \left( \frac{\lambda^2 \sigma^2}{2} \right),\; 
 		\forall \lambda \in I. 
 	\end{equation*}
+	进一步地, 由Chernoff方法, $I = [0, \infty)$时, $X$满足次高斯随机变量的上偏差不等式; $I = \R$时, $X$满足集中不等式 \eqref{eq:SubGuassianConcentration}.
 \end{theorem}
 \begin{proof}
 	对于$\lambda \in I \backslash \{0\}$, 令$G(\lambda) := \frac{\log \varphi_X(\lambda)}{\lambda}$. 
@@ -308,10 +284,6 @@
 	\end{equation*}
 	类似的, 我们可以证明目标不等式在$\lambda \leq 0$时成立. 
 \end{proof}
-\begin{corollary}
-	若熵$\cH(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \varphi_X(\lambda)$在$I = [0, \infty)$上成立时, $X$满足次高斯随机变量的上偏差不等式. 
-	进一步地, 若$I = \R$, $X$满足集中不等式 \eqref{eq:SubGuassianConcentration}. 
-\end{corollary}
 
 自然地, 我们可以将上述方法由次高斯随机变量推广至次指数随机变量. 
 \begin{proposition}[Bernstein熵的界]\label{thm:BernsteinEntropyBd}
@@ -350,7 +322,7 @@
 \begin{corollary}
 	利用Chernoff方法, 命题 \ref{thm:BernsteinEntropyBd} 中的熵条件意味着$X$满足上偏差不等式
 	\begin{equation*}
-		\P[X \geq \E X + t] 
+		\mathbb{P}[X \geq \E X + t] 
 		\leq \exp \left(- \frac{t^2}{4 \sigma^2 + 2b t} \right),\;
 		\forall t \geq 0. 
 	\end{equation*}
@@ -358,12 +330,21 @@
 
 \subsubsection{熵的张量化}
 
-多变量函数的熵可以被适当的单变量的熵的和控制上界. 
+由于独立随机变量的联合分布是边缘分布的张量积, 于是对于一些“性质良好”的函数, 可以计算每个随机变量对函数的贡献得到随机变量的函数熵的界. 
+
+
+这里我们讨论的函数是\emph{可分凸函数}: 称函数$f \colon \R^n \to \R$是可分凸的, 如果对任意指标$k \in \{1, \dots, n\}$, 给定向量$\bm x_{\backslash k} := (x_1, \dots, x_{k-1}, x_{k+1}, \dots x_n) \in \R^{n-1}$, 单变量函数
+\begin{equation*}
+	y_k \mapsto f(x_1, \dots x_{k-1}, y_k, x_{k+1}, \dots x_n)
+\end{equation*}
+总是凸函数. 
+凸函数总是可分凸的. 
+
 \begin{lemma}[熵的张量化]
 	设$f \colon \R^n \to \R$, $\{X_i\}_{i=1}^n$为独立随机变量, 那么
 	\begin{equation*}
 		\cH\left(e^{\lambda f(X_1, \cdots, X_n)}\right)
-		\leq \E \left[ \sum_{k=1}^n \cH \left(e^{\lambda f_k(X_k)} \big| X_k \right) \right],\; 
+		\leq \E \left[ \sum_{k=1}^n \cH \left(e^{\lambda f_k(X_k)} \big| \bm X_k \right) \right],\; 
 		\forall \lambda > 0. 
 	\end{equation*}
 \end{lemma}
@@ -372,18 +353,10 @@
 \end{proof}
 
 
-下面我们说明, 熵方法
-
-称函数$f \colon \R^n \to \R$为\emph{可分凸函数}, 如果对任意指标$k \in \{1, \dots, n\}$, 给定向量$(x_1, \dots, x_{k-1}, x_{k+1}, \dots x_n) \in \R^{n-1}$, 单变量函数
-\begin{equation*}
-	y_k \mapsto f(x_1, \dots x_{k-1}, y_k, x_{k+1}, \dots x_n)
-\end{equation*}
-总是凸函数. 
-凸函数总是可分凸的, 
 \begin{theorem}
 	令$\{X_i\}_{i=1}^n$为区间$[a, b]$上的独立随机变量, $f \colon \R^n \to \R$为可分凸函数且关于$2$范数为$L$-Lipschitz的, 那么对任意$t \geq 0$, 成立
 	\begin{equation*}
-		\P[f(X) \geq \E f(X) + t] 
+		\mathbb{P}[f(X) \geq \E f(X) + t] 
 		\leq \exp \left( - \frac{t^2}{4L^2 (b-a)^2} \right). 
 	\end{equation*}
 \end{theorem}
@@ -397,10 +370,10 @@
 经典的等周不等式断言, 欧氏空间$(\R^n, \rho)$中相同体积的子集中, 球的表面积最小. 
 一种等价表述是, 使得给定体积的子集的(一致) \emph{$\epsilon$-扩张}
 \begin{equation*}
-	A^{\epsilon} := \left\{ x \in \cX \colon \rho(x, A) < \epsilon \right\}
+	A^{\epsilon} := \left\{ x \in \mathcal{X} \colon \rho(x, A) < \epsilon \right\}
 \end{equation*}
 的体积(作为$\epsilon$的函数)最小的集合$A$一定是球体\footnote{直观上, 膨胀得最慢的是球体.}.  
-这种表述避免了表面积的概念, 并且可以推广至任意度量空间$(\cX, \rho)$上. 
+这种表述避免了表面积的概念, 并且可以推广至任意度量空间$(\mathcal{X}, \rho)$上. 
 
 Minkowski将空间的向量加法这一代数结构同凸体的体积这一几何结构联系在一起, 提出了\emph{Minkowski和}的概念: 
 对于$\R^n$中的凸体$C$和$D$, 它们的Minkowski和定义为
@@ -425,35 +398,35 @@ Minkowski将空间的向量加法这一代数结构同凸体的体积这一几�
 
 \subsubsection{Lipschitz函数的集中性}
 
-赋予$(\cX, \rho)$赋予一个概率测度$\P$, 我们称三元组$(\cX, \rho, \P)$为\emph{度量测度空间}. 
-考虑随机变量$X \sim \P$,  此时等周不等式表述为, 确定满足$\P[X \in A] \geq 1/2$、使得测度$\P[X \in A^{\epsilon}]$最小的集合$A \subseteq \cX$.
+赋予$(\mathcal{X}, \rho)$赋予一个概率测度$\mathbb{P}$, 我们称三元组$(\mathcal{X}, \rho, \mathbb{P})$为\emph{度量测度空间}. 
+考虑随机变量$X \sim \mathbb{P}$,  此时等周不等式表述为, 确定满足$\mathbb{P}[X \in A] \geq 1/2$、使得测度$\mathbb{P}[X \in A^{\epsilon}]$最小的集合$A \subseteq \mathcal{X}$.
 
-我们引入$(\cX, \rho, \P)$上的集中度函数$\alpha \colon \R^* \to [0, 1/2]$
+我们引入$(\mathcal{X}, \rho, \mathbb{P})$上的集中度函数$\alpha \colon \R^* \to [0, 1/2]$
 \begin{equation*}
-	\alpha_{\P}(\epsilon)
-	:= \sup_{A \subseteq \cX \colon \P[A] \geq 1/2} \left\{ 1 - \P[A^{\epsilon}] \right\}. 
+	\alpha_{\mathbb{P}}(\epsilon)
+	:= \sup_{A \subseteq \mathcal{X} \colon \mathbb{P}[A] \geq 1/2} \left\{ 1 - \mathbb{P}[A^{\epsilon}] \right\}. 
 \end{equation*}
-于是等周不等式相当于确定$\alpha_{\P}$的上界. 
+于是等周不等式相当于确定$\alpha_{\mathbb{P}}$的上界. 
 
 下面的定理说明, 集中度函数可以控制Lipschitz函数的尾部. 
-回忆$f(X)$的\emph{中位数}是指满足$\P[f(X) \geq m_f] \geq 1/2$, $\P[f(X) \leq m_f] \geq 1/2$的某个常数$m_f$. 
+回忆$f(X)$的\emph{中位数}是指满足$\mathbb{P}[f(X) \geq m_f] \geq 1/2$, $\mathbb{P}[f(X) \leq m_f] \geq 1/2$的某个常数$m_f$. 
 
 \begin{theorem}[Lévy不等式]
-	设$f \colon \cX \to \R$关于$\rho$是$L$-Lipschitz连续的函数, $X \sim \P$, 有$\P[ |f(X) - m_f| \geq \epsilon] \leq 2 \alpha(\epsilon / L)$. 
+	设$f \colon \mathcal{X} \to \R$关于$\rho$是$L$-Lipschitz连续的函数, $X \sim \mathbb{P}$, 有$\mathbb{P}[ |f(X) - m_f| \geq \epsilon] \leq 2 \alpha(\epsilon / L)$. 
 	特别地, 当$f$是$1$-Lipschitz连续函数时, 我们有
 	\begin{equation*}
-		\P[ |f(X) - m_f| \geq \epsilon] \leq 2 \alpha(\epsilon / L). 
+		\mathbb{P}[ |f(X) - m_f| \geq \epsilon] \leq 2 \alpha(\epsilon / L). 
 	\end{equation*}
 \end{theorem}
 \begin{proof}
-	令$A := \{x \in \cX \colon f(x) \leq m_f\}$, 于是$\P[A] \geq 1/2$. 
+	令$A := \{x \in \mathcal{X} \colon f(x) \leq m_f\}$, 于是$\mathbb{P}[A] \geq 1/2$. 
 	由扩张的定义, 对任意$x \in A^{\epsilon / L}$, 存在$y \in A$使得$\rho(x,y) < \epsilon / L$. 
-	于是$f(x) < f(y) + |f(x) - f(y)| < m_f + \varepsilon$, 进一步地, 我们有$\P[A^{\epsilon / L}] \leq \P[f(X) < m_f + \epsilon]$. 
+	于是$f(x) < f(y) + |f(x) - f(y)| < m_f + \varepsilon$, 进一步地, 我们有$\mathbb{P}[A^{\epsilon / L}] \leq \mathbb{P}[f(X) < m_f + \epsilon]$. 
 	取余集可以得到
 	\begin{equation*}
-		\P[f(X) \geq m_f + \epsilon] 
-		\leq 1 - \P[A^{\epsilon / L}] 
-		\leq \alpha_{\P}(\epsilon / L). 
+		\mathbb{P}[f(X) \geq m_f + \epsilon] 
+		\leq 1 - \mathbb{P}[A^{\epsilon / L}] 
+		\leq \alpha_{\mathbb{P}}(\epsilon / L). 
 	\end{equation*}
 	对$-f$运用相同的方法可以得到下偏差不等式, 结合起来可得集中不等式. 
 \end{proof}
@@ -462,24 +435,24 @@ Minkowski将空间的向量加法这一代数结构同凸体的体积这一几�
 换而言之, 两种对尾部的控制是等价的. 
 
 \begin{theorem}
-	若存在函数$\beta \colon \R^* \to [0, 1]$使得对任意的$(\cX, \rho)$上的$1$-Lipschitz函数都有
+	若存在函数$\beta \colon \R^* \to [0, 1]$使得对任意的$(\mathcal{X}, \rho)$上的$1$-Lipschitz函数都有
 	\begin{equation*}
-		\P[f(X) \geq \E f(X) + \epsilon] \leq \beta(\epsilon),\; \forall \epsilon \geq 0, 
+		\mathbb{P}[f(X) \geq \E f(X) + \epsilon] \leq \beta(\epsilon),\; \forall \epsilon \geq 0, 
 	\end{equation*}
-	那么$\alpha_{\P}(\epsilon) \leq \beta(\epsilon / 2)$. 
+	那么$\alpha_{\mathbb{P}}(\epsilon) \leq \beta(\epsilon / 2)$. 
 \end{theorem}
 \begin{proof}
-	对任意$\cX$中满足$\P[A] \geq 1/2$的可测集$A$, 构造$f_A(x) := \rho(x, A) \wedge \epsilon$. 
-	注意到在$A$上有$f_A = 0$, 在$A$外有$f_A \leq \epsilon$, 所以$\E f_A(X) \leq \epsilon (1 - \P[A]) \leq \epsilon / 2$. 
+	对任意$\mathcal{X}$中满足$\mathbb{P}[A] \geq 1/2$的可测集$A$, 构造$f_A(x) := \rho(x, A) \wedge \epsilon$. 
+	注意到在$A$上有$f_A = 0$, 在$A$外有$f_A \leq \epsilon$, 所以$\E f_A(X) \leq \epsilon (1 - \mathbb{P}[A]) \leq \epsilon / 2$. 
 	于是我们有
 	\begin{equation*}
-		1 - \P[A^\epsilon]
-		= \P[X \in \bar A^{\epsilon}]
-		= \P[f_A(X) \geq \epsilon] 
-		\leq \P\left[f_A(X) \geq \E f_A(X) + \frac{\epsilon}{2}\right]
+		1 - \mathbb{P}[A^\epsilon]
+		= \mathbb{P}[X \in \bar A^{\epsilon}]
+		= \mathbb{P}[f_A(X) \geq \epsilon] 
+		\leq \mathbb{P}\left[f_A(X) \geq \E f_A(X) + \frac{\epsilon}{2}\right]
 		\leq \beta\left( \frac{\epsilon}{2} \right),  
 	\end{equation*}
-	再对满足条件$\P[A] \geq 1/2$的$A$取上确界即可. 
+	再对满足条件$\mathbb{P}[A] \geq 1/2$的$A$取上确界即可. 
 	其中最后一个不等式是由于$f_A$是一个$1$-Lipschitz函数: 
 	\begin{itemize}
 		\item 若$x, y \in A^{\epsilon}$, 则$|f_A(x) - f_A(y)| = |\rho(x, A) - \rho(y, A) | \leq  \rho(x, y)$; 
@@ -494,76 +467,76 @@ Minkowski将空间的向量加法这一代数结构同凸体的体积这一几�
 
 
 
-给定$(\cX, \rho)$上的两个概率分布$\Q$和$\P$, 它们之间的\emph{Wasserstein距离}为
+给定$(\mathcal{X}, \rho)$上的两个概率分布$\mathbb{Q}$和$\mathbb{P}$, 它们之间的\emph{Wasserstein距离}为
 \begin{equation*}
-	W_{\rho}(\Q, \P) 
-	:= \sup_{\|f\|_{Lip} \leq 1} \left[ \E_{\Q} f - \E_{\P} f \right]
-	= \sup_{\|f\|_{Lip} \leq 1} \int f (\dd \Q - \dd \P). 
+	W_{\rho}(\mathbb{Q}, \mathbb{P}) 
+	:= \sup_{\|f\|_{Lip} \leq 1} \left[ \E_{\mathbb{Q}} f - \E_{\mathbb{P}} f \right]
+	= \sup_{\|f\|_{Lip} \leq 1} \int f (\dd \mathbb{Q} - \dd \mathbb{P}). 
 \end{equation*}
 可以证明这样的$W_{\rho}$构成了一个度量: 
-存在满足$\|f\|_{Lip} \leq 1$的$f$使得$W_{\rho}(\Q, \P) = \int f (\dd \Q - \dd \P)$, 于是$W_{\rho}(\P, \Q) \geq \int (-f) (\dd \P - \dd \Q) = W_{\rho}(\Q, \P)$. 
-类似地, 还有$W_{\rho}(\Q, \P) \geq W_{\rho}(\P, \Q)$, 从而二者相等. 
+存在满足$\|f\|_{Lip} \leq 1$的$f$使得$W_{\rho}(\mathbb{Q}, \mathbb{P}) = \int f (\dd \mathbb{Q} - \dd \mathbb{P})$, 于是$W_{\rho}(\mathbb{P}, \mathbb{Q}) \geq \int (-f) (\dd \mathbb{P} - \dd \mathbb{Q}) = W_{\rho}(\mathbb{Q}, \mathbb{P})$. 
+类似地, 还有$W_{\rho}(\mathbb{Q}, \mathbb{P}) \geq W_{\rho}(\mathbb{P}, \mathbb{Q})$, 从而二者相等. 
 我们将其称为$\rho$诱导的Wasserstein度量. 
 
 Wasserstein距离
 
 
 \begin{example}[Hamming度量和全变差距离]
-	关于Hamming度量的Wasserstein距离$W_{Ham}(\Q, \P)$等价于全变差距离$\|\Q - \P\|_{TV} := \sup_{A \subseteq \cX} |\Q(A) - \P(A)|$. 
+	关于Hamming度量的Wasserstein距离$W_{Ham}(\mathbb{Q}, \mathbb{P})$等价于全变差距离$\|\mathbb{Q} - \mathbb{P}\|_{TV} := \sup_{A \subseteq \mathcal{X}} |\mathbb{Q}(A) - \mathbb{P}(A)|$. 
 	
 	此时$f$是关于Hamming度量的$1$-Lipschitz连续函数等价于$f$值域为某个区间$[c, c+1]$, 不失一般性地, 我们假定$c = 0$. 
-	记$\Q$和$\P$关于Lebesgue测度$\nu$的密度分别为$q$, $p$, 集合$A = \{x \in \cX \colon q(x) \geq p(x)\} $, 于是有
+	记$\mathbb{Q}$和$\mathbb{P}$关于Lebesgue测度$\nu$的密度分别为$q$, $p$, 集合$A = \{x \in \mathcal{X} \colon q(x) \geq p(x)\} $, 于是有
 	\begin{equation*}
-		W_{Ham}(\Q, \P)
-		= \sup_{f \colon \cX \to [0, 1]} \int_{\cX} f (q - p) \dd \nu 
-		\leq \int_A (\dd \Q - \dd \P)
-		\leq \|\Q - \P\|_{TV}. 
+		W_{Ham}(\mathbb{Q}, \mathbb{P})
+		= \sup_{f \colon \mathcal{X} \to [0, 1]} \int_{\mathcal{X}} f (q - p) \dd \nu 
+		\leq \int_A (\dd \mathbb{Q} - \dd \mathbb{P})
+		\leq \|\mathbb{Q} - \mathbb{P}\|_{TV}. 
 	\end{equation*}
-	另一方面, 对任意可测集$B \subseteq \cX$, 注意到$\mathbb{I}_B$是$1$-Lipschitz连续的, 于是
+	另一方面, 对任意可测集$B \subseteq \mathcal{X}$, 注意到$\mathbb{I}_B$是$1$-Lipschitz连续的, 于是
 	\begin{equation*}
-		\Q(B) - \P(B) 
-		= \int \mathbb{I}_B (\dd \Q - \dd \P) 
-		\leq W_{Ham}(\Q, \P). 
+		\mathbb{Q}(B) - \mathbb{P}(B) 
+		= \int \mathbb{I}_B (\dd \mathbb{Q} - \dd \mathbb{P}) 
+		\leq W_{Ham}(\mathbb{Q}, \mathbb{P}). 
 	\end{equation*}
-	于是有$\|\Q - \P\|_{TV} \leq W_{Ham}(\Q, \P)$, 从而二者等价. 
+	于是有$\|\mathbb{Q} - \mathbb{P}\|_{TV} \leq W_{Ham}(\mathbb{Q}, \mathbb{P})$, 从而二者等价. 
 \end{example}
 
 \subsubsection{Kantorovich–Rubinstein对偶}
 
 \begin{equation*}
-	\inf_{\M \in \Pi(\Q, \P)} \E_{\M} \left[ \rho(X, X') \right]
-	= \inf_{\M \in \Pi(\Q, \P)} \int_{\cX \times \cX} \rho(x, x') \dd \M(x, x'). 
+	\inf_{\M \in \mathbb{P}i(\mathbb{Q}, \mathbb{P})} \E_{\M} \left[ \rho(X, X') \right]
+	= \inf_{\M \in \mathbb{P}i(\mathbb{Q}, \mathbb{P})} \int_{\mathcal{X} \times \mathcal{X}} \rho(x, x') \dd \M(x, x'). 
 \end{equation*}
 
 \subsubsection{信息不等式}
 
-给定$(\cX, \rho)$上的分布$\Q \ll \P$, 它们之间的Kullback–Leibler散度(相对熵)定义为
+给定$(\mathcal{X}, \rho)$上的分布$\mathbb{Q} \ll \mathbb{P}$, 它们之间的Kullback–Leibler散度(相对熵)定义为
 \begin{equation}
-	D(\Q \| \P)
-	:= \E_{\Q} \left[ \log \frac{\dd \Q}{\dd \P} \right]
-	= \int_{\cX} q(x) \log \frac{q(x)}{p(x)} \nu(\dd x), 
+	D(\mathbb{Q} \| \mathbb{P})
+	:= \E_{\mathbb{Q}} \left[ \log \frac{\dd \mathbb{Q}}{\dd \mathbb{P}} \right]
+	= \int_{\mathcal{X}} q(x) \log \frac{q(x)}{p(x)} \nu(\dd x), 
 \end{equation}
-其中$q, p$为$\Q, \P$的密度, $\nu$为$\cX$上的Lebesgue测度. 
+其中$q, p$为$\mathbb{Q}, \mathbb{P}$的密度, $\nu$为$\mathcal{X}$上的Lebesgue测度. 
 它不是一个度量: 不满足对称性、三角不等式. 
  
- 称$(\cX, \rho)$上的概率测度$\P$满足参数为$\gamma > 0$的\emph{$\rho$-传输成本不等式}, 如果对任意的概率测度$\Q$总有
+ 称$(\mathcal{X}, \rho)$上的概率测度$\mathbb{P}$满足参数为$\gamma > 0$的\emph{$\rho$-传输成本不等式}, 如果对任意的概率测度$\mathbb{Q}$总有
  \begin{equation}\label{eq:TransportationCostInequality}
- 	W_{\rho} (\Q, \P) \leq \sqrt{2 \gamma D(\Q \| \P)}.
+ 	W_{\rho} (\mathbb{Q}, \mathbb{P}) \leq \sqrt{2 \gamma D(\mathbb{Q} \| \mathbb{P})}.
  \end{equation}
 
 \begin{theorem}
-	若度量测度空间$(\cX, \rho, \P)$中的概率测度满足$\rho$-传输成本不等式\eqref{eq:TransportationCostInequality}, 那么它的集中度满足
+	若度量测度空间$(\mathcal{X}, \rho, \mathbb{P})$中的概率测度满足$\rho$-传输成本不等式\eqref{eq:TransportationCostInequality}, 那么它的集中度满足
 	\begin{equation}\label{eq:ConcetrationByTransportationCost}
-		\alpha_{\P}(\epsilon) \leq 2 \exp \left(- \frac{\epsilon^2}{2 \gamma} \right).
+		\alpha_{\mathbb{P}}(\epsilon) \leq 2 \exp \left(- \frac{\epsilon^2}{2 \gamma} \right).
 	\end{equation}
 \end{theorem}
 \begin{proof}
-	考虑任意满足$\P[A] \geq \frac12$的集合$A$和$\epsilon > 0$, 只需证明$B := \bar A^{\epsilon}$的测度总是小于不等式\eqref{eq:ConcetrationByTransportationCost}的右侧. 
-	若$\P[B] = 0$, 则不等式显然成立, 下面我们总假设$\P[B] > 0$. 
+	考虑任意满足$\mathbb{P}[A] \geq \frac12$的集合$A$和$\epsilon > 0$, 只需证明$B := \bar A^{\epsilon}$的测度总是小于不等式\eqref{eq:ConcetrationByTransportationCost}的右侧. 
+	若$\mathbb{P}[B] = 0$, 则不等式显然成立, 下面我们总假设$\mathbb{P}[B] > 0$. 
 	
-	考虑$\P_A$, $\P_B$为在$A$和$B$上的条件分布, $\M$为它们的任意耦合, 于是
+	考虑$\mathbb{P}_A$, $\mathbb{P}_B$为在$A$和$B$上的条件分布, $\M$为它们的任意耦合, 于是
 	\begin{align*}
-		\int_{\cX \times \cX} \rho(x, x') \dd \M(x, x')
+		\int_{\mathcal{X} \times \mathcal{X}} \rho(x, x') \dd \M(x, x')
 		&= \int_{A \times B} \rho(x, x') \dd \M(x, x') \\
 		&\geq \rho(A, B) \int_{A \times B} \dd \M 
 		= \rho(A, B) 
@@ -573,14 +546,14 @@ Wasserstein距离
 	再由三角不等式和$\rho$-传输成本不等式, 我们有(这里根号下似乎少了个2)
 	\begin{align*}
 		\epsilon 
-		&\leq W_{\rho}(\P, \P_A) + W_{\rho}(\P, \P_B) 
-		\leq \sqrt{\gamma D(\P_A \| \P)} + \sqrt{\gamma D(\P_B \| \P)} \\
-		&\leq \sqrt{2 \gamma} \left[ D(\P_A \| \P) + D(\P_B \| \P) \right]^{1/2}.
+		&\leq W_{\rho}(\mathbb{P}, \mathbb{P}_A) + W_{\rho}(\mathbb{P}, \mathbb{P}_B) 
+		\leq \sqrt{\gamma D(\mathbb{P}_A \| \mathbb{P})} + \sqrt{\gamma D(\mathbb{P}_B \| \mathbb{P})} \\
+		&\leq \sqrt{2 \gamma} \left[ D(\mathbb{P}_A \| \mathbb{P}) + D(\mathbb{P}_B \| \mathbb{P}) \right]^{1/2}.
 	\end{align*}
-	另一方面, $\P_A$的密度为$p_A(x) = \frac{p(x) \mathbb I_A(x)}{\P[A]}$, 于是$D(\P_A \| \P) = - \log \P[A]$, $D(\P_B \| \P) = -\log \P[B]$, 从而有$\epsilon^2 \leq -  2 \gamma \log (\P[A] \P[B])$, 等价地
+	另一方面, $\mathbb{P}_A$的密度为$p_A(x) = \frac{p(x) \mathbb I_A(x)}{\mathbb{P}[A]}$, 于是$D(\mathbb{P}_A \| \mathbb{P}) = - \log \mathbb{P}[A]$, $D(\mathbb{P}_B \| \mathbb{P}) = -\log \mathbb{P}[B]$, 从而有$\epsilon^2 \leq -  2 \gamma \log (\mathbb{P}[A] \mathbb{P}[B])$, 等价地
 	\begin{equation*}
-		 \P[B] 
-		 \leq (\P[A])^{-1} \exp\left(- \frac{\epsilon^2}{2 \gamma} \right) 
+		 \mathbb{P}[B] 
+		 \leq (\mathbb{P}[A])^{-1} \exp\left(- \frac{\epsilon^2}{2 \gamma} \right) 
 		 \leq 2 \exp\left(- \frac{\epsilon^2}{2 \gamma} \right). 
 	\end{equation*}
 \end{proof}
@@ -591,6 +564,63 @@ Wasserstein距离
 
 定义
 \begin{align*}
-	\cC(\Q, \P)
-	= \sqrt{\int\left(1 - \frac{\dd \Q}{\dd \P} \right)_+^2 \dd \P}
+	\cC(\mathbb{Q}, \mathbb{P})
+	= \sqrt{\int\left(1 - \frac{\dd \mathbb{Q}}{\dd \mathbb{P}} \right)_+^2 \dd \mathbb{P}}
 \end{align*}
+
+
+
+\subsection{经验过程的尾部概率界}
+
+设$(X_1, \cdots, X_n)$来自乘积分布$\mathbb{P} = \otimes_{i=1}^n \mathbb{P}_i$, 其中$\mathbb{P}_i$的支撑集$\mathcal{X}_i \subseteq \mathcal{X}$. 
+对于定义域为$\cX$函数类$\cF$, 考虑随机变量
+\begin{equation*}
+	Z := \sup_{f \in \cF} \left\{ \frac{1}{n} \sum_{i=1}^n f(X_i) \right\}. 
+\end{equation*}
+注意这里的$\sup$是对每一点$x \in \cX^n$取极大值. 
+若要考虑$\sup_{f \in \cF} \left| \frac{1}{n} \sum_i f(X_i) \right|$, 只需考虑在函数类$\tilde \cF := \cF \cup (- \cF)$上考虑上确界即可: 
+\begin{equation*}
+	\sup_{f \in \cF} \left| \frac{1}{n} \sum_i f(X_i) \right|
+	= \sup_{f \in \cF} \left\{ \max \left\{ \frac{1}{n} \sum_{i=1}^n f(X_i), - \frac{1}{n} \sum_{i=1}^n f(X_i) \right\} \right\} 
+	= \sup_{\tilde \cF} \left\{ \frac{1}{n} \sum_{i=1}^n f(X_i) \right\}
+\end{equation*}
+
+\begin{theorem}[泛函Hoeffding不等式]
+	若对每个$f \in \cF$, 存在实数$a_{i, f} \leq b_{i, f}$使得
+	\begin{equation*}
+		f(x) \in [a_{i, f}, b_{i, f}],\quad \forall x \in \cX_i,\; i = 1, \cdots, n, 
+	\end{equation*}
+	那么对任意$\delta \geq 0$, 成立
+	\begin{equation}
+		\P[ Z \geq \E Z + \delta] 
+		\leq \exp \left( - \frac{n \delta^2}{4 L^2} \right), 
+	\end{equation}
+	其中$L^2 = \sup_{f \in \cF} \left\{ \frac{1}{n} \sum_i (b_{i, f} - a_{i, f})^2 \right\}$. 
+\end{theorem}
+
+\begin{proof}
+	将$Z$视作随机变量$(X_1, \dots, X_n)$的函数, 定义$Z_j \colon x_j \mapsto Z(X_1, \dots, X_{j-1}, x_j, X_{j+1}, \dots, X_n)$
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
