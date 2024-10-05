@@ -11,18 +11,18 @@
 经典的结果是(广义)Markov不等式和Chebyshev不等式.
 设函数$f \colon \R \to \R^*$单调增, 对任意$t > 0$, 注意到
 \begin{equation*}
-	\E f(X) 
-		\geq \E \left[f(X); X \geq t \right]
-		\geq \E \left[f(t) \I{X \geq t} \right] 
+	\mathbb{E}f(X) 
+		\geq \mathbb{E}\left[f(X); X \geq t \right]
+		\geq \mathbb{E}\left[f(t) \I{X \geq t} \right] 
 		= f(t) \cdot \mathbb{P}[X \geq t].
 \end{equation*}
 于是我们有随机变量的\emph{Markov不等式}: 
 \begin{equation}\label{eq:Markov'sInequality}
-	\mathbb{P}[X \geq t] \leq \frac{\E f(X)}{f(t)}.
+	\mathbb{P}[X \geq t] \leq \frac{\mathbb{E}f(X)}{f(t)}.
 \end{equation}
-特别地, 取$f(u) = u^2$, $X = |Y - \E Y|$, 有\emph{Chebyshev不等式}: 
+特别地, 取$f(u) = u^2$, $X = |Y - \mathbb{E}Y|$, 有\emph{Chebyshev不等式}: 
 \begin{equation*}
-	\mathbb{P}[|Y - \E Y| \geq t] 
+	\mathbb{P}[|Y - \mathbb{E}Y| \geq t] 
 	\leq \frac{\var Y}{t^2}.
 \end{equation*}
 
@@ -35,22 +35,22 @@
 可以看到, Markov不等式 \eqref{eq:Markov'sInequality} 中尾部概率由$f$的增长速度所控制——这意味着选取增长速度最快的函数, 可以得到更有效的尾部概率不等式. 
 自然地, 我们考虑指数函数. 
 
-若随机变量$X$在$0$的某个邻域$I$内有\emph{中心矩母函数}, 即在$\lambda \in I$上有$\varphi_X(\lambda) := \E[e^{\lambda (X - \E X)}] < \infty$, 那么$\lambda \in I^* := I \cap [0, \infty)$时, 取$f(u) = e^{\lambda u}$可以得到下述的\emph{Chernoff不等式}: 
+若随机变量$X$在$0$的某个邻域$I$内有\emph{中心矩母函数}, 即在$\lambda \in I$上有$\varphi_X(\lambda) := \mathbb{E}[e^{\lambda (X - \mathbb{E}X)}] < \infty$, 那么$\lambda \in I^* := I \cap [0, \infty)$时, 取$f(u) = e^{\lambda u}$可以得到下述的\emph{Chernoff不等式}: 
 \begin{equation*}
-	\mathbb{P}[X - \E X \geq t] 
-	\leq \frac{\E[e^{\lambda(X - \E X)}]}{e^{\lambda t}},\;
+	\mathbb{P}[X - \mathbb{E}X \geq t] 
+	\leq \frac{\mathbb{E}[e^{\lambda(X - \mathbb{E}X)}]}{e^{\lambda t}},\;
 	\forall \lambda \in I^*.
 \end{equation*}
 通过选取最优的$\lambda$, 我们可以得到\emph{Chernoff界}
 \begin{equation*}
-	\mathbb{P}[X \geq \E X + t]
-	\leq \exp \left[ \inf_{\lambda \in I^*} \left\{ \log \E[e^{\lambda(X - \E X)}] - \lambda t \right\} \right]. 
+	\mathbb{P}[X \geq \mathbb{E}X + t]
+	\leq \exp \left[ \inf_{\lambda \in I^*} \left\{ \log \mathbb{E}[e^{\lambda(X - \mathbb{E}X)}] - \lambda t \right\} \right]. 
 \end{equation*}
 
 \begin{example}[Gauss随机变量的上偏差不等式]
 	考虑最经典的Gauss随机变量$X \sim N(\mu, \sigma^2)$, 其矩母函数
 	\begin{equation}
-		\E[e^{\lambda X}] = e^{\frac{\sigma^2 \lambda^2}{2} + \mu \lambda} 		
+		\mathbb{E}[e^{\lambda X}] = e^{\frac{\sigma^2 \lambda^2}{2} + \mu \lambda} 		
 	\end{equation}
 	对于$\lambda \in \R$总是存在. 
 	通过简单的求导可以看到最优的$\lambda^* = \frac{t}{\sigma^2}$, 于是有
@@ -59,15 +59,14 @@
 	\end{equation}
 \end{example}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{次高斯随机变量}
+\subsubsection{次高斯随机变量}
 
 我们将Gauss随机变量作为“模版”来研究其他随机变量: 如果某个随机变量的中心矩母函数能被中心Gauss随机变量的矩母函数所控制, 利用Chernoff方法, 它的尾概率也会被中心Gauss随机变量的尾概率控制. 
 
 \begin{definition}[次高斯随机变量]
 	称期望为$\mu$的随机变量$X$为次高斯的, 如果存在$\sigma > 0$, 使得
 	\begin{equation*}
-		\E[e^{\lambda(X - \mu)}] \leq e^{\sigma^2 \lambda^2 /2},\; \forall \lambda \in \R. 
+		\mathbb{E}[e^{\lambda(X - \mu)}] \leq e^{\sigma^2 \lambda^2 /2},\; \forall \lambda \in \R. 
 	\end{equation*}
 	称$\sigma$为$X$的次高斯参数. 
 \end{definition}
@@ -94,7 +93,7 @@
 	\begin{enumerate}[label=(\Roman*)]
 		\item 存在常数$\sigma \geq 0$使得
 			\begin{equation*}
-				\E[e^{\lambda X} ] \leq e^{\frac{\lambda^2 \sigma^2}{2}},\; \forall \lambda \in \R; 
+				\mathbb{E}[e^{\lambda X} ] \leq e^{\frac{\lambda^2 \sigma^2}{2}},\; \forall \lambda \in \R; 
 			\end{equation*}
 		\item 存在常数$c \geq 0$和$Z \sim \cN(0, \tau^2)$使得
 			\begin{equation*}
@@ -102,24 +101,22 @@
 			\end{equation*}
 		\item 存在常数$\theta \geq 0$使得
 			\begin{equation*}
-				\E[X^{2k}] \leq \frac{(2k)!}{2^k k!} \theta^{2k}, \forall k = 1,2,\dots;
+				\mathbb{E}[X^{2k}] \leq \frac{(2k)!}{2^k k!} \theta^{2k}, \forall k = 1,2,\dots;
 			\end{equation*}
 		\item 存在常数$\sigma \geq 0$使得
 			\begin{equation*}
-				\E\left[ \exp\left(\frac{\lambda X^2}{2 \sigma^2}\right) \right] \leq \frac{1}{\sqrt{1 - \lambda}},\; \forall \lambda \in [0,1).
+				\mathbb{E}\left[ \exp\left(\frac{\lambda X^2}{2 \sigma^2}\right) \right] \leq \frac{1}{\sqrt{1 - \lambda}},\; \forall \lambda \in [0,1).
 			\end{equation*}
 	\end{enumerate}
 \end{theorem}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{次指数随机变量}
+\subsubsection{次指数随机变量}
 
 很多时候随机变量的中心矩母函数只会在$0$的某个邻域内存在, 相应地, 我们将次高斯随机变量的条件放宽如下. 
 \begin{definition}[次指数随机变量]
 	称期望为$\mu$的随机变量$X$为次指数的, 如果存在非负参数对$(\nu, \alpha)$使得
 	\begin{equation*}
-		\E[ e^{\lambda(X - \mu)} ] 
+		\mathbb{E}[ e^{\lambda(X - \mu)} ] 
 		\leq e^{\frac{\nu^2 \lambda^2}{2}},\; 
 		\forall |\lambda| < \frac{1}{\alpha}. 
 	\end{equation*}
@@ -131,7 +128,7 @@
 \begin{theorem}[次指数随机变量的上偏差不等式]\label{thm:UpperDeviationOfSubExpRV}
 	设$X$是参数为$(\nu, \alpha)$的次指数随机变量, 那么
 	\begin{equation*}
-		\mathbb{P}[X \geq \E X + t] \leq 
+		\mathbb{P}[X \geq \mathbb{E}X + t] \leq 
 		\begin{cases}
 			e^{-\frac{t^2}{2 \nu^2}}, & 0 \leq t \leq \frac{\nu^2}{\alpha}, \\
 			e^{-\frac{t}{2 \alpha}}, & t > \frac{\nu^2}{\alpha}.
@@ -147,23 +144,23 @@
 之前我们讨论了独立随机变量和$f(X_1, \dots, X_n) = \sum_i X_i$的一些尾概率界. 对于更一般的函数$f$，经典的求尾概率界方法是鞅的分解. 
 
 设$\{X_k\}_{k=1}^n$为一列独立随机变量, 记$\bm X = (X_1, \dots, X_n)$, $\bm X_1^k = (X_1, \dots, X_k)$. 
-对于函数$f \colon \R^n \to \R$, 考虑随机变量序列$Y_0 = \E f(\bm X)$, $Y_k = \E[f(\bm X)|\bm X_1^k]$, $k = 1, \dots, n$. 
+对于函数$f \colon \R^n \to \R$, 考虑随机变量序列$Y_0 = \mathbb{E}f(\bm X)$, $Y_k = \mathbb{E}[f(\bm X)|\bm X_1^k]$, $k = 1, \dots, n$. 
 由条件期望的性质易见$Y_n = f(\bm X)$. 
 这样的$\{Y_k\}_{k=1}^n$构成了关于$\{\bm X_1^k\}_{k=1}^n$鞅: 
 \begin{itemize}
 	\item 由Jensen不等式和重期望公式, 
 		\begin{equation*}
-			\E |Y_k| 
-			= \E\left[\left|\E[f(\bm X)|\bm X_1^k]\right|\right] 
-			\leq \E\left[\E[|f(\bm X)||\bm X_1^k] \right]
-			= \E |f(\bm X)|
+			\mathbb{E}|Y_k| 
+			= \mathbb{E}\left[\left|\mathbb{E}[f(\bm X)|\bm X_1^k]\right|\right] 
+			\leq \mathbb{E}\left[\mathbb{E}[|f(\bm X)||\bm X_1^k] \right]
+			= \mathbb{E}|f(\bm X)|
 			< \infty
 		\end{equation*}
-	\item $\E[Y_{k+1}|\bm X_1^k] = \E\left[\E[f(\bm X)|\bm X_1^{k+1}] \big|\bm X_1^k\right] = \E[f(\bm X) | X_1^k] = Y_k$. 
+	\item $\mathbb{E}[Y_{k+1}|\bm X_1^k] = \mathbb{E}\left[\mathbb{E}[f(\bm X)|\bm X_1^{k+1}] \big|\bm X_1^k\right] = \mathbb{E}[f(\bm X) | X_1^k] = Y_k$. 
 \end{itemize}
-从而$f(\bm X)$和$\E f(\bm X)$的偏差可以表示为鞅差分解
+从而$f(\bm X)$和$\mathbb{E}f(\bm X)$的偏差可以表示为鞅差分解
 \begin{equation*}
-	f(\bm X) - \E f(\bm X) 
+	f(\bm X) - \mathbb{E}f(\bm X) 
 	= Y_n - Y_0 
 	= \sum_{k=1}^n (Y_k - Y_{k-1})
 	=: \sum_{k=1}^n D_k.
@@ -173,7 +170,7 @@
 \begin{theorem}
 	设鞅差序列$\{(D_k, \cF_k)\}_{k=1}^{\infty}$满足次指数条件
 	\begin{equation*}
-		\E \left[ e^{\lambda D_k} | \cF_{k-1} \right] 
+		\mathbb{E}\left[ e^{\lambda D_k} | \cF_{k-1} \right] 
 		\leq e^{\frac{\lambda^2 \nu_k^2}{2}} \text{ a.e. },\; \forall |\lambda| < \frac{1}{\alpha_k}, 
 	\end{equation*}
 	那么
@@ -192,35 +189,33 @@
 \begin{proof}
 	我们首先使用控制鞅差和的标准方法, 对于$|\lambda| < \alpha_*^{-1}$, 
 	\begin{align*}
-		\E\left[ e^{\lambda \sum_k D_k} \right]
-		&= \E\left[ \E\left[ e^{\lambda \sum_k D_k} \bigg| \cF_{n-1} \right] \right] 
-		= \E \left[ e^{\lambda \sum_{k=1}^{n-1} D_k} \E [e^{\lambda D_n} | \cF_{n-1}] \right] \\
-		&\leq \E \left[ e^{\lambda \sum_{k=1}^{n-1} D_k} \right]  e^{\frac{\lambda^2 \nu_n^2}{2}} 
+		\mathbb{E}\left[ e^{\lambda \sum_k D_k} \right]
+		&= \mathbb{E}\left[ \mathbb{E}\left[ e^{\lambda \sum_k D_k} \bigg| \cF_{n-1} \right] \right] 
+		= \mathbb{E}\left[ e^{\lambda \sum_{k=1}^{n-1} D_k} \mathbb{E}[e^{\lambda D_n} | \cF_{n-1}] \right] \\
+		&\leq \mathbb{E}\left[ e^{\lambda \sum_{k=1}^{n-1} D_k} \right]  e^{\frac{\lambda^2 \nu_n^2}{2}} 
 		\leq \cdots
 		\leq e^{\lambda^2 \sum_k \nu^2 / 2}
 	\end{align*}
 	于是$\sum_k D_k$是次指数随机变量, 再沿用Chernoff方法, 可以得到集中不等式. 
 \end{proof}
 
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{熵方法}
 设随机变量$X \sim \mathbb{P}$, 给定凸函数$\Phi \colon \R \to \R$, 若$X$和$\Phi(X)$的期望存在, 则概率分布空间上的泛函
 \begin{equation*}
-	\cH_\Phi(X) := \E \Phi(X) - \Phi(\E X) \geq 0, 
+	\cH_\Phi(X) := \mathbb{E}\Phi(X) - \Phi(\mathbb{E}X)  
 \end{equation*}
-称为$X$的$\Phi$熵. 
+称为$X$的$\Phi$熵.
+由Jensen不等式易见$\cH \geq 0$.
 这样的泛函可以衡量随机变量随机性的大小: 
 \begin{itemize}
 	\item 若$X = C$ a.e., 那么$\cH_\Phi (X) = 0$; 
-	\item 特别地, 取$\Phi(u) = u^2$时, 此时熵$\cH_\Phi(X) = \E X^2 - (\E X)^2$就是方差. 根据Chebyshev不等式, 我们可以利用方差熵来控制尾部概率; 
+	\item 特别地, 取$\Phi(u) = u^2$时, 此时熵$\cH_\Phi(X) = \mathbb{E}X^2 - (\mathbb{E}X)^2$就是方差. 根据Chebyshev不等式, 我们可以利用方差熵来控制尾部概率; 
 	\item 此外, 取$\Phi(u) = - \log u$, 随机变量$Z = e^{\lambda X}$时, 
 		\begin{equation*}
 			\cH_\Phi(Z) 
-			= - \lambda \E X + \log \E[e^{\lambda X}] 
-			= \log \E[e^{\lambda(X - \E X)}], 
+			= - \lambda \mathbb{E}X + \log \mathbb{E}[e^{\lambda X}] 
+			= \log \mathbb{E}[e^{\lambda(X - \mathbb{E}X)}], 
 		\end{equation*}
 		这样的熵对应的是中心化的矩母函数, 可以利用这样的熵来计算尾部概率的Chernoff界. 
 \end{itemize}
@@ -235,10 +230,10 @@
 诱导的熵: 
 \begin{equation}\label{eq:EntropyByMGF}
 	\cH(e^{\lambda X}) 
-	= \lambda \E[ X e^{\lambda X}] - \E[e^{\lambda X}] \log \E[e^{\lambda X}]
+	= \lambda \mathbb{E}[ X e^{\lambda X}] - \mathbb{E}[e^{\lambda X}] \log \mathbb{E}[e^{\lambda X}]
 	= \lambda \varphi_X'(\lambda) - \varphi_X(\lambda) \log \varphi_X(\lambda), 
 \end{equation}
-其中$\varphi_X(\lambda) = \E[e^{\lambda X}]$为矩母函数. 
+其中$\varphi_X(\lambda) = \mathbb{E}[e^{\lambda X}]$为矩母函数. 
 
 \begin{example}[Gauss随机变量的熵]
 	对于$X \sim \cN(\mu, \sigma^2)$, 其矩母函数为$\varphi_X(\lambda) = e^{\lambda^2 \sigma^2 / 2 + \lambda \mu}$, 于是
@@ -249,13 +244,31 @@
 	\end{equation}
 \end{example}
 
+\begin{theorem}[熵的变分表示]
+	\begin{equation}\label{eq:VariationalRepresentationForEntropy}
+		\cH(e^{\lambda f(X)})
+		= \sup_g \left\{ \mathbb{E} \left[g(X) e^{\lambda f(X)} \right] \colon \E [e^{g(X)}] \leq 1 \right\}
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	考虑测度$\P^g[A] = \E^g [\mathbb{I}_A] := \mathbb{E}[e^{g(X)}; A]$, 此时期望的Jensen不等式依然成立. 
+	一方面, 我们有
+	\begin{align*}
+		&\cH(e^{\lambda f(X)}) - \E[g(X) e^{\lambda f(X)}]
+		= \E \left[ (\lambda f(X) - g(X)) e^{\lambda f(X)} \right] - \E[ e^{\lambda f(X)}] \log \E[ e^{\lambda f(X)}] \\
+		=& \E^g  \left[ (\lambda f(X) - g(X)) e^{\lambda f(X) - g(X)} \right] - \E^g[ e^{\lambda f(X) - g(X)}] \log \E^g[ e^{\lambda f(X) - g(X)}] \\
+		=& \cH^g(e^{\lambda f(X) - g(X)}) \geq 0. 
+	\end{align*}
+	另一方面, 容易验证$g(x) = \lambda f(x) - \log \E[e^{\lambda f(X)}]$使得等式成立. 
+\end{proof}
+
 \subsubsection{Herbst方法}
 
 和次高斯随机变量的想法类似, 如果$e^{\lambda X}$的熵能被Gauss随机变量的熵所控制, 相应的矩母函数、尾部概率也会被控制.
 \begin{theorem}[Herbst方法]\label{thm:HerbstArgument}
 	若对任意的$\lambda \in I$ (这里$I$取$[0, \infty)$或者$\R$)总有熵$\cH(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \varphi_X(\lambda)$, 那么
 	\begin{equation*}
-		\E\left[e^{\lambda(X - \E X)}\right] 
+		\mathbb{E}\left[e^{\lambda(X - \mathbb{E}X)}\right] 
 		\leq \exp \left( \frac{\lambda^2 \sigma^2}{2} \right),\; 
 		\forall \lambda \in I. 
 	\end{equation*}
@@ -270,8 +283,8 @@
 	当$\lambda > 0$时, 对任意的$0 < \lambda_0 < \lambda$, 在区间$[\lambda_0, \lambda]$上积分有$G(\lambda) - G(\lambda_0) \leq \frac{\sigma^2 (\lambda - \lambda_0)}{2}$. 
 	再令$\lambda_0 \to 0^+$有
 	\begin{equation*}
-		\log \E\left[e^{\lambda(X - \E X)}\right]
-		= \lambda(G(\lambda) - \E X)
+		\log \mathbb{E}\left[e^{\lambda(X - \mathbb{E}X)}\right]
+		= \lambda(G(\lambda) - \mathbb{E}X)
 		\leq \frac{\lambda^2 \sigma^2}{2} ,\; 
 		\forall \lambda \geq 0. 
 	\end{equation*}
@@ -280,7 +293,7 @@
 		G(0) 
 		= \lim_{\lambda \to 0} G(\lambda) 
 		= \lim_{\lambda \to 0} \frac{\varphi_X'(\lambda)}{\varphi_X(\lambda)}
-		= \E X. 
+		= \mathbb{E}X. 
 	\end{equation*}
 	类似的, 我们可以证明目标不等式在$\lambda \leq 0$时成立. 
 \end{proof}
@@ -290,12 +303,12 @@
 	若存在正常数$b$, $\sigma$使得
 	\begin{equation*}
 		\cH(e^{\lambda X}) 
-		\leq \lambda^2 \left[ b \varphi_X'(\lambda) + \varphi_X(\lambda)(\sigma^2 - b \E X) \right],\;
+		\leq \lambda^2 \left[ b \varphi_X'(\lambda) + \varphi_X(\lambda)(\sigma^2 - b \mathbb{E}X) \right],\;
 		\forall \lambda \in [0, 1/b), 
 	\end{equation*}
 	那么$X$满足上界
 	\begin{equation*}
-		\log \E \left[ e^{\lambda(X - \E X)}\right] 
+		\log \mathbb{E}\left[ e^{\lambda(X - \mathbb{E}X)}\right] 
 		\leq \sigma^2 \lambda^2 (1 - b \lambda)^{-1},\; 
 		\forall \lambda \in [0, 1/b). 
 	\end{equation*}
@@ -304,17 +317,17 @@
 	类似地, 命题中的条件意味着
 	\begin{equation*}
 		G'(\lambda) 
-		\leq \sigma^2 - b \E X + b \cdot \frac{\varphi_X'(\lambda)}{\varphi_X(\lambda)}. 
+		\leq \sigma^2 - b \mathbb{E}X + b \cdot \frac{\varphi_X'(\lambda)}{\varphi_X(\lambda)}. 
 	\end{equation*}
 	在任意的区间$[\lambda_0, \lambda] \subseteq (0, 1/b)$上积分有
 	\begin{equation*}
 		G(\lambda) - G(\lambda_0) 
-		\leq (\sigma^2 - b \E X)(\lambda - \lambda_0) + b(\log \varphi_X(\lambda) - \log \varphi_X(\lambda_0)). 
+		\leq (\sigma^2 - b \mathbb{E}X)(\lambda - \lambda_0) + b(\log \varphi_X(\lambda) - \log \varphi_X(\lambda_0)). 
 	\end{equation*}
-	再令$\lambda_0 \to 0^+$有$G(\lambda) - \E X \leq \lambda \sigma^2 + b \lambda (G(\lambda) - \E X)$, 于是
+	再令$\lambda_0 \to 0^+$有$G(\lambda) - \mathbb{E}X \leq \lambda \sigma^2 + b \lambda (G(\lambda) - \mathbb{E}X)$, 于是
 	\begin{equation*}
-		\log \E\left[e^{\lambda(X - \E X)}\right]
-		= \lambda(G(\lambda) - \E X)
+		\log \mathbb{E}\left[e^{\lambda(X - \mathbb{E}X)}\right]
+		= \lambda(G(\lambda) - \mathbb{E}X)
 		\leq \frac{\lambda^2 \sigma^2}{1 - b \lambda} ,\; 
 		\forall \lambda \in [0, 1/b). 
 	\end{equation*}
@@ -322,7 +335,7 @@
 \begin{corollary}
 	利用Chernoff方法, 命题 \ref{thm:BernsteinEntropyBd} 中的熵条件意味着$X$满足上偏差不等式
 	\begin{equation*}
-		\mathbb{P}[X \geq \E X + t] 
+		\mathbb{P}[X \geq \mathbb{E}X + t] 
 		\leq \exp \left(- \frac{t^2}{4 \sigma^2 + 2b t} \right),\;
 		\forall t \geq 0. 
 	\end{equation*}
@@ -331,8 +344,6 @@
 \subsubsection{熵的张量化}
 
 由于独立随机变量的联合分布是边缘分布的张量积, 于是对于一些“性质良好”的函数, 可以计算每个随机变量对函数的贡献得到随机变量的函数熵的界. 
-
-
 这里我们讨论的函数是\emph{可分凸函数}: 称函数$f \colon \R^n \to \R$是可分凸的, 如果对任意指标$k \in \{1, \dots, n\}$, 给定向量$\bm x_{\backslash k} := (x_1, \dots, x_{k-1}, x_{k+1}, \dots x_n) \in \R^{n-1}$, 单变量函数
 \begin{equation*}
 	y_k \mapsto f(x_1, \dots x_{k-1}, y_k, x_{k+1}, \dots x_n)
@@ -344,26 +355,37 @@
 	设$f \colon \R^n \to \R$, $\{X_i\}_{i=1}^n$为独立随机变量, 那么
 	\begin{equation*}
 		\cH\left(e^{\lambda f(X_1, \cdots, X_n)}\right)
-		\leq \E \left[ \sum_{k=1}^n \cH \left(e^{\lambda f_k(X_k)} \big| \bm X_k \right) \right],\; 
+		\leq \mathbb{E}\left[ \sum_{k=1}^n \cH \left(e^{\lambda f_k(X_{\backslash k})} \big| \bm X_k \right) \right],\; 
 		\forall \lambda > 0. 
 	\end{equation*}
 \end{lemma}
 \begin{proof}
-	
+	考虑满足$\E[e^{g(\bm X)}] \leq 1$的函数$g$, 定义函数序列$\{g^1, \dots, g^n\}$如下: 
+	\begin{align*}
+		g^1(\bm X_1^n) &:= g(\bm X) - \log \E[e^{g(\bm X)} | \bm X_2^n], \\
+		g^k(\bm X_k^n) &:= \log \E[e^{g(\bm X)} | \bm X_k^n] - \log \E[e^{g(\bm X)} | \bm X_{k+1}^n], \; k = 2,3, \dots n. 
+	\end{align*}
+	于是$\sum_{k=1}^n g^k(\bm X_k^n) = g(\bm X) - \log \E[ e^{g(\bm X)} ] \geq g(\bm X)$, $\E \left[ \exp(g^k(\bm X_k^n)) |X_{k+1}^n \right] = 1$. 
+	利用这一分解和方差的变分表示 \eqref{eq:VariationalRepresentationForEntropy}, 可以得到
+	\begin{align*}
+		\E [ g(\bm X) e^{\lambda f(\bm X)}]
+		&\leq \sum_{k=1}^n \E[ g^k(\bm X_k^n) e^{\lambda f(\bm X)} ] 
+		= \sum_{k=1}^n \E_{\bm X_{\backslash k}} \left[ \E[ g^k(\bm X_k^n) e^{\lambda f(\bm X)} ] | \bm X_{\backslash k} \right] \\
+		&\leq 
+	\end{align*}
 \end{proof}
-
 
 \begin{theorem}
 	令$\{X_i\}_{i=1}^n$为区间$[a, b]$上的独立随机变量, $f \colon \R^n \to \R$为可分凸函数且关于$2$范数为$L$-Lipschitz的, 那么对任意$t \geq 0$, 成立
 	\begin{equation*}
-		\mathbb{P}[f(X) \geq \E f(X) + t] 
+		\mathbb{P}[f(\bm X) \geq \mathbb{E}f(\bm X) + t] 
 		\leq \exp \left( - \frac{t^2}{4L^2 (b-a)^2} \right). 
 	\end{equation*}
 \end{theorem}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{集中的几何观点}
+\subsection{几何观点}
 
 \subsubsection{经典等周不等式}
 
@@ -437,19 +459,19 @@ Minkowski将空间的向量加法这一代数结构同凸体的体积这一几�
 \begin{theorem}
 	若存在函数$\beta \colon \R^* \to [0, 1]$使得对任意的$(\mathcal{X}, \rho)$上的$1$-Lipschitz函数都有
 	\begin{equation*}
-		\mathbb{P}[f(X) \geq \E f(X) + \epsilon] \leq \beta(\epsilon),\; \forall \epsilon \geq 0, 
+		\mathbb{P}[f(X) \geq \mathbb{E}f(X) + \epsilon] \leq \beta(\epsilon),\; \forall \epsilon \geq 0, 
 	\end{equation*}
 	那么$\alpha_{\mathbb{P}}(\epsilon) \leq \beta(\epsilon / 2)$. 
 \end{theorem}
 \begin{proof}
 	对任意$\mathcal{X}$中满足$\mathbb{P}[A] \geq 1/2$的可测集$A$, 构造$f_A(x) := \rho(x, A) \wedge \epsilon$. 
-	注意到在$A$上有$f_A = 0$, 在$A$外有$f_A \leq \epsilon$, 所以$\E f_A(X) \leq \epsilon (1 - \mathbb{P}[A]) \leq \epsilon / 2$. 
+	注意到在$A$上有$f_A = 0$, 在$A$外有$f_A \leq \epsilon$, 所以$\mathbb{E}f_A(X) \leq \epsilon (1 - \mathbb{P}[A]) \leq \epsilon / 2$. 
 	于是我们有
 	\begin{equation*}
 		1 - \mathbb{P}[A^\epsilon]
 		= \mathbb{P}[X \in \bar A^{\epsilon}]
 		= \mathbb{P}[f_A(X) \geq \epsilon] 
-		\leq \mathbb{P}\left[f_A(X) \geq \E f_A(X) + \frac{\epsilon}{2}\right]
+		\leq \mathbb{P}\left[f_A(X) \geq \mathbb{E}f_A(X) + \frac{\epsilon}{2}\right]
 		\leq \beta\left( \frac{\epsilon}{2} \right),  
 	\end{equation*}
 	再对满足条件$\mathbb{P}[A] \geq 1/2$的$A$取上确界即可. 
@@ -463,23 +485,18 @@ Minkowski将空间的向量加法这一代数结构同凸体的体积这一几�
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Wasserstein距离和信息不等式}
-
-
+\subsection{信息不等式}
 
 给定$(\mathcal{X}, \rho)$上的两个概率分布$\mathbb{Q}$和$\mathbb{P}$, 它们之间的\emph{Wasserstein距离}为
 \begin{equation*}
 	W_{\rho}(\mathbb{Q}, \mathbb{P}) 
-	:= \sup_{\|f\|_{Lip} \leq 1} \left[ \E_{\mathbb{Q}} f - \E_{\mathbb{P}} f \right]
+	:= \sup_{\|f\|_{Lip} \leq 1} \left[ \mathbb{E}_{\mathbb{Q}} f - \mathbb{E}_{\mathbb{P}} f \right]
 	= \sup_{\|f\|_{Lip} \leq 1} \int f (\dd \mathbb{Q} - \dd \mathbb{P}). 
 \end{equation*}
 可以证明这样的$W_{\rho}$构成了一个度量: 
 存在满足$\|f\|_{Lip} \leq 1$的$f$使得$W_{\rho}(\mathbb{Q}, \mathbb{P}) = \int f (\dd \mathbb{Q} - \dd \mathbb{P})$, 于是$W_{\rho}(\mathbb{P}, \mathbb{Q}) \geq \int (-f) (\dd \mathbb{P} - \dd \mathbb{Q}) = W_{\rho}(\mathbb{Q}, \mathbb{P})$. 
 类似地, 还有$W_{\rho}(\mathbb{Q}, \mathbb{P}) \geq W_{\rho}(\mathbb{P}, \mathbb{Q})$, 从而二者相等. 
 我们将其称为$\rho$诱导的Wasserstein度量. 
-
-Wasserstein距离
-
 
 \begin{example}[Hamming度量和全变差距离]
 	关于Hamming度量的Wasserstein距离$W_{Ham}(\mathbb{Q}, \mathbb{P})$等价于全变差距离$\|\mathbb{Q} - \mathbb{P}\|_{TV} := \sup_{A \subseteq \mathcal{X}} |\mathbb{Q}(A) - \mathbb{P}(A)|$. 
@@ -504,7 +521,7 @@ Wasserstein距离
 \subsubsection{Kantorovich–Rubinstein对偶}
 
 \begin{equation*}
-	\inf_{\M \in \mathbb{P}i(\mathbb{Q}, \mathbb{P})} \E_{\M} \left[ \rho(X, X') \right]
+	\inf_{\M \in \mathbb{P}i(\mathbb{Q}, \mathbb{P})} \mathbb{E}_{\M} \left[ \rho(X, X') \right]
 	= \inf_{\M \in \mathbb{P}i(\mathbb{Q}, \mathbb{P})} \int_{\mathcal{X} \times \mathcal{X}} \rho(x, x') \dd \M(x, x'). 
 \end{equation*}
 
@@ -513,7 +530,7 @@ Wasserstein距离
 给定$(\mathcal{X}, \rho)$上的分布$\mathbb{Q} \ll \mathbb{P}$, 它们之间的Kullback–Leibler散度(相对熵)定义为
 \begin{equation}
 	D(\mathbb{Q} \| \mathbb{P})
-	:= \E_{\mathbb{Q}} \left[ \log \frac{\dd \mathbb{Q}}{\dd \mathbb{P}} \right]
+	:= \mathbb{E}_{\mathbb{Q}} \left[ \log \frac{\dd \mathbb{Q}}{\dd \mathbb{P}} \right]
 	= \int_{\mathcal{X}} q(x) \log \frac{q(x)}{p(x)} \nu(\dd x), 
 \end{equation}
 其中$q, p$为$\mathbb{Q}, \mathbb{P}$的密度, $\nu$为$\mathcal{X}$上的Lebesgue测度. 
@@ -592,7 +609,7 @@ Wasserstein距离
 	\end{equation*}
 	那么对任意$\delta \geq 0$, 成立
 	\begin{equation}
-		\P[ Z \geq \E Z + \delta] 
+		\P[ Z \geq \mathbb{E}Z + \delta] 
 		\leq \exp \left( - \frac{n \delta^2}{4 L^2} \right), 
 	\end{equation}
 	其中$L^2 = \sup_{f \in \cF} \left\{ \frac{1}{n} \sum_i (b_{i, f} - a_{i, f})^2 \right\}$. 
