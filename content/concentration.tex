@@ -141,7 +141,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{鞅方法}
 
-之前我们讨论了独立随机变量和$f(X_1, \dots, X_n) = \sum_i X_i$的一些尾概率界. 对于更一般的函数$f$，经典的求尾概率界方法是鞅的分解. 
+之前我们讨论了独立随机变量和$f(X_1, \dots, X_n) = \sum_i X_i$的一些尾概率界. 对于更一般的函数$f$，建立尾概率界的经典方法方法是鞅的分解. 
 
 设$\{X_k\}_{k=1}^n$为一列独立随机变量, 记$\bm X = (X_1, \dots, X_n)$, $\bm X_1^k = (X_1, \dots, X_k)$. 
 对于函数$f \colon \R^n \to \R$, 考虑随机变量序列$Y_0 = \mathbb{E}f(\bm X)$, $Y_k = \mathbb{E}[f(\bm X)|\bm X_1^k]$, $k = 1, \dots, n$. 
@@ -244,10 +244,10 @@
 	\end{equation}
 \end{example}
 
-\begin{theorem}[熵的变分表示]
+\begin{theorem}[熵的变分表示]\label{thm:VariationalRepresentationForEntropy}
 	\begin{equation}\label{eq:VariationalRepresentationForEntropy}
 		\cH(e^{\lambda f(X)})
-		= \sup_g \left\{ \mathbb{E} \left[g(X) e^{\lambda f(X)} \right] \colon \E [e^{g(X)}] \leq 1 \right\}
+		= \sup_{g \colon \E [e^{g(X)}] \leq 1} \left\{ \mathbb{E} \left[g(X) e^{\lambda f(X)} \right] \right\}
 	\end{equation}
 \end{theorem}
 \begin{proof}
@@ -343,37 +343,58 @@
 
 \subsubsection{熵的张量化}
 
-由于独立随机变量的联合分布是边缘分布的张量积, 于是对于一些“性质良好”的函数, 可以计算每个随机变量对函数的贡献得到随机变量的函数熵的界. 
+由于独立随机变量的联合分布是边缘分布的张量积, 可以计算每个随机变量对函数的贡献得到随机变量的函数熵的界\footnote{最为经典的例子是独立随机变量和的方差熵是随机变量的方差和.}, 这种方法被称为\emph{熵的张量化}.
+
+
+具体地, 设$f \colon \R^n \to \R$, $\bm X = (X_1, \dots, X_n)$为独立随机变量构成的随机向量, 我们在保持$\bm X_{\backslash k}$不变的同时, 计算关于$X_k$的\emph{逐坐标条件熵}(次可加性)
+\begin{equation*}
+	\cH_k ( e^{\lambda f(\bm X)} )
+	:= \cH ( e^{\lambda f(\bm X)} | \bm X_{\backslash k} ). 
+\end{equation*}
+不难看出这是$\bm X_{\backslash k}$的函数, 它的期望就是
+
+\begin{lemma}[熵的张量化]\label{lemma:EntropyTensorization}
+	在上述的假设和记号下, 
+	\begin{equation*}
+		\cH(e^{\lambda f(\bm X)})
+		\leq \mathbb{E}\left[ \sum_{k=1}^n \cH_k (e^{\lambda f(\bm X)}) \right],\; 
+		\forall \lambda > 0. 
+	\end{equation*}
+\end{lemma}
+\begin{proof}
+	考虑满足$\E[e^{g(\bm X)}] \leq 1$的函数$g$, 定义函数序列$\{g^1, \dots, g^n\}$: 
+	\begin{align*}
+		g^k(\bm X_k^n) &:= \log \E[e^{g(\bm X)} | \bm X_k^n] - \log \E[e^{g(\bm X)} | \bm X_{k+1}^n]. 
+	\end{align*}
+	于是$\sum_{k=1}^n g^k(\bm X_k^n) = g(\bm X) - \log \E[ e^{g(\bm X)} ] \geq g(\bm X)$, 利用这一分解可得
+	\begin{equation*}
+		\E [ g(\bm X) e^{\lambda f(\bm X)}]
+		\leq \sum_{k=1}^n \E[ g^k(\bm X_k^n) e^{\lambda f(\bm X)} ] 
+		= \sum_{k=1}^n \E \left[ \E[ g^k(\bm X_k^n) e^{\lambda f(\bm X)} | \bm X_{\backslash k} ] \right]. 
+	\end{equation*}
+	条件随机变量$g^k(\bm X_k^n)| \bm X_{\backslash k}$的期望满足
+	\begin{equation*}
+		\E \left[ g^k(\bm X_k^n) | \bm X_{\backslash k} \right]
+		\geq \log \E \left[ \exp(g^k(\bm X_k^n)) |\bm X_{k+1}^n \right] = 0. 
+	\end{equation*}
+	
+	$\E \left[ \exp(g^k(\bm X_k^n)) |\bm X_{k+1}^n \right] = 1$. 
+	
+	$\E \left[ g^k(\bm X_k^n) | \bm X_{\backslash k} \right] = 1$
+	
+	
+	
+	定理\ref{thm:VariationalRepresentationForEntropy}, 可以得到
+	
+	再对左侧满足条件的$g$取上确界可知引理成立. 
+\end{proof}
+
 这里我们讨论的函数是\emph{可分凸函数}: 称函数$f \colon \R^n \to \R$是可分凸的, 如果对任意指标$k \in \{1, \dots, n\}$, 给定向量$\bm x_{\backslash k} := (x_1, \dots, x_{k-1}, x_{k+1}, \dots x_n) \in \R^{n-1}$, 单变量函数
 \begin{equation*}
 	y_k \mapsto f(x_1, \dots x_{k-1}, y_k, x_{k+1}, \dots x_n)
 \end{equation*}
 总是凸函数. 
 凸函数总是可分凸的. 
-
-\begin{lemma}[熵的张量化]
-	设$f \colon \R^n \to \R$, $\{X_i\}_{i=1}^n$为独立随机变量, 那么
-	\begin{equation*}
-		\cH\left(e^{\lambda f(X_1, \cdots, X_n)}\right)
-		\leq \mathbb{E}\left[ \sum_{k=1}^n \cH \left(e^{\lambda f_k(X_{\backslash k})} \big| \bm X_k \right) \right],\; 
-		\forall \lambda > 0. 
-	\end{equation*}
-\end{lemma}
-\begin{proof}
-	考虑满足$\E[e^{g(\bm X)}] \leq 1$的函数$g$, 定义函数序列$\{g^1, \dots, g^n\}$如下: 
-	\begin{align*}
-		g^1(\bm X_1^n) &:= g(\bm X) - \log \E[e^{g(\bm X)} | \bm X_2^n], \\
-		g^k(\bm X_k^n) &:= \log \E[e^{g(\bm X)} | \bm X_k^n] - \log \E[e^{g(\bm X)} | \bm X_{k+1}^n], \; k = 2,3, \dots n. 
-	\end{align*}
-	于是$\sum_{k=1}^n g^k(\bm X_k^n) = g(\bm X) - \log \E[ e^{g(\bm X)} ] \geq g(\bm X)$, $\E \left[ \exp(g^k(\bm X_k^n)) |X_{k+1}^n \right] = 1$. 
-	利用这一分解和方差的变分表示 \eqref{eq:VariationalRepresentationForEntropy}, 可以得到
-	\begin{align*}
-		\E [ g(\bm X) e^{\lambda f(\bm X)}]
-		&\leq \sum_{k=1}^n \E[ g^k(\bm X_k^n) e^{\lambda f(\bm X)} ] 
-		= \sum_{k=1}^n \E_{\bm X_{\backslash k}} \left[ \E[ g^k(\bm X_k^n) e^{\lambda f(\bm X)} ] | \bm X_{\backslash k} \right] \\
-		&\leq 
-	\end{align*}
-\end{proof}
 
 \begin{theorem}
 	令$\{X_i\}_{i=1}^n$为区间$[a, b]$上的独立随机变量, $f \colon \R^n \to \R$为可分凸函数且关于$2$范数为$L$-Lipschitz的, 那么对任意$t \geq 0$, 成立
