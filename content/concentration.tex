@@ -262,6 +262,42 @@
 	另一方面, 容易验证$g(x) = \lambda f(x) - \log \E[e^{\lambda f(X)}]$使得等式成立. 
 \end{proof}
 
+使用独立复制的方法可以对单变量函数熵的界做如下估计. 
+\begin{lemma}[单变量函数熵的界]\label{lemma:EntropyBoundForUnivariateFunctions}
+	设独立随机变量$X, Y \sim \P$, 对任意函数$g \colon \R \to \R$, 我们有
+	\begin{equation}\label{eq:EntropyBoundForUnivariateFunctions}
+		\cH(e^{\lambda g(X)})
+		\leq \lambda^2 \E[ (g(X) - g(Y))^2 e^{\lambda g(X)}; g(X) \geq g(Y) ], \quad \forall \lambda > 0.
+	\end{equation}
+	特别地, 当$X$支撑集为$[a, b]$, $g$为凸的Lipschitz函数时, 我们有
+	\begin{equation*}
+		\cH(e^{\lambda g(X)}) 
+		\leq \lambda^2 (b-a)^2 \E[(g'(X))^2 e^{\lambda g(X)}], \quad \forall \lambda > 0.
+	\end{equation*}
+\end{lemma}
+\begin{proof}
+	由Jensen不等式, 不难得出
+	\begin{equation*}
+		\cH(e^{\lambda g(X)})
+		= \E[\lambda g(X) e^{\lambda g(X)}] - \E[e^{\lambda g(X)}] \log \E[e^{\lambda g(Y)}] 
+		\leq \E[\lambda g(X) e^{\lambda g(X)}] - \E[\lambda g(X) e^{\lambda g(Y)}].
+	\end{equation*}
+	再利用$X$和$Y$的对称性, 
+	\begin{align*}
+		\cH(e^{\lambda g(X)})
+		&\leq \lambda \E[ g(X) (e^{\lambda g(X)}-  e^{\lambda g(Y)})] 
+		= - \lambda \E[ g(Y) (e^{\lambda g(X)}-  e^{\lambda g(Y)})] \\
+		&= \frac{\lambda}{2} \E\left[(g(X) - g(Y)) (e^{\lambda g(X)} - e^{\lambda g(Y)})\right] \\
+		&= \lambda \E\left[(g(X) - g(Y)) (e^{\lambda g(X)} - e^{\lambda g(Y)}); g(X) \geq g(Y) \right].
+	\end{align*}
+	而在$\{g(X) \geq g(Y)\}$, $\lambda > 0$时, 有$e^{\lambda g(X)} - e^{\lambda g(Y)} \leq \lambda(g(X) - g(Y)) e^{\lambda g(X)}$, 从而\eqref{eq:EntropyBoundForUnivariateFunctions}成立. 
+	进一步地, 当$g$为凸的Lipschitz函数时, 由Rademacher定理\ref{thm:Rademacher}, $g'$几乎处处存在. 
+	于是在$\{g(X) \geq g(Y)\}$, $\lambda > 0$, $X$支撑集为$[a, b]$的条件下,
+	\begin{equation*}
+		(g(X) - g(Y))^2 \leq (g'(X))^2 (X-Y)^2 \leq (b-a)^2 (g'(X))^2 \quad \text{a.s.}.
+	\end{equation*}
+\end{proof}
+
 \subsubsection{Herbst方法}
 
 和次高斯随机变量的想法类似, 如果$e^{\lambda X}$的熵能被Gauss随机变量的熵所控制, 相应的矩母函数、尾部概率也会被控制.
@@ -343,10 +379,10 @@
 
 \subsubsection{熵的张量化}
 
-由于独立随机变量的联合分布是边缘分布的张量积, 可以计算每个随机变量对函数的贡献得到随机变量的函数熵的界\footnote{最为经典的例子是独立随机变量和的方差熵是随机变量的方差和.}, 这种方法被称为\emph{熵的张量化}.
+由于独立随机变量的联合分布是边缘分布的张量积, 可以计算每个随机变量对函数的贡献得到随机变量的函数熵的界\footnote{最为经典的例子是独立随机变量和的方差熵是随机变量的方差和.}, 这种方法被称为\emph{熵的张量化}.(次可加性)
 
 
-具体地, 设$f \colon \R^n \to \R$, $\bm X = (X_1, \dots, X_n)$为独立随机变量构成的随机向量, 我们在保持$\bm X_{\backslash k}$不变的同时, 计算关于$X_k$的\emph{逐坐标条件熵}(次可加性)
+具体地, 设$f \colon \R^n \to \R$, $\bm X = (X_1, \dots, X_n)$为独立随机变量构成的随机向量, 我们在保持$\bm X_{\backslash k}$不变的同时, 计算关于$X_k$的\emph{逐坐标条件熵}
 \begin{equation*}
 	\cH_k ( e^{\lambda f(\bm X)} )
 	:= \cH ( e^{\lambda f(\bm X)} | \bm X_{\backslash k} ). 
@@ -382,27 +418,45 @@
 	
 	$\E \left[ g^k(\bm X_k^n) | \bm X_{\backslash k} \right] = 1$
 	
+	%------
+	\sp 
+	$\bm X = (X_1, \dots, X_n)$为独立随机变量构成的随机向量,记$\bm X_k^n = (X_k, \dots, X_n)$, $\bm X_{\backslash k} = (X_1, \dots, X_{k-1}, X_{k+1}, \dots, X_n)$. 
+	考虑满足$\E[e^{g(\bm X)}] \leq 1$的函数$g$, 定义函数序列$\{g^1, \dots, g^n\}$: 
+	\begin{align*}
+		g^k(\bm X_k^n) &:= \log \E[e^{g(\bm X)} | \bm X_k^n] - \log \E[e^{g(\bm X)} | \bm X_{k+1}^n]. 
+	\end{align*}
+	说明$\E \left[ g^k(\bm X_k^n) | \bm X_{\backslash k} \right] =1$
 	
-	
-	定理\ref{thm:VariationalRepresentationForEntropy}, 可以得到
-	
-	再对左侧满足条件的$g$取上确界可知引理成立. 
+	由定理\ref{thm:VariationalRepresentationForEntropy}, 对左侧满足条件的$g$取上确界可知引理成立. 
 \end{proof}
 
-这里我们讨论的函数是\emph{可分凸函数}: 称函数$f \colon \R^n \to \R$是可分凸的, 如果对任意指标$k \in \{1, \dots, n\}$, 给定向量$\bm x_{\backslash k} := (x_1, \dots, x_{k-1}, x_{k+1}, \dots x_n) \in \R^{n-1}$, 单变量函数
+特别地, 熵的张量化在处理\emph{可分凸函数}时, 可以得到很好的结论. 
+称函数$f \colon \R^n \to \R$是可分凸的, 如果对任意指标$k \in \{1, \dots, n\}$, 给定向量$\bm x_{\backslash k} := (x_1, \dots, x_{k-1}, x_{k+1}, \dots x_n) \in \R^{n-1}$, 单变量函数
 \begin{equation*}
 	y_k \mapsto f(x_1, \dots x_{k-1}, y_k, x_{k+1}, \dots x_n)
 \end{equation*}
 总是凸函数. 
 凸函数总是可分凸的. 
 
-\begin{theorem}
+\begin{proposition}
 	令$\{X_i\}_{i=1}^n$为区间$[a, b]$上的独立随机变量, $f \colon \R^n \to \R$为可分凸函数且关于$2$范数为$L$-Lipschitz的, 那么对任意$t \geq 0$, 成立
 	\begin{equation*}
 		\mathbb{P}[f(\bm X) \geq \mathbb{E}f(\bm X) + t] 
 		\leq \exp \left( - \frac{t^2}{4L^2 (b-a)^2} \right). 
-	\end{equation*}
-\end{theorem}
+	\end{equation*}	
+\end{proposition}
+\begin{proof}
+	对于$\lambda > 0$, 由引理\ref{lemma:EntropyTensorization}、 \ref{lemma:EntropyBoundForUnivariateFunctions}, 
+	\begin{align*}
+		\cH(e^{\lambda f(\bm X)})
+		&\leq \mathbb{E}\left[ \sum_{k=1}^n \cH_k (e^{\lambda f(\bm X)}) \right]
+		\leq \lambda^2 (b-a)^2  \mathbb{E}\left[ \sum_{k=1}^n \E_k\left[ \left(\frac{\partial f(\bm X)}{\partial X_k} \right)^2 e^{\lambda f(\bm X)}\right] \right] \\
+		&= \lambda^2 (b-a)^2  \mathbb{E}\left[ \sum_{k=1}^n \left(\frac{\partial f(\bm X)}{\partial X_k} \right)^2 e^{\lambda f(\bm X)}\right]
+		\leq \lambda^2 (b-a)^2 L^2 \E[e^{\lambda f(\bm X)}]. 
+	\end{align*}
+	再由Herbst方法(定理\ref{thm:HerbstArgument})有命题成立. 
+\end{proof}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
