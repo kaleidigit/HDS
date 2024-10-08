@@ -13,7 +13,7 @@
 \begin{equation*}
 	\mathbb{E}f(X) 
 		\geq \mathbb{E}\left[f(X); X \geq t \right]
-		\geq \mathbb{E}\left[f(t) \I{X \geq t} \right] 
+		\geq \mathbb{E}\left[f(t) \I{\{X \geq t\}} \right] 
 		= f(t) \cdot \mathbb{P}[X \geq t].
 \end{equation*}
 于是我们有随机变量的\emph{Markov不等式}: 
@@ -76,19 +76,7 @@
 	\mathbb{P}[|X - \mu| \geq t] \leq 2 e^{- \frac{t^2}{2 \sigma^2}},\; \forall t > 0. 
 \end{equation}
 
-直观上, 一个有界随机变量没有无限的尾部, 因此具有集中性质. 
-事实上, 若$X \in [a,b]$ a.e., 那么它是参数为$b-a$的次高斯随机变量. 
-
-\begin{proposition}[Hoeffding界]
-	设$\{X_i\}_{i=1}^n$为均值为$\mu_i$, 参数为$\sigma_i$的独立次高斯随机变量, 我们有
-	\begin{equation}
-		\mathbb{P} \left[ \sum_{i=1}^n (X_i - \mu_i) \geq t \right]
-		\leq \exp \left( - \frac{t^2}{2 \sum_{i=1}^n \sigma_i^2} \right ),\; 
-		\forall t \geq 0.
-	\end{equation}
-\end{proposition}
-
-\begin{theorem}[次高斯随机变量定义的等价性]
+\begin{theorem}[次高斯随机变量的等价定义]
 	对任意均值为$0$的随机变量$X$, 下述几条命题等价: 
 	\begin{enumerate}[label=(\Roman*)]
 		\item 存在常数$\sigma \geq 0$使得
@@ -109,6 +97,44 @@
 			\end{equation*}
 	\end{enumerate}
 \end{theorem}
+
+直观上, 一个有界随机变量没有无限的尾部, 因此它应当是次高斯随机变量. 
+事实上, 我们有如下强结论. 
+\begin{lemma}[有界随机变量的次高斯参数]\label{lemma:SubGaussianParameterOfBddRV}
+	若随机变量$X \in [a, b]$ a.s., 那么它是参数为$\frac{b-a}{2}$的次高斯随机变量. 
+\end{lemma}
+\begin{proof}
+	设随机变量$X_{\lambda}$关于$X$的分布的Radon–Nikodym导数为$\frac{e^{\lambda X}}{\E[e^{\lambda X}]}$. 
+	于是$X_{\lambda} \in [a, b]$ a.s., 从而$\left|X_{\lambda} - \frac{a+b}{2} \right| \leq \frac{b-a}{2}$ a.s., 
+	\begin{equation*}
+		\var X_{\lambda}
+		= \var \left(X_{\lambda} - \frac{a+b}{2} \right) 
+		\leq \E \left[X_{\lambda} - \frac{a+b}{2} \right]^2 
+		\leq \left(\frac{b-a}{2}\right)^2. 
+	\end{equation*}
+	记$\psi(\lambda) := \log \E[e^{\lambda X}]$, 它满足$\psi(0) = 0$, $\psi'(0) = \frac{\E[X e^{\lambda X}]}{\E[e^{\lambda X}]} \big|_{\lambda = 0} = \mu$, 且对任意$\lambda$,  
+	\begin{equation*}
+		\psi''(\lambda) 
+		= \frac{\E[X^2 e^{\lambda X}]}{\E[e^{\lambda X}]} - \left( \frac{\E[X e^{\lambda X}]}{\E[e^{\lambda X}]} \right)^2
+		= \E X_{\lambda}^2 - (\E X_{\lambda})^2
+		= \var X_{\lambda}.  
+	\end{equation*}
+	于是$\psi(\lambda)$的在原点的Taylor展开为$\psi(\lambda) = \lambda \mu + \frac{\lambda^2}{2} \psi''(\xi) \leq \lambda \mu + \frac{\lambda^2}{2} \left(\frac{b-a}{4}\right)^2$. 
+\end{proof}
+
+
+\begin{proposition}[Hoeffding界]
+	设$\{X_i\}_{i=1}^n$为均值为$\mu_i$, 参数为$\sigma_i$的独立次高斯随机变量, 我们有上偏差不等式
+	\begin{equation}
+		\mathbb{P} \left[ \sum_{i=1}^n (X_i - \mu_i) \geq t \right]
+		\leq \exp \left( - \frac{t^2}{2 \sum_{i=1}^n \sigma_i^2} \right ),\; 
+		\forall t \geq 0.
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	
+\end{proof}
+
 
 \subsubsection{次指数随机变量}
 
@@ -187,16 +213,43 @@
 	\end{enumerate}
 \end{theorem}
 \begin{proof}
-	我们首先使用控制鞅差和的标准方法, 对于$|\lambda| < \alpha_*^{-1}$, 
+	我们使用控制鞅差和的标准方法, 对于$|\lambda| < \alpha_*^{-1}$, 
 	\begin{align*}
 		\mathbb{E}\left[ e^{\lambda \sum_k D_k} \right]
 		&= \mathbb{E}\left[ \mathbb{E}\left[ e^{\lambda \sum_k D_k} \bigg| \cF_{n-1} \right] \right] 
 		= \mathbb{E}\left[ e^{\lambda \sum_{k=1}^{n-1} D_k} \mathbb{E}[e^{\lambda D_n} | \cF_{n-1}] \right] \\
 		&\leq \mathbb{E}\left[ e^{\lambda \sum_{k=1}^{n-1} D_k} \right]  e^{\frac{\lambda^2 \nu_n^2}{2}} 
-		\leq \cdots
+		\leq \dots
 		\leq e^{\lambda^2 \sum_k \nu^2 / 2}
 	\end{align*}
 	于是$\sum_k D_k$是次指数随机变量, 再沿用Chernoff方法, 可以得到集中不等式. 
+\end{proof} 
+
+\begin{corollary}[Azuma–Hoeffding]
+	设鞅差序列$\{(D_k, \cF_k)\}_{k=1}^{\infty}$中$D_k \in [a_k, b_k]$ a.s., 我们有集中不等式
+	\begin{equation*}
+		\P \left[ \left| \sum_{k=1}^n D_k \right| \geq t \right]
+		\leq 2 \exp \left(- \frac{2 t^2}{\sum_k (b_k - a_k)^2} \right), 
+		\quad \forall t \geq 0. 
+	\end{equation*}
+\end{corollary}
+\begin{proof}
+	由引理\ref{lemma:SubGaussianParameterOfBddRV}, 条件随机变量$e^{\lambda D_k} | \cF_{k-1}$是参数为$\frac{b_k - a_k}{2}$的次高斯随机变量. 
+	再根据上一证明中控制鞅差和的方法, 不难得到Hoeffding型集中不等式. 
+\end{proof}
+
+称函数$f \colon \R^n \to \R$满足参数为$(L_1, \dots, L_n)$的有界差不等式, 如果对指标$k = 1, \dots, n$成立
+
+\begin{corollary}[有界差不等式]
+	设函数$f \colon \R^n \to \R$满足参数为$(L_1, \dots, L_n)$的有界差不等式, 随机向量$\bm X = (X_1, \dots, X_n)$各分量独立, 我们有集中不等式
+	\begin{equation*}
+		\P[|f(X) - E f(X)| \geq t] 
+		\leq 2 \exp\left( - \frac{2 t^2}{\sum_k L_k^2} \right), 
+		\quad \forall t \geq 0. 
+	\end{equation*}
+\end{corollary}
+\begin{proof}
+	
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -348,6 +401,12 @@
 		\leq \sigma^2 \lambda^2 (1 - b \lambda)^{-1},\; 
 		\forall \lambda \in [0, 1/b). 
 	\end{equation*}
+	进一步地, 由Chernoff方法, $X$满足上偏差不等式
+	\begin{equation*}
+		\mathbb{P}[X \geq \mathbb{E}X + t] 
+		\leq \exp \left(- \frac{t^2}{4 \sigma^2 + 2b t} \right),\;
+		\forall t \geq 0. 
+	\end{equation*}
 \end{proposition}
 \begin{proof}
 	类似地, 命题中的条件意味着
@@ -368,26 +427,18 @@
 		\forall \lambda \in [0, 1/b). 
 	\end{equation*}
 \end{proof}
-\begin{corollary}
-	利用Chernoff方法, 命题 \ref{thm:BernsteinEntropyBd} 中的熵条件意味着$X$满足上偏差不等式
-	\begin{equation*}
-		\mathbb{P}[X \geq \mathbb{E}X + t] 
-		\leq \exp \left(- \frac{t^2}{4 \sigma^2 + 2b t} \right),\;
-		\forall t \geq 0. 
-	\end{equation*}
-\end{corollary}
 
 \subsubsection{熵的张量化}
 
-由于独立随机变量的联合分布是边缘分布的张量积, 可以计算每个随机变量对函数的贡献得到随机变量的函数熵的界\footnote{最为经典的例子是独立随机变量和的方差熵是随机变量的方差和.}, 这种方法被称为\emph{熵的张量化}.(次可加性)
+由于独立随机变量的联合分布是边缘分布的张量积, 我们可以计算每个随机变量对函数的贡献得到随机变量的函数熵的界\footnote{最为经典的例子是独立随机变量和的方差熵是随机变量的方差和.}, 这种被称为\emph{熵的张量化}, 或者说, 熵具有次可加性. 
 
 
-具体地, 设$f \colon \R^n \to \R$, $\bm X = (X_1, \dots, X_n)$为独立随机变量构成的随机向量, 我们在保持$\bm X_{\backslash k}$不变的同时, 计算关于$X_k$的\emph{逐坐标条件熵}
+具体地, 设$f \colon \R^n \to \R$, 随机向量$\bm X = (X_1, \dots, X_n)$各分量独立, 我们在保持$\bm X^{\backslash k}$不变的同时, 计算关于$X_k$的\emph{逐坐标条件熵}
 \begin{equation*}
 	\cH_k ( e^{\lambda f(\bm X)} )
-	:= \cH ( e^{\lambda f(\bm X)} | \bm X_{\backslash k} ). 
+	:= \cH ( e^{\lambda f(\bm X)} | \bm X^{\backslash k} ). 
 \end{equation*}
-不难看出这是$\bm X_{\backslash k}$的函数, 它的期望就是
+不难看出这是$\bm X^{\backslash k}$的函数, 它的期望就是
 
 \begin{lemma}[熵的张量化]\label{lemma:EntropyTensorization}
 	在上述的假设和记号下, 
@@ -406,32 +457,32 @@
 	\begin{equation*}
 		\E [ g(\bm X) e^{\lambda f(\bm X)}]
 		\leq \sum_{k=1}^n \E[ g^k(\bm X_k^n) e^{\lambda f(\bm X)} ] 
-		= \sum_{k=1}^n \E \left[ \E[ g^k(\bm X_k^n) e^{\lambda f(\bm X)} | \bm X_{\backslash k} ] \right]. 
+		= \sum_{k=1}^n \E \left[ \E[ g^k(\bm X_k^n) e^{\lambda f(\bm X)} | \bm X^{\backslash k} ] \right]. 
 	\end{equation*}
-	条件随机变量$g^k(\bm X_k^n)| \bm X_{\backslash k}$的期望满足
+	条件随机变量$g^k(\bm X_k^n)| \bm X^{\backslash k}$的期望满足
 	\begin{equation*}
-		\E \left[ g^k(\bm X_k^n) | \bm X_{\backslash k} \right]
+		\E \left[ g^k(\bm X_k^n) | \bm X^{\backslash k} \right]
 		\geq \log \E \left[ \exp(g^k(\bm X_k^n)) |\bm X_{k+1}^n \right] = 0. 
 	\end{equation*}
 	
 	$\E \left[ \exp(g^k(\bm X_k^n)) |\bm X_{k+1}^n \right] = 1$. 
 	
-	$\E \left[ g^k(\bm X_k^n) | \bm X_{\backslash k} \right] = 1$
+	$\E \left[ g^k(\bm X_k^n) | \bm X^{\backslash k} \right] = 1$
 	
 	%------
 	\sp 
-	$\bm X = (X_1, \dots, X_n)$为独立随机变量构成的随机向量,记$\bm X_k^n = (X_k, \dots, X_n)$, $\bm X_{\backslash k} = (X_1, \dots, X_{k-1}, X_{k+1}, \dots, X_n)$. 
+	$\bm X = (X_1, \dots, X_n)$为独立随机变量构成的随机向量,记$\bm X_k^n = (X_k, \dots, X_n)$, $\bm X^{\backslash k} = (X_1, \dots, X_{k-1}, X_{k+1}, \dots, X_n)$. 
 	考虑满足$\E[e^{g(\bm X)}] \leq 1$的函数$g$, 定义函数序列$\{g^1, \dots, g^n\}$: 
 	\begin{align*}
 		g^k(\bm X_k^n) &:= \log \E[e^{g(\bm X)} | \bm X_k^n] - \log \E[e^{g(\bm X)} | \bm X_{k+1}^n]. 
 	\end{align*}
-	说明$\E \left[ g^k(\bm X_k^n) | \bm X_{\backslash k} \right] =1$
+	说明$\E \left[ g^k(\bm X_k^n) | \bm X^{\backslash k} \right] =1$
 	
 	由定理\ref{thm:VariationalRepresentationForEntropy}, 对左侧满足条件的$g$取上确界可知引理成立. 
 \end{proof}
 
 特别地, 熵的张量化在处理\emph{可分凸函数}时, 可以得到很好的结论. 
-称函数$f \colon \R^n \to \R$是可分凸的, 如果对任意指标$k \in \{1, \dots, n\}$, 给定向量$\bm x_{\backslash k} := (x_1, \dots, x_{k-1}, x_{k+1}, \dots x_n) \in \R^{n-1}$, 单变量函数
+称函数$f \colon \R^n \to \R$是可分凸的, 如果对任意指标$k \in \{1, \dots, n\}$, 给定向量$\bm x^{\backslash k} := (x_1, \dots, x_{k-1}, x_{k+1}, \dots x_n) \in \R^{n-1}$, 单变量函数
 \begin{equation*}
 	y_k \mapsto f(x_1, \dots x_{k-1}, y_k, x_{k+1}, \dots x_n)
 \end{equation*}
@@ -664,39 +715,51 @@ Minkowski将空间的向量加法这一代数结构同凸体的体积这一几�
 
 \subsection{经验过程的尾部概率界}
 
-设$(X_1, \cdots, X_n)$来自乘积分布$\mathbb{P} = \otimes_{i=1}^n \mathbb{P}_i$, 其中$\mathbb{P}_i$的支撑集$\mathcal{X}_i \subseteq \mathcal{X}$. 
-对于定义域为$\cX$函数类$\cF$, 考虑随机变量
+设$(X_1, \dots, X_n)$来自乘积分布$\mathbb{P} = \otimes_{i=1}^n \mathbb{P}_i$, 其中$\mathbb{P}_i$的支撑集$\mathcal{X}_i \subseteq \mathcal{X}$. 
+对于定义域为$\cX$函数类$\sF$, 考虑随机变量
 \begin{equation*}
-	Z := \sup_{f \in \cF} \left\{ \frac{1}{n} \sum_{i=1}^n f(X_i) \right\}. 
+	Z := \sup_{f \in \sF} \left\{ \frac{1}{n} \sum_{i=1}^n f(X_i) \right\}. 
 \end{equation*}
 注意这里的$\sup$是对每一点$x \in \cX^n$取极大值. 
-若要考虑$\sup_{f \in \cF} \left| \frac{1}{n} \sum_i f(X_i) \right|$, 只需考虑在函数类$\tilde \cF := \cF \cup (- \cF)$上考虑上确界即可: 
+若要考虑$\sup_{f \in \sF} \left| \frac{1}{n} \sum_i f(X_i) \right|$, 只需考虑在函数类$\tilde \sF := \sF \cup (- \sF)$上考虑上确界即可: 
 \begin{equation*}
-	\sup_{f \in \cF} \left| \frac{1}{n} \sum_i f(X_i) \right|
-	= \sup_{f \in \cF} \left\{ \max \left\{ \frac{1}{n} \sum_{i=1}^n f(X_i), - \frac{1}{n} \sum_{i=1}^n f(X_i) \right\} \right\} 
-	= \sup_{\tilde \cF} \left\{ \frac{1}{n} \sum_{i=1}^n f(X_i) \right\}
+	\sup_{f \in \sF} \left| \frac{1}{n} \sum_i f(X_i) \right|
+	= \sup_{f \in \sF} \left\{ \max \left\{ \frac{1}{n} \sum_{i=1}^n f(X_i), - \frac{1}{n} \sum_{i=1}^n f(X_i) \right\} \right\} 
+	= \sup_{\tilde \sF} \left\{ \frac{1}{n} \sum_{i=1}^n f(X_i) \right\}
 \end{equation*}
 
+我们把Hoeffding
+
 \begin{theorem}[泛函Hoeffding不等式]
-	若对每个$f \in \cF$, 存在实数$a_{i, f} \leq b_{i, f}$使得
-	\begin{equation*}
-		f(x) \in [a_{i, f}, b_{i, f}],\quad \forall x \in \cX_i,\; i = 1, \cdots, n, 
-	\end{equation*}
-	那么对任意$\delta \geq 0$, 成立
+	若对每个$f \in \sF$, 都有$f(\cX_i) \subseteq  [a_{i, f}, b_{i, f}]$, $i = 1, \dots, n$,  那么对任意$\delta \geq 0$, 成立
 	\begin{equation}
 		\P[ Z \geq \mathbb{E}Z + \delta] 
 		\leq \exp \left( - \frac{n \delta^2}{4 L^2} \right), 
 	\end{equation}
-	其中$L^2 = \sup_{f \in \cF} \left\{ \frac{1}{n} \sum_i (b_{i, f} - a_{i, f})^2 \right\}$. 
+	其中$L^2 = \sup_{f \in \sF} \left\{ \frac{1}{n} \sum_i (b_{i, f} - a_{i, f})^2 \right\}$. 
 \end{theorem}
 
 \begin{proof}
-	将$Z$视作随机变量$(X_1, \dots, X_n)$的函数, 定义$Z_j \colon x_j \mapsto Z(X_1, \dots, X_{j-1}, x_j, X_{j+1}, \dots, X_n)$
+	为了简便, 我们使用非重尺度化的$Z = \sup_{f \in \sF} \left\{ \sum_i f(X_i) \right\}$, 它是$\bm X = (X_1, \dots, X_n)$的泛函.  
+	
+	定义$Z_j \colon x_j \mapsto Z(X_1, \dots, X_{j-1}, x_j, X_{j+1}, \dots, X_n)$
+	
+	对于$\lambda > 0$, 由引理\ref{lemma:EntropyTensorization}、 \ref{lemma:EntropyBoundForUnivariateFunctions}, 
+	
+	对$f \in \sF$, 定义$\cA(f) := \left\{ (x_1, \dots, x_n) \colon Z = \sum_i f(x_i) \right\}$
 \end{proof}
 
 
 
 
+\begin{theorem}[经验过程的Talagrand集中度]
+	若可数函数类$\sF$被$b$一致控制, 那么对任意$\delta > 0$, 成立
+	\begin{equation*}
+		\P[ Z \geq \E Z + \delta] 
+		\geq 2 \exp \left( - \frac{n \delta^2}{8 e \E \Sigma^2 + 4 b \delta} \right), 
+	\end{equation*}
+	其中$\Sigma^2 = \sup_{f \in \sF} \frac1n f^2(X_i)$. 
+\end{theorem}
 
 
 

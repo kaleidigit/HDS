@@ -1,0 +1,16 @@
+\section{一致大数定律}
+
+经验分布函数
+\begin{equation*}
+	\hat F_n(t) := \frac{1}{n} \sum_{i=1}^n \I{(-\infty], t]}(X_i)
+\end{equation*}
+是未知分布函数$F(t) = \P[ X \leq t ]$的无偏估计, 强大数定律告诉我们$\hat F_n(t) \stackrel{a.s.}{\to} F(t)$, 这是一种逐点收敛. 
+在统计背景下,  将$\hat F_n$代入$F$的泛函$\gamma(F)$可以得到估计$\gamma(\hat F_n)$, 例如
+
+\begin{example}
+	给定可积函数$g$, 定义期望泛函$\gamma_g(F) := \int g \dd F$, 代入估计$\hat F_n$
+	\begin{equation*}
+		\gamma_g(\hat F_n) = \frac{1}{n} \sum_{n=1}^n g(X_i)
+	\end{equation*}
+	可以作为$\E g(X)$的估计. 
+\end{example}

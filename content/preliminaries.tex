@@ -1,12 +1,80 @@
 \section{预备知识}
 
-\subsection{Rademacher定理}
+\subsection{概率论}
 
-\begin{theorem}[Rademacher]\label{thm:Rademacher}
-	任意凸的Lipschitz函数几乎处处有导数
+\subsubsection{积分变换、Stieltjes积分}
+
+\begin{theorem}[积分变换]\label{thm:IntegralTransform}
+	设$f \colon (\cX, \cA, \mu) \to (E, \mathcal{E})$为可测映射, $g$为$(E, \mathcal{E})$上的可测函数, 则
+	\begin{equation*}
+		\int_{f^{-1}(B)} g \circ f \dd \mu 
+		= \int_B g \dd f_* \mu. 
+	\end{equation*}
+\end{theorem}
+\begin{proof}
+	只需证明对可测示性成立即可. 
+	对于$g = \I{F}$, $F \in \mathcal{E}$, 有
+	\begin{align*}
+		\int_B \I{F} \dd f_* \mu
+		&= f_* \mu(B \cap F)
+		= \mu \left( f^{-1}(B) \cap f^{-1}(F) \right)
+		= \int_{f^{-1}(B)} \I{f^{-1}(F)} \dd \mu \\
+		&= \int_{f^{-1}(B)} \I{F}(f(x)) \mu(\dd x)
+		=\int_{f^{-1}(B)} \I{F} \circ f \dd \mu. 
+	\end{align*}
+\end{proof}
+
+
+
+
+\subsubsection{Randon-Nikodym导数、密度}
+
+Randon-Nikodym导数是定义密度和条件期望的关键. 
+
+\begin{theorem}[Radon-Nikodym 定理]
+	设$\mu$, $\nu$为可测空间$(\cX, \cA)$上的两个概率测度, $\nu$关于$\mu$\emph{绝对连续}, 即对于满足$\mu(A) = 0$的$A \in \cA$, 一定有$\nu(A) = 0$, 记做$\nu \ll \mu$. 
+	存在$\cX$上的非负函数$f$, 使得$\nu(A) = \int_A f \dd \mu$, 且$f$在$\mu$-a.e.意义下唯一, 记做$f = \frac{\dd \nu}{\dd \mu}$. 
 \end{theorem}
 
-\subsection{矩的另一种求法}
+\begin{example}[分布的密度]
+	随机变量$X \colon (\cX, \cA, \P) \to (\R, \cB, \mu)$的分布是前推测度$X_* \P (B) := \P \circ X^{-1} (B) = \P[X \in B]$, 它的关于$\mu$的密度由Randon-Nikodym导数给出: 
+	\begin{equation*}
+		f_X = \frac{\dd X_* \P}{\dd \mu}. 
+	\end{equation*}
+	从而由积分变换定理\ref{thm:IntegralTransform}, 
+	\begin{equation*}
+		\P[X \in B] 
+		= \int_{X^{-1}(B)} \dd \P 
+		= \int_B \dd X_* \P 
+		= \int_B f_X \dd \mu
+		= \E[f_X; B]
+	\end{equation*}
+	\begin{equation*}
+		\E[f(X); B]
+		= \int_B f \dd X_* \P 
+		= \int_B f(x) f_X(x) \dd \mu(x)
+	\end{equation*}
+\end{example}
+
+应用: 引理\ref{lemma:SubGaussianParameterOfBddRV}的证明
+
+\subsubsection{矩的求法}
+
+对于随机变量$X$, 若函数$\varphi_X(\lambda) = \E[e^{\lambda X}]$存在, 则称$\varphi_X$为$X$的\emph{矩母函数}.
+我们可以利用矩母函数来导出$X$的各阶矩: 
+\begin{equation*}
+	\frac{\dd^n}{\dd \lambda^n} \varphi_X(\lambda)
+	= \frac{\dd^n}{\dd \lambda^n} \E \left[ 1 + \lambda X + \frac{\lambda^2}{2!} X^2 + \dots \right]
+	= \E X^n + \frac{\lambda}{n + 1} \E X^{n+1} + \dots, 
+\end{equation*}
+于是$\E X^n = \varphi_X^{(n)}(0)$. 
+
+并非所有随机变量都具有矩生成函数, 
+
+很多时候它可能只在某个$0$的开邻域内存在
+
+中心矩母函数
+
 
 \begin{lemma}\label{lemma:trickOfExpectation}
 	若非负随机变量$X \in L^p$, $p > 0$, 则有
@@ -34,43 +102,7 @@
 \end{proof}
 
 
-
-
-
-
-\subsection{Randon-Nikodym导数}
-
-Randon-Nikodym导数是定义密度和条件概率的关键. 
-
-设$\mu$, $\nu$为可测空间$(\cX, \cA)$上的两个概率测度. 
-称$\nu$关于$\mu$\emph{绝对连续}, 如果$\mu$-零集一定是$\nu$-零集, 即对于满足$\mu(A) = 0$的$A \in \cA$, 一定有$\nu(A) = 0$, 记做$\nu \ll \mu$. 
-称$\mu$和$\nu$\emph{相互奇异}, 如果存在$A \in \cA$使得$\mu(A) = 0$, $\nu(\cX \backslash A) = 0$
-
-\begin{theorem}[Lebesgue分解定理]
-	设$\mu$和$\nu$为$(\cX, \cA)$上$\sigma$-有限测度, 那么$\nu$可以唯一地分解为关于$\mu$绝对连续的部分$\nu_a$和与$\mu$相互奇异的部分$\nu_s$. 
-\end{theorem}
-
-\begin{example}[分布的密度]
-	随机变量$X \colon (\cX, \cA, \P) \to (\R, \cB, \mu)$的分布是前推测度$X_* \P (A) := \P \circ X^{-1} (A) = \P[X \in A]$, 它的密度由Randon-Nikodym导数给出: 
-	\begin{equation*}
-		f_X = \frac{\dd X_* \P}{\dd \mu}. 
-	\end{equation*}
-	从而
-	\begin{equation*}
-		\P[X \in A] 
-		= \int_{X^{-1}(A)} \dd \P 
-		= \int_A \dd X_* \P 
-		= \int_A f_X \dd \mu
-		= \E[f_X; A]
-	\end{equation*}
-	\begin{equation*}
-		\E[f(X); A]
-		= \int_A f \dd X_* \P 
-		= \int_A f(x) f_X(x) \dd \mu(x)
-	\end{equation*}
-\end{example}
-
-\subsection{条件期望、鞅、鞅差}
+\subsubsection{条件期望、鞅、鞅差}
 
 给定概率空间$(\Omega, \cF_0, \mathbb{P})$, 子$\sigma$-域$\cF \subset \cF_0$, 随机变量$X \in \cF_0$可积. 
 称$Y$为$X$关于$\cF$的\emph{条件期望}, 如果
@@ -82,6 +114,7 @@ Randon-Nikodym导数是定义密度和条件概率的关键.
 我们可以把$X | \cF$看作随机变量, 称为条件随机变量. 
 在这样的记号下, $X$等价于$X | \{\emptyset, \Omega\}$. 
 
+条件期望$\P(A | \cF) = \E[\I{A} | \cF]$
 
 条件期望具有许多性质, 这里我们主要使用以下几个: 
 	\begin{enumerate}[label=(\roman*)]
@@ -98,7 +131,7 @@ Randon-Nikodym导数是定义密度和条件概率的关键.
 \end{center}
 如果我们记$D_k := X_k - X_{k-1}$, 容易验证$\{D_k\}$期望为$0$, 并且也是适应于$\{\cF_k\}$的鞅, 我们称其为\emph{鞅差}. 
 
-\subsection{方差的表示}
+\subsubsection{方差的表示}
 
 方差的通常计算方式为$\var X = \E[X - \E X]^2 = \E X^2 - (\E X)^2$, 这里我们介绍两种其他的表示方式. 
 
@@ -124,42 +157,45 @@ Randon-Nikodym导数是定义密度和条件概率的关键.
 	另一方面, $X - X'$和$X' - X$有相同的分布, 于是$\E(X - X')_+^2 = \E(X - X')_-^2$且两者之和即$\E (X - X')^2$. 
 \end{proof}
 
-\subsection{方差的张量化}
+%\subsubsection{方差的张量化}
+%
+%术语“张量化”源于这样一个事实：独立随机变量的概率测度是边缘分布的（张量）乘积
+%
+%我们熟知, 独立的随机变量$X_1, \dots, X_n$之和$Z := f(X_1, \cdots, X_n) = \sum_i X_i$的方差是$X_i$方差之和. 
+%对于更为一般的(可测)函数$f \colon \R^n \to \R$, 我们希望控制每个$X_i$的贡献来控制$\var Z$(这里假定了$Z$平方可积). 
+%
+%\begin{definition}[逐坐标期望]
+%	逐坐标期望算子$\E_i$在保持$(X_j, j \neq i)$的同时, 计算关于$X_i$的期望, 即$\E_i Z 
+%		= \E\left[ Z | X_1, \dots, X_{i-1}, X_{i+1}, \dots, X_n \right]$. 
+%	这一记号隐含地要求了$(X_i)$之间是相互独立的. 
+%\end{definition}
+%
+%由条件期望的性质, 不难看出逐坐标期望算子满足:  
+%	\begin{enumerate}[label=(\roman*)]
+%		\item \textbf{(幂等性)} $\E_i[\E_i Z] = \E_i Z$; 
+%		\item \textbf{(交换性)} $\E_i[\E_j Z] = \E_j [\E_i Z]$; 
+%	\end{enumerate}
+%
+%\begin{theorem}[方差的张量化]
+%	在上述的假设和记号下, $\var Z \leq \E \left[ \sum_i \var_i X_i \right]$
+%\end{theorem}
+%
+%\begin{remark}
+%	这是对独立随机变量和的方差的推广: 当$f$为求和函数时, 由独立性
+%	\begin{align*}
+%		\var_i Z 
+%		&= \E \left[ (Z - \E Z)^2 | X_1, \dots, X_{i-1}, X_{i+1}, \dots, X_n \right] \\
+%		&= \var X_i + \sum_{j \neq i} \E \left[ (X_j - \E[X_j | X_j] )^2 | X_j \right]
+%		= \var X_i. 
+%	\end{align*}
+%\end{remark}
 
-术语“张量化”源于这样一个事实：独立随机变量的概率测度是边缘分布的（张量）乘积
-
-我们熟知, 独立的随机变量$X_1, \dots, X_n$之和$Z := f(X_1, \cdots, X_n) = \sum_i X_i$的方差是$X_i$方差之和. 
-对于更为一般的(可测)函数$f \colon \R^n \to \R$, 我们希望控制每个$X_i$的贡献来控制$\var Z$(这里假定了$Z$平方可积). 
-
-\begin{definition}[逐坐标期望]
-	逐坐标期望算子$\E_i$在保持$(X_j, j \neq i)$的同时, 计算关于$X_i$的期望, 即$\E_i Z 
-		= \E\left[ Z | X_1, \dots, X_{i-1}, X_{i+1}, \dots, X_n \right]$. 
-	这一记号隐含地要求了$(X_i)$之间是相互独立的. 
-\end{definition}
-
-由条件期望的性质, 不难看出逐坐标期望算子满足:  
-	\begin{enumerate}[label=(\roman*)]
-		\item \textbf{(幂等性)} $\E_i[\E_i Z] = \E_i Z$; 
-		\item \textbf{(交换性)} $\E_i[\E_j Z] = \E_j [\E_i Z]$; 
-	\end{enumerate}
-
-\begin{theorem}[方差的张量化]
-	在上述的假设和记号下, $\var Z \leq \E \left[ \sum_i \var_i X_i \right]$
-\end{theorem}
-
-\begin{remark}
-	这是对独立随机变量和的方差的推广: 当$f$为求和函数时, 由独立性
-	\begin{align*}
-		\var_i Z 
-		&= \E \left[ (Z - \E Z)^2 | X_1, \dots, X_{i-1}, X_{i+1}, \dots, X_n \right] \\
-		&= \var X_i + \sum_{j \neq i} \E \left[ (X_j - \E[X_j | X_j] )^2 | X_j \right]
-		= \var X_i. 
-	\end{align*}
-\end{remark}
+%\subsubsection{乘积测度}
+%
+%考虑可测空间
 
 
-
-\subsection{耦合}
+\subsubsection{耦合}
 
 耦合是一种应用广泛的概率技术: 比较两个概率测度$\Q$, $\P$, 我们可以考虑具有边缘分布$\Q$, $\P$的乘积概率空间. 
 
@@ -175,3 +211,72 @@ Randon-Nikodym导数是定义密度和条件概率的关键.
 显然乘积测度$\Q \otimes \P$是$(\Q, \P)$的耦合, 
 
 耦合并不唯一, 记为$\Pi(\Q, \P)$. 
+
+
+\subsection{凸分析}
+
+\subsubsection{Rademacher定理}
+
+\begin{theorem}[Rademacher]\label{thm:Rademacher}
+	任意凸的Lipschitz函数几乎处处有导数
+\end{theorem}
+
+
+\subsubsection{Fenchel共轭}
+
+Fenchel共轭是Fourier变换在凸分析中的对应. 
+对于实Hilbert空间$\cX$上的正则函数$g \colon \cX \to (-\infty, +\infty]$, 即$\dom f := \{x \in \cX \colon f(x) \in \R \neq \emptyset$, 其在$u \in \cX$的\emph{Fenchel共轭}为
+\begin{equation}
+	f^*(u) = \sup_{x \in \cX} \left\{ \langle x, u \rangle - f(x) \right\}. 
+\end{equation}
+通过定义可以看到Fenchel共轭满足\emph{Fenchel-Young不等式}
+\begin{equation}
+	f(x) + f^*(u) \geq \langle x, u \rangle. 
+\end{equation}
+此外, $f^*$是凸的、下半连续的, 这是由于它是放射连续函数族$(\langle x, \cdot \rangle - f(x))_{x \in \cX}$的上确界. 
+对偶$f = f^{**}$当且仅当$f$是凸的、下半连续函数
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
