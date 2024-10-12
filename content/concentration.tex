@@ -11,20 +11,16 @@
 经典的结果是(广义)Markov不等式和Chebyshev不等式.
 设函数$f \colon \R \to \R^*$单调增, 对任意$t > 0$, 注意到
 \begin{equation*}
-	\mathbb{E}f(X) 
+	\mathbb{E}[f(X)] 
 		\geq \mathbb{E}\left[f(X); X \geq t \right]
 		\geq \mathbb{E}\left[f(t) \I{\{X \geq t\}} \right] 
 		= f(t) \cdot \mathbb{P}[X \geq t].
 \end{equation*}
 于是我们有随机变量的\emph{Markov不等式}: 
 \begin{equation}\label{eq:Markov'sInequality}
-	\mathbb{P}[X \geq t] \leq \frac{\mathbb{E}f(X)}{f(t)}.
+	\mathbb{P}[X \geq t] \leq \frac{\mathbb{E}[f(X)]}{f(t)}.
 \end{equation}
-特别地, 取$f(u) = u^2$, $X = |Y - \mathbb{E}Y|$, 有\emph{Chebyshev不等式}: 
-\begin{equation*}
-	\mathbb{P}[|Y - \mathbb{E}Y| \geq t] 
-	\leq \frac{\var Y}{t^2}.
-\end{equation*}
+特别地, 取$f(u) = u^2$, $X = |Y - \mathbb{E}Y|$, 有\emph{Chebyshev不等式}$\mathbb{P}[|Y - \mathbb{E}Y| \geq t] \leq \frac{\var Y}{t^2}$. 
 
 更一般的, 考虑多个独立随机变量的函数$f(X_1, \dots, X_n)$的集中不等式
 
@@ -104,19 +100,19 @@
 	若随机变量$X \in [a, b]$ a.s., 那么它是参数为$\frac{b-a}{2}$的次高斯随机变量. 
 \end{lemma}
 \begin{proof}
-	设随机变量$X_{\lambda}$关于$X$的分布的Radon–Nikodym导数为$\frac{e^{\lambda X}}{\E[e^{\lambda X}]}$. 
+	定义随机变量$X_{\lambda}$, 其关于$X$的分布的Radon–Nikodym导数为$\frac{e^{\lambda X}}{\mathbb{E}[e^{\lambda X}]}$, 记$\E[X_{\lambda}] = \mu$. 
 	于是$X_{\lambda} \in [a, b]$ a.s., 从而$\left|X_{\lambda} - \frac{a+b}{2} \right| \leq \frac{b-a}{2}$ a.s., 
 	\begin{equation*}
 		\var X_{\lambda}
 		= \var \left(X_{\lambda} - \frac{a+b}{2} \right) 
-		\leq \E \left[X_{\lambda} - \frac{a+b}{2} \right]^2 
+		\leq \mathbb{E}\left[X_{\lambda} - \frac{a+b}{2} \right]^2 
 		\leq \left(\frac{b-a}{2}\right)^2. 
 	\end{equation*}
-	记$\psi(\lambda) := \log \E[e^{\lambda X}]$, 它满足$\psi(0) = 0$, $\psi'(0) = \frac{\E[X e^{\lambda X}]}{\E[e^{\lambda X}]} \big|_{\lambda = 0} = \mu$, 且对任意$\lambda$,  
+	记$\psi(\lambda) := \log \mathbb{E}[e^{\lambda X}]$, 它满足$\psi(0) = 0$, $\psi'(0) = \frac{\mathbb{E}[X e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} \big|_{\lambda = 0} = \mu$, 且对任意$\lambda$,  
 	\begin{equation*}
 		\psi''(\lambda) 
-		= \frac{\E[X^2 e^{\lambda X}]}{\E[e^{\lambda X}]} - \left( \frac{\E[X e^{\lambda X}]}{\E[e^{\lambda X}]} \right)^2
-		= \E X_{\lambda}^2 - (\E X_{\lambda})^2
+		= \frac{\mathbb{E}[X^2 e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} - \left( \frac{\mathbb{E}[X e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} \right)^2
+		= \mathbb{E}X_{\lambda}^2 - (\mathbb{E}X_{\lambda})^2
 		= \var X_{\lambda}.  
 	\end{equation*}
 	于是$\psi(\lambda)$的在原点的Taylor展开为$\psi(\lambda) = \lambda \mu + \frac{\lambda^2}{2} \psi''(\xi) \leq \lambda \mu + \frac{\lambda^2}{2} \left(\frac{b-a}{4}\right)^2$. 
@@ -170,23 +166,23 @@
 之前我们讨论了独立随机变量和$f(X_1, \dots, X_n) = \sum_i X_i$的一些尾概率界. 对于更一般的函数$f$，建立尾概率界的经典方法方法是鞅的分解. 
 
 设$\{X_k\}_{k=1}^n$为一列独立随机变量, 记$\bm X = (X_1, \dots, X_n)$, $\bm X_1^k = (X_1, \dots, X_k)$. 
-对于函数$f \colon \R^n \to \R$, 考虑随机变量序列$Y_0 = \mathbb{E}f(\bm X)$, $Y_k = \mathbb{E}[f(\bm X)|\bm X_1^k]$, $k = 1, \dots, n$. 
+对于函数$f \colon \R^n \to \R$, 考虑随机变量序列$Y_0 = \mathbb{E}[f(\bm X)]$, $Y_k = \mathbb{E}[f(\bm X)|\bm X_1^k]$, $k = 1, \dots, n$. 
 由条件期望的性质易见$Y_n = f(\bm X)$. 
 这样的$\{Y_k\}_{k=1}^n$构成了关于$\{\bm X_1^k\}_{k=1}^n$鞅: 
 \begin{itemize}
 	\item 由Jensen不等式和重期望公式, 
 		\begin{equation*}
-			\mathbb{E}|Y_k| 
+			\mathbb{E}[|Y_k|]
 			= \mathbb{E}\left[\left|\mathbb{E}[f(\bm X)|\bm X_1^k]\right|\right] 
 			\leq \mathbb{E}\left[\mathbb{E}[|f(\bm X)||\bm X_1^k] \right]
-			= \mathbb{E}|f(\bm X)|
+			= \mathbb{E}[|f(\bm X)|]
 			< \infty
 		\end{equation*}
 	\item $\mathbb{E}[Y_{k+1}|\bm X_1^k] = \mathbb{E}\left[\mathbb{E}[f(\bm X)|\bm X_1^{k+1}] \big|\bm X_1^k\right] = \mathbb{E}[f(\bm X) | X_1^k] = Y_k$. 
 \end{itemize}
 从而$f(\bm X)$和$\mathbb{E}f(\bm X)$的偏差可以表示为鞅差分解
 \begin{equation*}
-	f(\bm X) - \mathbb{E}f(\bm X) 
+	f(\bm X) - \mathbb{E}[f(\bm X)] 
 	= Y_n - Y_0 
 	= \sum_{k=1}^n (Y_k - Y_{k-1})
 	=: \sum_{k=1}^n D_k.
@@ -228,7 +224,7 @@
 \begin{corollary}[Azuma–Hoeffding]
 	设鞅差序列$\{(D_k, \cF_k)\}_{k=1}^{\infty}$中$D_k \in [a_k, b_k]$ a.s., 我们有集中不等式
 	\begin{equation*}
-		\P \left[ \left| \sum_{k=1}^n D_k \right| \geq t \right]
+		\mathbb{E} \left[ \left| \sum_{k=1}^n D_k \right| \geq t \right]
 		\leq 2 \exp \left(- \frac{2 t^2}{\sum_k (b_k - a_k)^2} \right), 
 		\quad \forall t \geq 0. 
 	\end{equation*}
@@ -243,7 +239,7 @@
 \begin{corollary}[有界差不等式]
 	设函数$f \colon \R^n \to \R$满足参数为$(L_1, \dots, L_n)$的有界差不等式, 随机向量$\bm X = (X_1, \dots, X_n)$各分量独立, 我们有集中不等式
 	\begin{equation*}
-		\P[|f(X) - E f(X)| \geq t] 
+		\mathbb{E}[|f(X) - E f(X)| \geq t] 
 		\leq 2 \exp\left( - \frac{2 t^2}{\sum_k L_k^2} \right), 
 		\quad \forall t \geq 0. 
 	\end{equation*}
@@ -256,14 +252,14 @@
 \subsection{熵方法}
 设随机变量$X \sim \mathbb{P}$, 给定凸函数$\Phi \colon \R \to \R$, 若$X$和$\Phi(X)$的期望存在, 则概率分布空间上的泛函
 \begin{equation*}
-	\cH_\Phi(X) := \mathbb{E}\Phi(X) - \Phi(\mathbb{E}X)  
+	\cH_\Phi(X) := \mathbb{E}[\Phi(X)] - \Phi(\mathbb{E}[X])  
 \end{equation*}
 称为$X$的$\Phi$熵.
 由Jensen不等式易见$\cH \geq 0$.
 这样的泛函可以衡量随机变量随机性的大小: 
 \begin{itemize}
 	\item 若$X = C$ a.e., 那么$\cH_\Phi (X) = 0$; 
-	\item 特别地, 取$\Phi(u) = u^2$时, 此时熵$\cH_\Phi(X) = \mathbb{E}X^2 - (\mathbb{E}X)^2$就是方差. 根据Chebyshev不等式, 我们可以利用方差熵来控制尾部概率; 
+	\item 特别地, 取$\Phi(u) = u^2$时, 此时熵$\cH_\Phi(X) = \mathbb{E}[X^2] - (\mathbb{E}[X])^2$就是方差. 根据Chebyshev不等式, 我们可以利用方差熵来控制尾部概率; 
 	\item 此外, 取$\Phi(u) = - \log u$, 随机变量$Z = e^{\lambda X}$时, 
 		\begin{equation*}
 			\cH_\Phi(Z) 
@@ -300,48 +296,48 @@
 \begin{theorem}[熵的变分表示]\label{thm:VariationalRepresentationForEntropy}
 	\begin{equation}\label{eq:VariationalRepresentationForEntropy}
 		\cH(e^{\lambda f(X)})
-		= \sup_{g \colon \E [e^{g(X)}] \leq 1} \left\{ \mathbb{E} \left[g(X) e^{\lambda f(X)} \right] \right\}
+		= \sup_{g \colon \mathbb{E}[e^{g(X)}] \leq 1} \left\{ \mathbb{E} \left[g(X) e^{\lambda f(X)} \right] \right\}
 	\end{equation}
 \end{theorem}
 \begin{proof}
-	考虑测度$\P^g[A] = \E^g [\mathbb{I}_A] := \mathbb{E}[e^{g(X)}; A]$, 此时期望的Jensen不等式依然成立. 
+	考虑测度$\mathbb{E}^g[A] = \mathbb{E}^g [\mathbb{I}_A] := \mathbb{E}[e^{g(X)}; A]$, 此时期望的Jensen不等式依然成立. 
 	一方面, 我们有
 	\begin{align*}
-		&\cH(e^{\lambda f(X)}) - \E[g(X) e^{\lambda f(X)}]
-		= \E \left[ (\lambda f(X) - g(X)) e^{\lambda f(X)} \right] - \E[ e^{\lambda f(X)}] \log \E[ e^{\lambda f(X)}] \\
-		=& \E^g  \left[ (\lambda f(X) - g(X)) e^{\lambda f(X) - g(X)} \right] - \E^g[ e^{\lambda f(X) - g(X)}] \log \E^g[ e^{\lambda f(X) - g(X)}] \\
+		&\cH(e^{\lambda f(X)}) - \mathbb{E}[g(X) e^{\lambda f(X)}]
+		= \mathbb{E}\left[ (\lambda f(X) - g(X)) e^{\lambda f(X)} \right] - \mathbb{E}[ e^{\lambda f(X)}] \log \mathbb{E}[ e^{\lambda f(X)}] \\
+		=& \mathbb{E}^g  \left[ (\lambda f(X) - g(X)) e^{\lambda f(X) - g(X)} \right] - \mathbb{E}^g[ e^{\lambda f(X) - g(X)}] \log \mathbb{E}^g[ e^{\lambda f(X) - g(X)}] \\
 		=& \cH^g(e^{\lambda f(X) - g(X)}) \geq 0. 
 	\end{align*}
-	另一方面, 容易验证$g(x) = \lambda f(x) - \log \E[e^{\lambda f(X)}]$使得等式成立. 
+	另一方面, 容易验证$g(x) = \lambda f(x) - \log \mathbb{E}[e^{\lambda f(X)}]$使得等式成立. 
 \end{proof}
 
 使用独立复制的方法可以对单变量函数熵的界做如下估计. 
 \begin{lemma}[单变量函数熵的界]\label{lemma:EntropyBoundForUnivariateFunctions}
-	设独立随机变量$X, Y \sim \P$, 对任意函数$g \colon \R \to \R$, 我们有
+	设独立随机变量$X, Y \sim \mathbb{E}$, 对任意函数$g \colon \R \to \R$, 我们有
 	\begin{equation}\label{eq:EntropyBoundForUnivariateFunctions}
 		\cH(e^{\lambda g(X)})
-		\leq \lambda^2 \E[ (g(X) - g(Y))^2 e^{\lambda g(X)}; g(X) \geq g(Y) ], \quad \forall \lambda > 0.
+		\leq \lambda^2 \mathbb{E}[ (g(X) - g(Y))^2 e^{\lambda g(X)}; g(X) \geq g(Y) ], \quad \forall \lambda > 0.
 	\end{equation}
 	特别地, 当$X$支撑集为$[a, b]$, $g$为凸的Lipschitz函数时, 我们有
 	\begin{equation*}
 		\cH(e^{\lambda g(X)}) 
-		\leq \lambda^2 (b-a)^2 \E[(g'(X))^2 e^{\lambda g(X)}], \quad \forall \lambda > 0.
+		\leq \lambda^2 (b-a)^2 \mathbb{E}[(g'(X))^2 e^{\lambda g(X)}], \quad \forall \lambda > 0.
 	\end{equation*}
 \end{lemma}
 \begin{proof}
 	由Jensen不等式, 不难得出
 	\begin{equation*}
 		\cH(e^{\lambda g(X)})
-		= \E[\lambda g(X) e^{\lambda g(X)}] - \E[e^{\lambda g(X)}] \log \E[e^{\lambda g(Y)}] 
-		\leq \E[\lambda g(X) e^{\lambda g(X)}] - \E[\lambda g(X) e^{\lambda g(Y)}].
+		= \mathbb{E}[\lambda g(X) e^{\lambda g(X)}] - \mathbb{E}[e^{\lambda g(X)}] \log \mathbb{E}[e^{\lambda g(Y)}] 
+		\leq \mathbb{E}[\lambda g(X) e^{\lambda g(X)}] - \mathbb{E}[\lambda g(X) e^{\lambda g(Y)}].
 	\end{equation*}
 	再利用$X$和$Y$的对称性, 
 	\begin{align*}
 		\cH(e^{\lambda g(X)})
-		&\leq \lambda \E[ g(X) (e^{\lambda g(X)}-  e^{\lambda g(Y)})] 
-		= - \lambda \E[ g(Y) (e^{\lambda g(X)}-  e^{\lambda g(Y)})] \\
-		&= \frac{\lambda}{2} \E\left[(g(X) - g(Y)) (e^{\lambda g(X)} - e^{\lambda g(Y)})\right] \\
-		&= \lambda \E\left[(g(X) - g(Y)) (e^{\lambda g(X)} - e^{\lambda g(Y)}); g(X) \geq g(Y) \right].
+		&\leq \lambda \mathbb{E}[ g(X) (e^{\lambda g(X)}-  e^{\lambda g(Y)})] 
+		= - \lambda \mathbb{E}[ g(Y) (e^{\lambda g(X)}-  e^{\lambda g(Y)})] \\
+		&= \frac{\lambda}{2} \mathbb{E}\left[(g(X) - g(Y)) (e^{\lambda g(X)} - e^{\lambda g(Y)})\right] \\
+		&= \lambda \mathbb{E}\left[(g(X) - g(Y)) (e^{\lambda g(X)} - e^{\lambda g(Y)}); g(X) \geq g(Y) \right].
 	\end{align*}
 	而在$\{g(X) \geq g(Y)\}$, $\lambda > 0$时, 有$e^{\lambda g(X)} - e^{\lambda g(Y)} \leq \lambda(g(X) - g(Y)) e^{\lambda g(X)}$, 从而\eqref{eq:EntropyBoundForUnivariateFunctions}成立. 
 	进一步地, 当$g$为凸的Lipschitz函数时, 由Rademacher定理\ref{thm:Rademacher}, $g'$几乎处处存在. 
@@ -449,34 +445,34 @@
 	\end{equation*}
 \end{lemma}
 \begin{proof}
-	考虑满足$\E[e^{g(\bm X)}] \leq 1$的函数$g$, 定义函数序列$\{g^1, \dots, g^n\}$: 
+	考虑满足$\mathbb{E}[e^{g(\bm X)}] \leq 1$的函数$g$, 定义函数序列$\{g^1, \dots, g^n\}$: 
 	\begin{align*}
-		g^k(\bm X_k^n) &:= \log \E[e^{g(\bm X)} | \bm X_k^n] - \log \E[e^{g(\bm X)} | \bm X_{k+1}^n]. 
+		g^k(\bm X_k^n) &:= \log \mathbb{E}[e^{g(\bm X)} | \bm X_k^n] - \log \mathbb{E}[e^{g(\bm X)} | \bm X_{k+1}^n]. 
 	\end{align*}
-	于是$\sum_{k=1}^n g^k(\bm X_k^n) = g(\bm X) - \log \E[ e^{g(\bm X)} ] \geq g(\bm X)$, 利用这一分解可得
+	于是$\sum_{k=1}^n g^k(\bm X_k^n) = g(\bm X) - \log \mathbb{E}[ e^{g(\bm X)} ] \geq g(\bm X)$, 利用这一分解可得
 	\begin{equation*}
-		\E [ g(\bm X) e^{\lambda f(\bm X)}]
-		\leq \sum_{k=1}^n \E[ g^k(\bm X_k^n) e^{\lambda f(\bm X)} ] 
-		= \sum_{k=1}^n \E \left[ \E[ g^k(\bm X_k^n) e^{\lambda f(\bm X)} | \bm X^{\backslash k} ] \right]. 
+		\mathbb{E}[ g(\bm X) e^{\lambda f(\bm X)}]
+		\leq \sum_{k=1}^n \mathbb{E}[ g^k(\bm X_k^n) e^{\lambda f(\bm X)} ] 
+		= \sum_{k=1}^n \mathbb{E}\left[ \mathbb{E}[ g^k(\bm X_k^n) e^{\lambda f(\bm X)} | \bm X^{\backslash k} ] \right]. 
 	\end{equation*}
 	条件随机变量$g^k(\bm X_k^n)| \bm X^{\backslash k}$的期望满足
 	\begin{equation*}
-		\E \left[ g^k(\bm X_k^n) | \bm X^{\backslash k} \right]
-		\geq \log \E \left[ \exp(g^k(\bm X_k^n)) |\bm X_{k+1}^n \right] = 0. 
+		\mathbb{E}\left[ g^k(\bm X_k^n) | \bm X^{\backslash k} \right]
+		\geq \log \mathbb{E}\left[ \exp(g^k(\bm X_k^n)) |\bm X_{k+1}^n \right] = 0. 
 	\end{equation*}
 	
-	$\E \left[ \exp(g^k(\bm X_k^n)) |\bm X_{k+1}^n \right] = 1$. 
+	$\mathbb{E}\left[ \exp(g^k(\bm X_k^n)) |\bm X_{k+1}^n \right] = 1$. 
 	
-	$\E \left[ g^k(\bm X_k^n) | \bm X^{\backslash k} \right] = 1$
+	$\mathbb{E}\left[ g^k(\bm X_k^n) | \bm X^{\backslash k} \right] = 1$
 	
 	%------
 	\sp 
 	$\bm X = (X_1, \dots, X_n)$为独立随机变量构成的随机向量,记$\bm X_k^n = (X_k, \dots, X_n)$, $\bm X^{\backslash k} = (X_1, \dots, X_{k-1}, X_{k+1}, \dots, X_n)$. 
-	考虑满足$\E[e^{g(\bm X)}] \leq 1$的函数$g$, 定义函数序列$\{g^1, \dots, g^n\}$: 
+	考虑满足$\mathbb{E}[e^{g(\bm X)}] \leq 1$的函数$g$, 定义函数序列$\{g^1, \dots, g^n\}$: 
 	\begin{align*}
-		g^k(\bm X_k^n) &:= \log \E[e^{g(\bm X)} | \bm X_k^n] - \log \E[e^{g(\bm X)} | \bm X_{k+1}^n]. 
+		g^k(\bm X_k^n) &:= \log \mathbb{E}[e^{g(\bm X)} | \bm X_k^n] - \log \mathbb{E}[e^{g(\bm X)} | \bm X_{k+1}^n]. 
 	\end{align*}
-	说明$\E \left[ g^k(\bm X_k^n) | \bm X^{\backslash k} \right] =1$
+	说明$\mathbb{E}\left[ g^k(\bm X_k^n) | \bm X^{\backslash k} \right] =1$
 	
 	由定理\ref{thm:VariationalRepresentationForEntropy}, 对左侧满足条件的$g$取上确界可知引理成立. 
 \end{proof}
@@ -501,11 +497,11 @@
 	\begin{align*}
 		\cH(e^{\lambda f(\bm X)})
 		&\leq \mathbb{E}\left[ \sum_{k=1}^n \cH_k (e^{\lambda f(\bm X)}) \right]
-		\leq \lambda^2 (b-a)^2  \mathbb{E}\left[ \sum_{k=1}^n \E_k\left[ \left(\frac{\partial f(\bm X)}{\partial X_k} \right)^2 e^{\lambda f(\bm X)}\right] \right] \\
+		\leq \lambda^2 (b-a)^2  \mathbb{E}\left[ \sum_{k=1}^n \mathbb{E}_k\left[ \left(\frac{\partial f(\bm X)}{\partial X_k} \right)^2 e^{\lambda f(\bm X)}\right] \right] \\
 		&= \lambda^2 (b-a)^2  \mathbb{E}\left[ \sum_{k=1}^n \left(\frac{\partial f(\bm X)}{\partial X_k} \right)^2 e^{\lambda f(\bm X)}\right]
-		\leq \lambda^2 (b-a)^2 L^2 \E[e^{\lambda f(\bm X)}]. 
+		\leq \lambda^2 (b-a)^2 L^2 \mathbb{E}[e^{\lambda f(\bm X)}]. 
 	\end{align*}
-	再由Herbst方法(定理\ref{thm:HerbstArgument})有命题成立. 
+	再由Herbst方法(定理\ref{thm:HerbstArgument})可见命题成立. 
 \end{proof}
 
 
@@ -653,14 +649,14 @@ Minkowski将空间的向量加法这一代数结构同凸体的体积这一几�
 
 \subsubsection{信息不等式}
 
-给定$(\mathcal{X}, \rho)$上的分布$\mathbb{Q} \ll \mathbb{P}$, 它们之间的Kullback–Leibler散度(相对熵)定义为
+给定$(\mathcal{X}, \rho)$上的分布$\mathbb{Q} \ll \mathbb{P}$, 它们之间的\emph{Kullback–Leibler散度}(相对熵)定义为
 \begin{equation}
 	D(\mathbb{Q} \| \mathbb{P})
 	:= \mathbb{E}_{\mathbb{Q}} \left[ \log \frac{\dd \mathbb{Q}}{\dd \mathbb{P}} \right]
 	= \int_{\mathcal{X}} q(x) \log \frac{q(x)}{p(x)} \nu(\dd x), 
 \end{equation}
 其中$q, p$为$\mathbb{Q}, \mathbb{P}$的密度, $\nu$为$\mathcal{X}$上的Lebesgue测度. 
-它不是一个度量: 不满足对称性、三角不等式. 
+它不满足对称性、三角不等式, 因而不是一个度量. 
  
  称$(\mathcal{X}, \rho)$上的概率测度$\mathbb{P}$满足参数为$\gamma > 0$的\emph{$\rho$-传输成本不等式}, 如果对任意的概率测度$\mathbb{Q}$总有
  \begin{equation}\label{eq:TransportationCostInequality}
@@ -711,55 +707,6 @@ Minkowski将空间的向量加法这一代数结构同凸体的体积这一几�
 	= \sqrt{\int\left(1 - \frac{\dd \mathbb{Q}}{\dd \mathbb{P}} \right)_+^2 \dd \mathbb{P}}
 \end{align*}
 
-
-
-\subsection{经验过程的尾部概率界}
-
-设$(X_1, \dots, X_n)$来自乘积分布$\mathbb{P} = \otimes_{i=1}^n \mathbb{P}_i$, 其中$\mathbb{P}_i$的支撑集$\mathcal{X}_i \subseteq \mathcal{X}$. 
-对于定义域为$\cX$函数类$\sF$, 考虑随机变量
-\begin{equation*}
-	Z := \sup_{f \in \sF} \left\{ \frac{1}{n} \sum_{i=1}^n f(X_i) \right\}. 
-\end{equation*}
-注意这里的$\sup$是对每一点$x \in \cX^n$取极大值. 
-若要考虑$\sup_{f \in \sF} \left| \frac{1}{n} \sum_i f(X_i) \right|$, 只需考虑在函数类$\tilde \sF := \sF \cup (- \sF)$上考虑上确界即可: 
-\begin{equation*}
-	\sup_{f \in \sF} \left| \frac{1}{n} \sum_i f(X_i) \right|
-	= \sup_{f \in \sF} \left\{ \max \left\{ \frac{1}{n} \sum_{i=1}^n f(X_i), - \frac{1}{n} \sum_{i=1}^n f(X_i) \right\} \right\} 
-	= \sup_{\tilde \sF} \left\{ \frac{1}{n} \sum_{i=1}^n f(X_i) \right\}
-\end{equation*}
-
-我们把Hoeffding
-
-\begin{theorem}[泛函Hoeffding不等式]
-	若对每个$f \in \sF$, 都有$f(\cX_i) \subseteq  [a_{i, f}, b_{i, f}]$, $i = 1, \dots, n$,  那么对任意$\delta \geq 0$, 成立
-	\begin{equation}
-		\P[ Z \geq \mathbb{E}Z + \delta] 
-		\leq \exp \left( - \frac{n \delta^2}{4 L^2} \right), 
-	\end{equation}
-	其中$L^2 = \sup_{f \in \sF} \left\{ \frac{1}{n} \sum_i (b_{i, f} - a_{i, f})^2 \right\}$. 
-\end{theorem}
-
-\begin{proof}
-	为了简便, 我们使用非重尺度化的$Z = \sup_{f \in \sF} \left\{ \sum_i f(X_i) \right\}$, 它是$\bm X = (X_1, \dots, X_n)$的泛函.  
-	
-	定义$Z_j \colon x_j \mapsto Z(X_1, \dots, X_{j-1}, x_j, X_{j+1}, \dots, X_n)$
-	
-	对于$\lambda > 0$, 由引理\ref{lemma:EntropyTensorization}、 \ref{lemma:EntropyBoundForUnivariateFunctions}, 
-	
-	对$f \in \sF$, 定义$\cA(f) := \left\{ (x_1, \dots, x_n) \colon Z = \sum_i f(x_i) \right\}$
-\end{proof}
-
-
-
-
-\begin{theorem}[经验过程的Talagrand集中度]
-	若可数函数类$\sF$被$b$一致控制, 那么对任意$\delta > 0$, 成立
-	\begin{equation*}
-		\P[ Z \geq \E Z + \delta] 
-		\geq 2 \exp \left( - \frac{n \delta^2}{8 e \E \Sigma^2 + 4 b \delta} \right), 
-	\end{equation*}
-	其中$\Sigma^2 = \sup_{f \in \sF} \frac1n f^2(X_i)$. 
-\end{theorem}
 
 
 

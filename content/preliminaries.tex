@@ -54,9 +54,10 @@ Randon-Nikodym导数是定义密度和条件期望的关键.
 		= \int_B f \dd X_* \P 
 		= \int_B f(x) f_X(x) \dd \mu(x)
 	\end{equation*}
+	此外, 由于分布总是(前推)测度, 我们可以通过给出关于随机变量分布的密度函数来定义新的随机变量, 例如引理\ref{lemma:SubGaussianParameterOfBddRV}的证明. 
 \end{example}
 
-应用: 引理\ref{lemma:SubGaussianParameterOfBddRV}的证明
+
 
 \subsubsection{矩的求法}
 
@@ -225,7 +226,7 @@ Randon-Nikodym导数是定义密度和条件期望的关键.
 \subsubsection{Fenchel共轭}
 
 Fenchel共轭是Fourier变换在凸分析中的对应. 
-对于实Hilbert空间$\cX$上的正则函数$g \colon \cX \to (-\infty, +\infty]$, 即$\dom f := \{x \in \cX \colon f(x) \in \R \neq \emptyset$, 其在$u \in \cX$的\emph{Fenchel共轭}为
+对于实Hilbert空间$\cX$上的正则函数$g \colon \cX \to (-\infty, +\infty]$, 即$\mathrm{dom} f := \{x \in \cX \colon f(x) \in \R \neq \emptyset$, 其在$u \in \cX$的\emph{Fenchel共轭}为
 \begin{equation}
 	f^*(u) = \sup_{x \in \cX} \left\{ \langle x, u \rangle - f(x) \right\}. 
 \end{equation}

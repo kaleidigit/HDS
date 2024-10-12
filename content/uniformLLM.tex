@@ -1,10 +1,15 @@
 \section{一致大数定律}
 
-经验分布函数
+设$\{X_i\}_{i=1}^n$是来自分布$F$的$n$个独立同分布样本, $F$经典的无偏估计是经验分布函数
 \begin{equation*}
-	\hat F_n(t) := \frac{1}{n} \sum_{i=1}^n \I{(-\infty], t]}(X_i)
+	\hat F_n(t) := \frac{1}{n} \sum_{i=1}^n \I{(-\infty], t]}(X_i). 
 \end{equation*}
-是未知分布函数$F(t) = \P[ X \leq t ]$的无偏估计, 强大数定律告诉我们$\hat F_n(t) \stackrel{a.s.}{\to} F(t)$, 这是一种逐点收敛. 
+强大数定律告诉我们$\hat F_n(t) \stackrel{a.s.}{\to} F(t)$, 这是一种逐点收敛. 
+
+\begin{theorem}[Glivenko-Cantelli定理]\label{thm:Glivenko-Cantelli}
+		对任意分布$F$, 经验分布$\hat F_n$是$F$在一致范数下的强相合估计, 即$\|\hat F_n - F\|_{\infty} := \sup_{t \in \R} |\hat F_n(t) - F(t)| \stackrel{a.s.}{\to} 0$. 
+\end{theorem}
+
 在统计背景下,  将$\hat F_n$代入$F$的泛函$\gamma(F)$可以得到估计$\gamma(\hat F_n)$, 例如
 
 \begin{example}
@@ -14,3 +19,98 @@
 	\end{equation*}
 	可以作为$\E g(X)$的估计. 
 \end{example}
+
+若泛函$\gamma$连续, 估计$\gamma(\hat F_n)$的相合性可以很好地被研究: 称泛函$\gamma$在$F$关于极大范数$\| \cdot \|_{\infty}$是\emph{连续的}, 如果对于任意$\epsilon > 0$, 存在$\delta > 0$, 使得对任意$\|G - F\|_{\infty} < \delta$的函数$G$, 总有$|\gamma(G) - \gamma(F)| < \epsilon$. 
+
+\subsection{函数类的一致大数定律}
+
+设$\sF$为在区域$\cX$上可积的实值函数类, $\{X_i\}_{i=1}^n$是来自分布$\P$的$n$个独立同分布样本. 
+\begin{equation*}
+	\|\P_n - \P\|_{\sF} := \sup_{f \in\cF} \left| \frac{1}{n} \sum_{i=1}^n f(X_i) - E f(X) \right|
+\end{equation*}
+在函数类$\sF$上衡量了样本平均$\frac{1}{n} \sum_i f(X_i)$和总体平均$\E f(X)$间的偏差. 
+我们称$\cF$为$\P$上的一个\emph{Glivenko-Cantelli类}, 如果$\|\P_n - \P\|_{\sF} \stackrel{\P}{\to} 0$. 
+经典的Glivenko-Cantelli定理可以看作是在示性函数类$\sF = \{\I{(- \infty, t]} \colon t \in \R \}$上的强一致定律. 
+
+
+未知分布$\P_{\theta^*}$, 其中$\theta^* \in \Omega$未知, $\{ \P_{\theta} \colon \theta \in \Omega\}$为概率分布族. 
+这里的$\Omega$可能是$\R^d$, 对应参数估计问题; 或者是函数类$\mathscr{G}$, 对应非参数问题. 
+
+估计$\theta^*$的决策方法总是基于最小化损失函数$\cL_{\theta} (X)$: 最优的$\theta$应当使得\emph{总体风险}$R(\theta, \theta^*) := \E_{\P_{\theta^*}}\cL_{\theta}$达到最小. 
+然而在实践中, 我们通常无法获得总体数据, 只能根据有限个样本$\{ X_i \}_{i=1}^n$, 在$\Omega$的某个子集$\Omega_0$上最小化\emph{经验风险}得到估计
+\begin{equation*}
+	\hat \theta 
+	= \argmin_{\theta \in \Omega_0} \hat R_n (\theta, \theta^*) 
+	= \argmin_{\theta \in \Omega_0} \frac{1}{n} \sum_{i=1}^n \cL_{\theta}(X_i). 
+\end{equation*}
+
+
+控制过度风险
+\begin{equation*}
+	\E(\hat \theta, \theta^*)
+	:= R(\hat \theta, \theta^*) - \inf_{\theta \in \Omega_0} R(\theta, \theta^*). 
+\end{equation*}
+为了方便起见, 我们假设存在某个$\theta_0 \in \Omega_0$满足$R(\theta_0, \theta^*) = \inf_{\theta \in \Omega_0}R(\theta, \theta^*)$. 
+于是过度风险可以做如下估计
+\begin{align*}
+	\E(\hat \theta, \theta^*)
+	&= \left[ R(\hat \theta, \theta^*) - \hat R_n(\hat \theta, \theta^*) \right] 
+	+ \left[ \hat R_n(\hat \theta, \theta^*) - \hat R_n(\theta_0, \theta^*) \right]
+	+ \left[ \hat R_n(\theta_0, \theta^*) - R(\theta_0, \theta^*) \right] \\
+	&\leq \|\P_n - \P\|_{\cL_{\Omega_0}} 
+	+ \left[ \hat R_n(\hat \theta, \theta^*) - \hat R_n(\theta_0, \theta^*) \right]
+	+ \|\P_n - \P\|_{\cL_{\Omega_0}}, 
+\end{align*}
+其中函数类$\cL_{\Omega_0} := \{ \cL_{\theta}(\cdot) \colon \theta \in \Omega_0 \}$. 
+而$\|\P_n - \P\|_{\cL_{\Omega_0}}$具体的
+
+
+
+
+\subsection{经验过程的尾部概率界}
+
+设$(X_1, \dots, X_n)$来自乘积分布$\mathbb{P} = \otimes_{i=1}^n \mathbb{P}_i$, 其中$\mathbb{P}_i$的支撑集$\mathcal{X}_i \subseteq \mathcal{X}$. 
+对于定义域为$\cX$函数类$\sF$, 考虑随机变量
+\begin{equation*}
+	Z := \sup_{f \in \sF} \left\{ \frac{1}{n} \sum_{i=1}^n f(X_i) \right\}. 
+\end{equation*}
+注意这里的$\sup$是对每一点$x \in \cX^n$取极大值. 
+若要考虑$\sup_{f \in \sF} \left| \frac{1}{n} \sum_i f(X_i) \right|$, 只需考虑在函数类$\tilde \sF := \sF \cup (- \sF)$上考虑上确界即可: 
+\begin{equation*}
+	\sup_{f \in \sF} \left| \frac{1}{n} \sum_i f(X_i) \right|
+	= \sup_{f \in \sF} \left\{ \max \left\{ \frac{1}{n} \sum_{i=1}^n f(X_i), - \frac{1}{n} \sum_{i=1}^n f(X_i) \right\} \right\} 
+	= \sup_{\tilde \sF} \left\{ \frac{1}{n} \sum_{i=1}^n f(X_i) \right\}
+\end{equation*}
+
+我们把Hoeffding
+
+\begin{theorem}[泛函Hoeffding不等式]
+	若对每个$f \in \sF$, 都有$f(\cX_i) \subseteq  [a_{i, f}, b_{i, f}]$, $i = 1, \dots, n$,  那么对任意$\delta \geq 0$, 成立
+	\begin{equation}
+		\P[ Z \geq \mathbb{E}[Z] + \delta] 
+		\leq \exp \left( - \frac{n \delta^2}{4 L^2} \right), 
+	\end{equation}
+	其中$L^2 = \sup_{f \in \sF} \left\{ \frac{1}{n} \sum_i (b_{i, f} - a_{i, f})^2 \right\}$. 
+\end{theorem}
+
+\begin{proof}
+	为了简便, 我们使用非重尺度化的$Z = \sup_{f \in \sF} \left\{ \sum_i f(X_i) \right\}$, 它是$\bm X = (X_1, \dots, X_n)$的泛函.  
+	
+	定义$Z_j \colon x_j \mapsto Z(X_1, \dots, X_{j-1}, x_j, X_{j+1}, \dots, X_n)$
+	
+	对于$\lambda > 0$, 由引理\ref{lemma:EntropyTensorization}、 \ref{lemma:EntropyBoundForUnivariateFunctions}, 
+	
+	对$f \in \sF$, 定义$\cA(f) := \left\{ (x_1, \dots, x_n) \colon Z = \sum_i f(x_i) \right\}$
+\end{proof}
+
+
+\begin{theorem}[经验过程的Talagrand集中度]
+	若可数函数类$\sF$被$b$一致控制, 那么对任意$\delta > 0$, 成立
+	\begin{equation*}
+		\P[ Z \geq \E Z + \delta] 
+		\geq 2 \exp \left( - \frac{n \delta^2}{8 e \E \Sigma^2 + 4 b \delta} \right), 
+	\end{equation*}
+	其中$\Sigma^2 = \sup_{f \in \sF} \frac1n f^2(X_i)$. 
+\end{theorem}
+
+\subsection{Rademacher复杂度、VC维数}
