@@ -2,6 +2,40 @@
 
 \subsection{概率论}
 
+\begin{theorem}[Borel-Cantelli引理]
+	设$(A_n)_{n \in \N}$为事件序列.
+	\begin{enumerate}
+		\item 若$\sum_n \P(A_n) < \infty$, 则$\P(A_n \text{ i.o.} ) =0$. 
+		\item 若$A_n$\textbf{相互独立}且$\sum_n \P(A_n) = \infty$, 则$\P(A_n \text{ i.o.} ) =1$.
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	\begin{enumerate}
+		\item 由$\P$上半连续、$\sigma$-可加性和Cauchy收敛准则: 
+		\begin{equation*} 
+			\P\left(\lim_{n \to \infty} \bigcup_{m \geq n} A_m\right) 
+			= \lim_{n \to \infty} \P \left(\bigcup_{m \geq n} A_m\right) 
+			\leq \lim_{n \to \infty} \sum_{m \geq n} \P(A_m) = 0. 
+		\end{equation*}
+		\item 由De Morgan律和$\P$下半连续
+		\begin{equation*}
+			\P \left( \left(\bigcap_{m=1}^{\infty} \bigcup_{n=m}^{\infty} A_n \right)^c \right)
+			= \P \left( \bigcup_{m=1}^{\infty} \bigcap_{n=m}^{\infty} A_n^c \right) 
+			= \lim_{m \to \infty} \P\left( \bigcap_{n=m}^{\infty} A_n^c \right).
+		\end{equation*}
+		而对任意$m \in \N$, 由不等式$\log(1-x) \leq -x$在$x \in [0,1]$成立, 总有
+		\begin{align*}
+			\P \left( \bigcap_{n=m}^{\infty} A_n^c \right) 
+			&= \lim_{N \to \infty} \P \left( \bigcap_{n=m}^{N} A_n^c \right) 
+			= \prod_{n=m}^{\infty} \left( 1 - \P(A_n) \right) \\
+			&= \exp\left( \sum_{n=m}^{\infty} \log(1-\P(A_n)) \right)
+			\leq \exp\left(- \sum_{n=m}^{\infty} \P(A_n) \right) 
+			= 0. 
+		\end{align*}
+	\end{enumerate}
+\end{proof}
+
+
 \subsubsection{积分变换、Stieltjes积分}
 
 \begin{theorem}[积分变换]\label{thm:IntegralTransform}

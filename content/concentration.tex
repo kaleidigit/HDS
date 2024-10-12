@@ -48,7 +48,7 @@
 	\begin{equation}
 		\mathbb{E}[e^{\lambda X}] = e^{\frac{\sigma^2 \lambda^2}{2} + \mu \lambda} 		
 	\end{equation}
-	对于$\lambda \in \R$总是存在. 
+	在$\lambda \in \R$总是存在. 
 	通过简单的求导可以看到最优的$\lambda^* = \frac{t}{\sigma^2}$, 于是有
 	\begin{equation}\label{eq:UpperDeviationOfSubGuassianRV}
 		\mathbb{P}[X \geq \mu + t] \leq e^{- \frac{t^2}{2 \sigma^2}},\; \forall t \geq 0. 
@@ -67,7 +67,7 @@
 	称$\sigma$为$X$的次高斯参数. 
 \end{definition}
 可以看到, 参数为$\sigma$的次高斯随机变量$X$总是满足上偏差不等式 \eqref{eq:UpperDeviationOfSubGuassianRV}.  
-此外, 由于$-X$也是次高斯随机变量, 可以得到下偏差不等式$\mathbb{P}[X \leq \mu - t] \leq e^{- \frac{t^2}{2 \sigma^2}}$对任意$t \geq 0$成立, 于是次高斯随机变量满足\emph{集中不等式}
+此外, 由于$-X$也是次高斯随机变量, 可以得到下偏差不等式: $\mathbb{P}[X \leq \mu - t] \leq e^{- \frac{t^2}{2 \sigma^2}}$对任意$t \geq 0$成立, 于是次高斯随机变量满足\emph{集中不等式}
 \begin{equation}\label{eq:SubGuassianConcentration}
 	\mathbb{P}[|X - \mu| \geq t] \leq 2 e^{- \frac{t^2}{2 \sigma^2}},\; \forall t > 0. 
 \end{equation}
@@ -100,7 +100,7 @@
 	若随机变量$X \in [a, b]$ a.s., 那么它是参数为$\frac{b-a}{2}$的次高斯随机变量. 
 \end{lemma}
 \begin{proof}
-	定义随机变量$X_{\lambda}$, 其关于$X$的分布的Radon–Nikodym导数为$\frac{e^{\lambda X}}{\mathbb{E}[e^{\lambda X}]}$, 记$\E[X_{\lambda}] = \mu$. 
+	定义随机变量$X_{\lambda}$, 其关于$X$的分布的Radon–Nikodym导数为$\frac{e^{\lambda X}}{\mathbb{E}[e^{\lambda X}]}$. 
 	于是$X_{\lambda} \in [a, b]$ a.s., 从而$\left|X_{\lambda} - \frac{a+b}{2} \right| \leq \frac{b-a}{2}$ a.s., 
 	\begin{equation*}
 		\var X_{\lambda}
@@ -108,14 +108,15 @@
 		\leq \mathbb{E}\left[X_{\lambda} - \frac{a+b}{2} \right]^2 
 		\leq \left(\frac{b-a}{2}\right)^2. 
 	\end{equation*}
-	记$\psi(\lambda) := \log \mathbb{E}[e^{\lambda X}]$, 它满足$\psi(0) = 0$, $\psi'(0) = \frac{\mathbb{E}[X e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} \big|_{\lambda = 0} = \mu$, 且对任意$\lambda$,  
+	记记$\E[X] = \mu$, $\psi(\lambda) := \log \mathbb{E}[e^{\lambda X}]$, 它满足$\psi(0) = 0$, $\psi'(0) = \frac{\mathbb{E}[X e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} \big|_{\lambda = 0} = \mu$, 且对任意$\lambda$,  
 	\begin{equation*}
 		\psi''(\lambda) 
 		= \frac{\mathbb{E}[X^2 e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} - \left( \frac{\mathbb{E}[X e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} \right)^2
 		= \mathbb{E}X_{\lambda}^2 - (\mathbb{E}X_{\lambda})^2
 		= \var X_{\lambda}.  
 	\end{equation*}
-	于是$\psi(\lambda)$的在原点的Taylor展开为$\psi(\lambda) = \lambda \mu + \frac{\lambda^2}{2} \psi''(\xi) \leq \lambda \mu + \frac{\lambda^2}{2} \left(\frac{b-a}{4}\right)^2$. 
+	于是$\psi(\lambda)$的在原点的Taylor展开为$\psi(\lambda) = \lambda \mu + \frac{\lambda^2}{2} \psi''(\xi) \leq \lambda \mu + \frac{\lambda^2}{2} \left(\frac{b-a}{2}\right)^2$. 
+	从而$\mathbb{E}[e^{\lambda(X - \mu)}] \leq \exp\left(\frac{\lambda^2}{2} \left(\frac{b-a}{2}\right)^2\right)$, 即$X$是参数为$\frac{b-a}{2}$的次高斯随机变量. 
 \end{proof}
 
 
@@ -165,10 +166,9 @@
 
 之前我们讨论了独立随机变量和$f(X_1, \dots, X_n) = \sum_i X_i$的一些尾概率界. 对于更一般的函数$f$，建立尾概率界的经典方法方法是鞅的分解. 
 
-设$\{X_k\}_{k=1}^n$为一列独立随机变量, 记$\bm X = (X_1, \dots, X_n)$, $\bm X_1^k = (X_1, \dots, X_k)$. 
-对于函数$f \colon \R^n \to \R$, 考虑随机变量序列$Y_0 = \mathbb{E}[f(\bm X)]$, $Y_k = \mathbb{E}[f(\bm X)|\bm X_1^k]$, $k = 1, \dots, n$. 
-由条件期望的性质易见$Y_n = f(\bm X)$. 
-这样的$\{Y_k\}_{k=1}^n$构成了关于$\{\bm X_1^k\}_{k=1}^n$鞅: 
+设随机向量$\bm X = (X_1, \dots, X_n)$各分量独立, 函数$f \colon \R^n \to \R$满足$\mathbb{E}[f(\bm X)] < \infty$. 
+考虑随机变量序列$Y_0 = \mathbb{E}[f(\bm X)]$, $Y_k = \mathbb{E}[f(\bm X)|\bm X_1^k]$, $k = 1, \dots, n$. 
+由条件期望的性质易见$Y_n = f(\bm X)$ a.s. 且$\{Y_k\}_{k=1}^n$是适应于$\{\bm X_1^k\}_{k=1}^n$的鞅: 
 \begin{itemize}
 	\item 由Jensen不等式和重期望公式, 
 		\begin{equation*}
@@ -189,7 +189,7 @@
 \end{equation*}
 
 我们先来证明一个一般的鞅差序列的Bernstein型不等式界. 
-\begin{theorem}
+\begin{lemma}
 	设鞅差序列$\{(D_k, \cF_k)\}_{k=1}^{\infty}$满足次指数条件
 	\begin{equation*}
 		\mathbb{E}\left[ e^{\lambda D_k} | \cF_{k-1} \right] 
@@ -207,7 +207,7 @@
 				\end{cases}
 			\end{equation*}
 	\end{enumerate}
-\end{theorem}
+\end{lemma}
 \begin{proof}
 	我们使用控制鞅差和的标准方法, 对于$|\lambda| < \alpha_*^{-1}$, 
 	\begin{align*}
@@ -216,36 +216,53 @@
 		= \mathbb{E}\left[ e^{\lambda \sum_{k=1}^{n-1} D_k} \mathbb{E}[e^{\lambda D_n} | \cF_{n-1}] \right] \\
 		&\leq \mathbb{E}\left[ e^{\lambda \sum_{k=1}^{n-1} D_k} \right]  e^{\frac{\lambda^2 \nu_n^2}{2}} 
 		\leq \dots
-		\leq e^{\lambda^2 \sum_k \nu^2 / 2}
+		\leq \exp\left(\frac{\lambda^2}{2} \cdot  \sum_{k=1}^n \nu_k^2 \right)
 	\end{align*}
 	于是$\sum_k D_k$是次指数随机变量, 再沿用Chernoff方法, 可以得到集中不等式. 
 \end{proof} 
 
-\begin{corollary}[Azuma–Hoeffding]
+\begin{theorem}[Azuma–Hoeffding]\label{thm:Azuma–Hoeffding}
 	设鞅差序列$\{(D_k, \cF_k)\}_{k=1}^{\infty}$中$D_k \in [a_k, b_k]$ a.s., 我们有集中不等式
 	\begin{equation*}
 		\mathbb{E} \left[ \left| \sum_{k=1}^n D_k \right| \geq t \right]
 		\leq 2 \exp \left(- \frac{2 t^2}{\sum_k (b_k - a_k)^2} \right), 
 		\quad \forall t \geq 0. 
-	\end{equation*}
-\end{corollary}
+	\end{equation*}	
+\end{theorem}
 \begin{proof}
 	由引理\ref{lemma:SubGaussianParameterOfBddRV}, 条件随机变量$e^{\lambda D_k} | \cF_{k-1}$是参数为$\frac{b_k - a_k}{2}$的次高斯随机变量. 
 	再根据上一证明中控制鞅差和的方法, 不难得到Hoeffding型集中不等式. 
 \end{proof}
 
-称函数$f \colon \R^n \to \R$满足参数为$(L_1, \dots, L_n)$的有界差不等式, 如果对指标$k = 1, \dots, n$成立
+称函数$f \colon \R^n \to \R$满足参数为$(L_1, \dots, L_n)$的\emph{有界差不等式}, 如果对指标$k = 1, \dots, n$, 总有
+\begin{equation*}
+	|f(\bm x_1^{k-1}, x_k, \bm x_{k-2}^n) - f(\bm x_1^{k-1}, x_k', \bm x_{k-2}^n)| 
+	\leq L_k. 
+\end{equation*}
+可以证明, 满足有界差不等式的函数一定有界, 而有界函数显然满足有界差不等式. 
+参数的好处只是为了做出更精确的估计罢了. 
 
 \begin{corollary}[有界差不等式]
 	设函数$f \colon \R^n \to \R$满足参数为$(L_1, \dots, L_n)$的有界差不等式, 随机向量$\bm X = (X_1, \dots, X_n)$各分量独立, 我们有集中不等式
 	\begin{equation*}
-		\mathbb{E}[|f(X) - E f(X)| \geq t] 
+		\mathbb{P}[|f(X) - \E[f(X)]| \geq t] 
 		\leq 2 \exp\left( - \frac{2 t^2}{\sum_k L_k^2} \right), 
 		\quad \forall t \geq 0. 
 	\end{equation*}
 \end{corollary}
 \begin{proof}
-	
+	定义随机变量 
+	\begin{align*}
+		A_k &:= \inf_x \E[f(\bm X)|\bm X_1^{k-1}, X_k = x] - \E[f(\bm X)|\bm X_1^{k-1}], \\
+		B_k &:= \sup_x \E[f(\bm X)|\bm X_1^{k-1}, X_k = x] - \E[f(\bm X)|\bm X_1^{k-1}]. 
+	\end{align*} 
+	于是$D_k \in [A_k, B_k]$ a.s. 且区间长度
+	\begin{equation*}
+		B_k - A_k
+		= \sup_{x, y} \E[f(\bm X_1^k, x, \bm X_{k+1}^n) - f(\bm X_1^k, y, \bm X_{k+1}^n) | X_1^{k-1}] 
+		\leq L_k. 
+	\end{equation*}
+	于是由定理\ref{thm:Azuma–Hoeffding}可以得到集中不等式
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
