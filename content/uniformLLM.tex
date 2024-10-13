@@ -17,26 +17,26 @@
 	\begin{equation*}
 		\gamma_g(\hat F_n) = \frac{1}{n} \sum_{n=1}^n g(X_i)
 	\end{equation*}
-	可以作为$\E g(X)$的估计. 
+	可以作为$\mathbb{E} g(X)$的估计. 
 \end{example}
 
 若泛函$\gamma$连续, 估计$\gamma(\hat F_n)$的相合性可以很好地被研究: 称泛函$\gamma$在$F$关于极大范数$\| \cdot \|_{\infty}$是\emph{连续的}, 如果对于任意$\epsilon > 0$, 存在$\delta > 0$, 使得对任意$\|G - F\|_{\infty} < \delta$的函数$G$, 总有$|\gamma(G) - \gamma(F)| < \epsilon$. 
 
 \subsection{函数类的一致大数定律}
 
-设$\sF$为在区域$\cX$上可积的实值函数类, $\{X_i\}_{i=1}^n$是来自分布$\P$的$n$个独立同分布样本. 
+设$\sF$为在区域$\cX$上可积的实值函数类, $\{X_i\}_{i=1}^n$是来自分布$\mathbb{P}$的$n$个独立同分布样本. 
 \begin{equation*}
-	\|\P_n - \P\|_{\sF} := \sup_{f \in\cF} \left| \frac{1}{n} \sum_{i=1}^n f(X_i) - E f(X) \right|
+	\|\mathbb{P}_n - \mathbb{P}\|_{\sF} := \sup_{f \in\cF} \left| \frac{1}{n} \sum_{i=1}^n f(X_i) - E f(X) \right|
 \end{equation*}
-在函数类$\sF$上衡量了样本平均$\frac{1}{n} \sum_i f(X_i)$和总体平均$\E f(X)$间的偏差. 
-我们称$\cF$为$\P$上的一个\emph{Glivenko-Cantelli类}, 如果$\|\P_n - \P\|_{\sF} \stackrel{\P}{\to} 0$. 
+在函数类$\sF$上衡量了样本平均$\frac{1}{n} \sum_i f(X_i)$和总体平均$\mathbb{E} f(X)$间的偏差. 
+我们称$\cF$为$\mathbb{P}$上的一个\emph{Glivenko-Cantelli类}, 如果$\|\mathbb{P}_n - \mathbb{P}\|_{\sF} \stackrel{\mathbb{P}}{\to} 0$. 
 经典的Glivenko-Cantelli定理可以看作是在示性函数类$\sF = \{\I{(- \infty, t]} \colon t \in \R \}$上的强一致定律. 
 
 
-未知分布$\P_{\theta^*}$, 其中$\theta^* \in \Omega$未知, $\{ \P_{\theta} \colon \theta \in \Omega\}$为概率分布族. 
+未知分布$\mathbb{P}_{\theta^*}$, 其中$\theta^* \in \Omega$未知, $\{ \mathbb{P}_{\theta} \colon \theta \in \Omega\}$为概率分布族. 
 这里的$\Omega$可能是$\R^d$, 对应参数估计问题; 或者是函数类$\mathscr{G}$, 对应非参数问题. 
 
-估计$\theta^*$的决策方法总是基于最小化损失函数$\cL_{\theta} (X)$: 最优的$\theta$应当使得\emph{总体风险}$R(\theta, \theta^*) := \E_{\P_{\theta^*}}\cL_{\theta}$达到最小. 
+估计$\theta^*$的决策方法总是基于最小化损失函数$\cL_{\theta} (X)$: 最优的$\theta$应当使得\emph{总体风险}$R(\theta, \theta^*) := \mathbb{E}_{\mathbb{P}_{\theta^*}}\cL_{\theta}$达到最小. 
 然而在实践中, 我们通常无法获得总体数据, 只能根据有限个样本$\{ X_i \}_{i=1}^n$, 在$\Omega$的某个子集$\Omega_0$上最小化\emph{经验风险}得到估计
 \begin{equation*}
 	\hat \theta 
@@ -47,22 +47,22 @@
 
 控制过度风险
 \begin{equation*}
-	\E(\hat \theta, \theta^*)
+	\mathbb{E}(\hat \theta, \theta^*)
 	:= R(\hat \theta, \theta^*) - \inf_{\theta \in \Omega_0} R(\theta, \theta^*). 
 \end{equation*}
 为了方便起见, 我们假设存在某个$\theta_0 \in \Omega_0$满足$R(\theta_0, \theta^*) = \inf_{\theta \in \Omega_0}R(\theta, \theta^*)$. 
 于是过度风险可以做如下估计
 \begin{align*}
-	\E(\hat \theta, \theta^*)
+	\mathbb{E}(\hat \theta, \theta^*)
 	&= \left[ R(\hat \theta, \theta^*) - \hat R_n(\hat \theta, \theta^*) \right] 
 	+ \left[ \hat R_n(\hat \theta, \theta^*) - \hat R_n(\theta_0, \theta^*) \right]
 	+ \left[ \hat R_n(\theta_0, \theta^*) - R(\theta_0, \theta^*) \right] \\
-	&\leq \|\P_n - \P\|_{\cL_{\Omega_0}} 
+	&\leq \|\mathbb{P}_n - \mathbb{P}\|_{\cL_{\Omega_0}} 
 	+ \left[ \hat R_n(\hat \theta, \theta^*) - \hat R_n(\theta_0, \theta^*) \right]
-	+ \|\P_n - \P\|_{\cL_{\Omega_0}}, 
+	+ \|\mathbb{P}_n - \mathbb{P}\|_{\cL_{\Omega_0}}, 
 \end{align*}
 其中函数类$\cL_{\Omega_0} := \{ \cL_{\theta}(\cdot) \colon \theta \in \Omega_0 \}$. 
-而$\|\P_n - \P\|_{\cL_{\Omega_0}}$具体的
+而$\|\mathbb{P}_n - \mathbb{P}\|_{\cL_{\Omega_0}}$具体的
 
 
 
@@ -87,7 +87,7 @@
 \begin{theorem}[泛函Hoeffding不等式]
 	若对每个$f \in \sF$, 都有$f(\cX_i) \subseteq  [a_{i, f}, b_{i, f}]$, $i = 1, \dots, n$,  那么对任意$\delta \geq 0$, 成立
 	\begin{equation}
-		\P[ Z \geq \mathbb{E}[Z] + \delta] 
+		\mathbb{P}[ Z \geq \mathbb{E}[Z] + \delta] 
 		\leq \exp \left( - \frac{n \delta^2}{4 L^2} \right), 
 	\end{equation}
 	其中$L^2 = \sup_{f \in \sF} \left\{ \frac{1}{n} \sum_i (b_{i, f} - a_{i, f})^2 \right\}$. 
@@ -107,8 +107,8 @@
 \begin{theorem}[经验过程的Talagrand集中度]
 	若可数函数类$\sF$被$b$一致控制, 那么对任意$\delta > 0$, 成立
 	\begin{equation*}
-		\P[ Z \geq \E Z + \delta] 
-		\geq 2 \exp \left( - \frac{n \delta^2}{8 e \E \Sigma^2 + 4 b \delta} \right), 
+		\mathbb{P}[ Z \geq \mathbb{E}[Z] + \delta] 
+		\geq 2 \exp \left( - \frac{n \delta^2}{8 e \mathbb{E} \Sigma^2 + 4 b \delta} \right), 
 	\end{equation*}
 	其中$\Sigma^2 = \sup_{f \in \sF} \frac1n f^2(X_i)$. 
 \end{theorem}

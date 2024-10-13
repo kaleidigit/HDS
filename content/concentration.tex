@@ -20,9 +20,22 @@
 \begin{equation}\label{eq:Markov'sInequality}
 	\mathbb{P}[X \geq t] \leq \frac{\mathbb{E}[f(X)]}{f(t)}.
 \end{equation}
-特别地, 取$f(u) = u^2$, $X = |Y - \mathbb{E}Y|$, 有\emph{Chebyshev不等式}$\mathbb{P}[|Y - \mathbb{E}Y| \geq t] \leq \frac{\var Y}{t^2}$. 
+对于随机变量$Y \in L^2$, 取$X = |Y - \mathbb{E}Y|$, $f(u) = u^k\; (u \geq 0)$, 可以得到基于高阶矩的集中不等式\footnote{$k=2$时, 就是经典的Chebyshev不等式. }
+\begin{equation*}
+	\mathbb{P}[|Y - \mathbb{E}Y| \geq t] \leq \frac{ \mathbb{E}[ |Y - \mathbb{E}Y|^k]}{t^k}. 
+\end{equation*} 
 
-更一般的, 考虑多个独立随机变量的函数$f(X_1, \dots, X_n)$的集中不等式
+
+要进入高维统计, 我们自然地考虑多个随机变量的函数$f(X_1, \dots, X_n)$的集中不等式. 
+例如当$f$是求和函数时, 大数定律告诉
+
+这是渐进结果
+
+非渐进视角
+
+$1$-范数-通常与维数$n$有关
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -37,11 +50,12 @@
 	\leq \frac{\mathbb{E}[e^{\lambda(X - \mathbb{E}X)}]}{e^{\lambda t}},\;
 	\forall \lambda \in I^*.
 \end{equation*}
-通过选取最优的$\lambda$, 我们可以得到\emph{Chernoff界}
+通过选取最优的$\lambda$, 我们可以得到\emph{Chernoff界}\footnote{在最优的$k$下, 基于高阶矩的Markov不等式不会比Chernoff界中基于矩母函数获得的界更差. 但在实际应用中, 由于矩母函数计算的便利性, Chernoff界仍有着广泛的应用.}
 \begin{equation*}
 	\mathbb{P}[X \geq \mathbb{E}X + t]
 	\leq \exp \left[ \inf_{\lambda \in I^*} \left\{ \log \mathbb{E}[e^{\lambda(X - \mathbb{E}X)}] - \lambda t \right\} \right]. 
 \end{equation*}
+于是随机变量的集中不等式可以从其矩母函数的界得到. 
 
 \begin{example}[Gauss随机变量的上偏差不等式]
 	考虑最经典的Gauss随机变量$X \sim N(\mu, \sigma^2)$, 其矩母函数
@@ -55,7 +69,7 @@
 	\end{equation}
 \end{example}
 
-\subsubsection{次高斯随机变量}
+\subsubsection{次高斯随机变量与Hoeffding界}
 
 我们将Gauss随机变量作为“模版”来研究其他随机变量: 如果某个随机变量的中心矩母函数能被中心Gauss随机变量的矩母函数所控制, 利用Chernoff方法, 它的尾概率也会被中心Gauss随机变量的尾概率控制. 
 
@@ -94,6 +108,19 @@
 	\end{enumerate}
 \end{theorem}
 
+矩母函数的对数$\psi(\lambda) := \log \mathbb{E}[e^{\lambda X}] \lesssim \lambda^2$, 或者说$\psi''(\lambda) \lesssim 1$\footnote{对应引理\ref{lemma:SubGaussianParameterOfBddRV}的证明. } ; $G(\lambda) := \lambda^{-1} \psi(\lambda) \lesssim \lambda$, 或者说$G'(\lambda) \lesssim 1$\footnote{对应定理\ref{thm:HerbstArgument}的证明. }
+
+
+利用独立性和Chernoff方法, 容易证明下述命题. 
+\begin{proposition}[Hoeffding界]
+	设$\{X_i\}_{i=1}^n$为均值为$\mu_i$, 参数为$\sigma_i$的独立次高斯随机变量, 我们有上偏差不等式
+	\begin{equation}
+		\mathbb{P} \left[ \sum_{i=1}^n (X_i - \mu_i) \geq t \right]
+		\leq \exp \left( - \frac{t^2}{2 \sum_{i=1}^n \sigma_i^2} \right ),\; 
+		\forall t \geq 0.
+	\end{equation}
+\end{proposition}
+
 直观上, 一个有界随机变量没有无限的尾部, 因此它应当是次高斯随机变量. 
 事实上, 我们有如下强结论. 
 \begin{lemma}[有界随机变量的次高斯参数]\label{lemma:SubGaussianParameterOfBddRV}
@@ -108,7 +135,7 @@
 		\leq \mathbb{E}\left[X_{\lambda} - \frac{a+b}{2} \right]^2 
 		\leq \left(\frac{b-a}{2}\right)^2. 
 	\end{equation*}
-	记记$\E[X] = \mu$, $\psi(\lambda) := \log \mathbb{E}[e^{\lambda X}]$, 它满足$\psi(0) = 0$, $\psi'(0) = \frac{\mathbb{E}[X e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} \big|_{\lambda = 0} = \mu$, 且对任意$\lambda$,  
+	记记$\mathbb{E}[X] = \mu$, $\psi(\lambda) := \log \mathbb{E}[e^{\lambda X}]$, 它满足$\psi(0) = 0$, $\psi'(0) = \frac{\mathbb{E}[X e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} \big|_{\lambda = 0} = \mu$, 且对任意$\lambda$,  
 	\begin{equation*}
 		\psi''(\lambda) 
 		= \frac{\mathbb{E}[X^2 e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} - \left( \frac{\mathbb{E}[X e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} \right)^2
@@ -119,21 +146,12 @@
 	从而$\mathbb{E}[e^{\lambda(X - \mu)}] \leq \exp\left(\frac{\lambda^2}{2} \left(\frac{b-a}{2}\right)^2\right)$, 即$X$是参数为$\frac{b-a}{2}$的次高斯随机变量. 
 \end{proof}
 
-
-\begin{proposition}[Hoeffding界]
-	设$\{X_i\}_{i=1}^n$为均值为$\mu_i$, 参数为$\sigma_i$的独立次高斯随机变量, 我们有上偏差不等式
-	\begin{equation}
-		\mathbb{P} \left[ \sum_{i=1}^n (X_i - \mu_i) \geq t \right]
-		\leq \exp \left( - \frac{t^2}{2 \sum_{i=1}^n \sigma_i^2} \right ),\; 
-		\forall t \geq 0.
-	\end{equation}
-\end{proposition}
-\begin{proof}
-	
-\end{proof}
+\begin{corollary}
+	经典的Hoeffding不等式. 
+\end{corollary}
 
 
-\subsubsection{次指数随机变量}
+\subsubsection{次指数随机变量与Bernstein界}
 
 很多时候随机变量的中心矩母函数只会在$0$的某个邻域内存在, 相应地, 我们将次高斯随机变量的条件放宽如下. 
 \begin{definition}[次指数随机变量]
@@ -159,6 +177,9 @@
 	\end{equation*}
 \end{theorem}
 
+\begin{theorem}[次高斯随机变量的等价定义]
+	
+\end{theorem}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -189,24 +210,21 @@
 \end{equation*}
 
 我们先来证明一个一般的鞅差序列的Bernstein型不等式界. 
-\begin{lemma}
+\begin{lemma}[Azuma]
 	设鞅差序列$\{(D_k, \cF_k)\}_{k=1}^{\infty}$满足次指数条件
 	\begin{equation*}
 		\mathbb{E}\left[ e^{\lambda D_k} | \cF_{k-1} \right] 
 		\leq e^{\frac{\lambda^2 \nu_k^2}{2}} \text{ a.e. },\; \forall |\lambda| < \frac{1}{\alpha_k}, 
 	\end{equation*}
-	那么
-	\begin{enumerate}[label=(\arabic*)]
-		\item 和式$\sum_k D_k$是参数为$\left( \sqrt{\sum_k \nu_k^2}, \alpha_* \right)$的次指数随机变量, 其中$\alpha_* := \max_k \alpha_k$; 
-		\item 和式$\sum_k D_k$满足集中不等式
-			\begin{equation*}
-				\mathbb{P} \left[ \left| \sum_{k=1}^n D_k \right| \geq t \right] \leq 
-				\begin{cases}
-					2 \exp\left( -\frac{t^2}{2 \sum_k \nu_k^2} \right), & 0 \leq t \leq \alpha_*^{-1} \sum_k \nu_k^2, \\
-					2 \exp\left(- \frac{t}{2 \alpha_*}\right), & t > \alpha_*^{-1} \sum_k \nu_k^2.
-				\end{cases}
-			\end{equation*}
-	\end{enumerate}
+	那么和式$\sum_k D_k$是参数为$\left( \sqrt{\sum_k \nu_k^2}, \alpha_* \right)$的次指数随机变量, 其中$\alpha_* := \max_k \alpha_k$.  
+	再沿用Chernoff方法, 可以得到集中不等式
+	\begin{equation*}
+		\mathbb{P} \left[ \left| \sum_{k=1}^n D_k \right| \geq t \right] \leq 
+		\begin{cases}
+			2 \exp\left( -\frac{t^2}{2 \sum_k \nu_k^2} \right), & 0 \leq t \leq \alpha_*^{-1} \sum_k \nu_k^2, \\
+			2 \exp\left(- \frac{t}{2 \alpha_*}\right), & t > \alpha_*^{-1} \sum_k \nu_k^2.
+		\end{cases}
+	\end{equation*}
 \end{lemma}
 \begin{proof}
 	我们使用控制鞅差和的标准方法, 对于$|\lambda| < \alpha_*^{-1}$, 
@@ -216,15 +234,14 @@
 		= \mathbb{E}\left[ e^{\lambda \sum_{k=1}^{n-1} D_k} \mathbb{E}[e^{\lambda D_n} | \cF_{n-1}] \right] \\
 		&\leq \mathbb{E}\left[ e^{\lambda \sum_{k=1}^{n-1} D_k} \right]  e^{\frac{\lambda^2 \nu_n^2}{2}} 
 		\leq \dots
-		\leq \exp\left(\frac{\lambda^2}{2} \cdot  \sum_{k=1}^n \nu_k^2 \right)
+		\leq \exp\left(\frac{\lambda^2}{2} \cdot  \sum_{k=1}^n \nu_k^2 \right).
 	\end{align*}
-	于是$\sum_k D_k$是次指数随机变量, 再沿用Chernoff方法, 可以得到集中不等式. 
 \end{proof} 
 
-\begin{theorem}[Azuma–Hoeffding]\label{thm:Azuma–Hoeffding}
-	设鞅差序列$\{(D_k, \cF_k)\}_{k=1}^{\infty}$中$D_k \in [a_k, b_k]$ a.s., 我们有集中不等式
+\begin{theorem}[Azuma–Hoeffding不等式]\label{thm:Azuma–Hoeffding}
+	若鞅差序列$\{(D_k, \cF_k)\}_{k=1}^{\infty}$满足$D_k \in [a_k, b_k]$ a.s., 则有集中不等式
 	\begin{equation*}
-		\mathbb{E} \left[ \left| \sum_{k=1}^n D_k \right| \geq t \right]
+		\mathbb{P} \left[ \left| \sum_{k=1}^n D_k \right| \geq t \right]
 		\leq 2 \exp \left(- \frac{2 t^2}{\sum_k (b_k - a_k)^2} \right), 
 		\quad \forall t \geq 0. 
 	\end{equation*}	
@@ -245,7 +262,7 @@
 \begin{corollary}[有界差不等式]
 	设函数$f \colon \R^n \to \R$满足参数为$(L_1, \dots, L_n)$的有界差不等式, 随机向量$\bm X = (X_1, \dots, X_n)$各分量独立, 我们有集中不等式
 	\begin{equation*}
-		\mathbb{P}[|f(X) - \E[f(X)]| \geq t] 
+		\mathbb{P}[|f(X) - \mathbb{E}[f(X)]| \geq t] 
 		\leq 2 \exp\left( - \frac{2 t^2}{\sum_k L_k^2} \right), 
 		\quad \forall t \geq 0. 
 	\end{equation*}
@@ -253,39 +270,42 @@
 \begin{proof}
 	定义随机变量 
 	\begin{align*}
-		A_k &:= \inf_x \E[f(\bm X)|\bm X_1^{k-1}, X_k = x] - \E[f(\bm X)|\bm X_1^{k-1}], \\
-		B_k &:= \sup_x \E[f(\bm X)|\bm X_1^{k-1}, X_k = x] - \E[f(\bm X)|\bm X_1^{k-1}]. 
+		A_k &:= \inf_x \mathbb{E}[f(\bm X)|\bm X_1^{k-1}, X_k = x] - \mathbb{E}[f(\bm X)|\bm X_1^{k-1}], \\
+		B_k &:= \sup_x \mathbb{E}[f(\bm X)|\bm X_1^{k-1}, X_k = x] - \mathbb{E}[f(\bm X)|\bm X_1^{k-1}]. 
 	\end{align*} 
 	于是$D_k \in [A_k, B_k]$ a.s. 且区间长度
 	\begin{equation*}
 		B_k - A_k
-		= \sup_{x, y} \E[f(\bm X_1^k, x, \bm X_{k+1}^n) - f(\bm X_1^k, y, \bm X_{k+1}^n) | X_1^{k-1}] 
+		= \sup_{x, y} \mathbb{E}[f(\bm X_1^k, x, \bm X_{k+1}^n) - f(\bm X_1^k, y, \bm X_{k+1}^n) | X_1^{k-1}] 
 		\leq L_k. 
 	\end{equation*}
 	于是由定理\ref{thm:Azuma–Hoeffding}可以得到集中不等式
 \end{proof}
 
+\begin{example}
+	若函数$f$关于Hamming距离$d_H(\bm x, \bm y) = \sum_k \I{\{x_k \neq y_k\}}$是$L$-Lipschitz的, 那么$f$满足参数为$(L, \dots, L)$的有界差不等式. 
+	于是对于各分量独立的随机向量$\bm X$, 有$\mathbb{P}[|f(X) - \mathbb{E}[f(X)]| \geq t] \leq 2 e^{-\frac{2 t^2}{n L^2}}$, $\forall t \geq 0$. 
+\end{example}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{熵方法}
-设随机变量$X \sim \mathbb{P}$, 给定凸函数$\Phi \colon \R \to \R$, 若$X$和$\Phi(X)$的期望存在, 则概率分布空间上的泛函
+
+设随机变量$X \sim \mathbb{P}$, 给定凸函数$\Phi \colon \R \to \R$, 若$X$和$\Phi(X)$的期望存在, 则称概率分布空间上的泛函
 \begin{equation*}
-	\cH_\Phi(X) := \mathbb{E}[\Phi(X)] - \Phi(\mathbb{E}[X])  
+	\mathcal{H}_\Phi(X) := \mathbb{E}[\Phi(X)] - \Phi(\mathbb{E}[X])  
 \end{equation*}
-称为$X$的$\Phi$熵.
-由Jensen不等式易见$\cH \geq 0$.
-这样的泛函可以衡量随机变量随机性的大小: 
+为$X$的$\Phi$-熵.
+由Jensen不等式易见$\mathcal{H} \geq 0$, 它可以衡量随机变量随机性的大小: 
 \begin{itemize}
-	\item 若$X = C$ a.e., 那么$\cH_\Phi (X) = 0$; 
-	\item 特别地, 取$\Phi(u) = u^2$时, 此时熵$\cH_\Phi(X) = \mathbb{E}[X^2] - (\mathbb{E}[X])^2$就是方差. 根据Chebyshev不等式, 我们可以利用方差熵来控制尾部概率; 
+	\item 若$X = C$ a.e., 那么$\mathcal{H}_\Phi (X) = 0$; 
+	\item 特别地, 取$\Phi(u) = u^2$时, 此时熵$\mathcal{H}_\Phi(X) = \mathbb{E}[X^2] - (\mathbb{E}[X])^2$就是方差. 根据Chebyshev不等式, 我们可以利用方差熵来控制尾部概率; 
 	\item 此外, 取$\Phi(u) = - \log u$, 随机变量$Z = e^{\lambda X}$时, 
 		\begin{equation*}
-			\cH_\Phi(Z) 
+			\mathcal{H}_\Phi(Z) 
 			= - \lambda \mathbb{E}X + \log \mathbb{E}[e^{\lambda X}] 
 			= \log \mathbb{E}[e^{\lambda(X - \mathbb{E}X)}], 
 		\end{equation*}
-		这样的熵对应的是中心化的矩母函数, 可以利用这样的熵来计算尾部概率的Chernoff界. 
+		这样的熵对应的是中心化的矩母函数, 可以用来计算尾部概率的Chernoff界. 
 \end{itemize}
-
 之后, 我们总是考虑非负随机变量$e^{\lambda X}$由凸函数$\Phi \colon [0, \infty) \to \R$: 
 \begin{equation*}
 	\Phi(u) = 
@@ -295,7 +315,7 @@
 \end{equation*}
 诱导的熵: 
 \begin{equation}\label{eq:EntropyByMGF}
-	\cH(e^{\lambda X}) 
+	\mathcal{H}(e^{\lambda X}) 
 	= \lambda \mathbb{E}[ X e^{\lambda X}] - \mathbb{E}[e^{\lambda X}] \log \mathbb{E}[e^{\lambda X}]
 	= \lambda \varphi_X'(\lambda) - \varphi_X(\lambda) \log \varphi_X(\lambda), 
 \end{equation}
@@ -304,7 +324,7 @@
 \begin{example}[Gauss随机变量的熵]
 	对于$X \sim \cN(\mu, \sigma^2)$, 其矩母函数为$\varphi_X(\lambda) = e^{\lambda^2 \sigma^2 / 2 + \lambda \mu}$, 于是
 	\begin{equation}\label{eq:EntropyOfGaussianRV}
-		\cH(e^{\lambda X}) 
+		\mathcal{H}(e^{\lambda X}) 
 		= (\lambda^2 \sigma^2 + \lambda \mu) \varphi_X(\lambda) - \left(\frac{\lambda^2 \sigma^2}{2} + \lambda\mu\right) \varphi_X(\lambda) 
 		= \frac{\lambda^2 \sigma^2}{2} \cdot \varphi_X(\lambda). 
 	\end{equation}
@@ -312,18 +332,18 @@
 
 \begin{theorem}[熵的变分表示]\label{thm:VariationalRepresentationForEntropy}
 	\begin{equation}\label{eq:VariationalRepresentationForEntropy}
-		\cH(e^{\lambda f(X)})
+		\mathcal{H}(e^{\lambda f(X)})
 		= \sup_{g \colon \mathbb{E}[e^{g(X)}] \leq 1} \left\{ \mathbb{E} \left[g(X) e^{\lambda f(X)} \right] \right\}
 	\end{equation}
 \end{theorem}
 \begin{proof}
-	考虑测度$\mathbb{E}^g[A] = \mathbb{E}^g [\mathbb{I}_A] := \mathbb{E}[e^{g(X)}; A]$, 此时期望的Jensen不等式依然成立. 
+	考虑测度$\mathbb{P}^g[A] = \mathbb{E}^g [\mathbb{I}_A] := \mathbb{E}[e^{g(X)}; A]$, 此时期望的Jensen不等式依然成立. 
 	一方面, 我们有
 	\begin{align*}
-		&\cH(e^{\lambda f(X)}) - \mathbb{E}[g(X) e^{\lambda f(X)}]
+		&\mathcal{H}(e^{\lambda f(X)}) - \mathbb{E}[g(X) e^{\lambda f(X)}]
 		= \mathbb{E}\left[ (\lambda f(X) - g(X)) e^{\lambda f(X)} \right] - \mathbb{E}[ e^{\lambda f(X)}] \log \mathbb{E}[ e^{\lambda f(X)}] \\
 		=& \mathbb{E}^g  \left[ (\lambda f(X) - g(X)) e^{\lambda f(X) - g(X)} \right] - \mathbb{E}^g[ e^{\lambda f(X) - g(X)}] \log \mathbb{E}^g[ e^{\lambda f(X) - g(X)}] \\
-		=& \cH^g(e^{\lambda f(X) - g(X)}) \geq 0. 
+		=& \mathcal{H}^g(e^{\lambda f(X) - g(X)}) \geq 0. 
 	\end{align*}
 	另一方面, 容易验证$g(x) = \lambda f(x) - \log \mathbb{E}[e^{\lambda f(X)}]$使得等式成立. 
 \end{proof}
@@ -332,25 +352,25 @@
 \begin{lemma}[单变量函数熵的界]\label{lemma:EntropyBoundForUnivariateFunctions}
 	设独立随机变量$X, Y \sim \mathbb{E}$, 对任意函数$g \colon \R \to \R$, 我们有
 	\begin{equation}\label{eq:EntropyBoundForUnivariateFunctions}
-		\cH(e^{\lambda g(X)})
+		\mathcal{H}(e^{\lambda g(X)})
 		\leq \lambda^2 \mathbb{E}[ (g(X) - g(Y))^2 e^{\lambda g(X)}; g(X) \geq g(Y) ], \quad \forall \lambda > 0.
 	\end{equation}
 	特别地, 当$X$支撑集为$[a, b]$, $g$为凸的Lipschitz函数时, 我们有
 	\begin{equation*}
-		\cH(e^{\lambda g(X)}) 
+		\mathcal{H}(e^{\lambda g(X)}) 
 		\leq \lambda^2 (b-a)^2 \mathbb{E}[(g'(X))^2 e^{\lambda g(X)}], \quad \forall \lambda > 0.
 	\end{equation*}
 \end{lemma}
 \begin{proof}
 	由Jensen不等式, 不难得出
 	\begin{equation*}
-		\cH(e^{\lambda g(X)})
+		\mathcal{H}(e^{\lambda g(X)})
 		= \mathbb{E}[\lambda g(X) e^{\lambda g(X)}] - \mathbb{E}[e^{\lambda g(X)}] \log \mathbb{E}[e^{\lambda g(Y)}] 
 		\leq \mathbb{E}[\lambda g(X) e^{\lambda g(X)}] - \mathbb{E}[\lambda g(X) e^{\lambda g(Y)}].
 	\end{equation*}
 	再利用$X$和$Y$的对称性, 
 	\begin{align*}
-		\cH(e^{\lambda g(X)})
+		\mathcal{H}(e^{\lambda g(X)})
 		&\leq \lambda \mathbb{E}[ g(X) (e^{\lambda g(X)}-  e^{\lambda g(Y)})] 
 		= - \lambda \mathbb{E}[ g(Y) (e^{\lambda g(X)}-  e^{\lambda g(Y)})] \\
 		&= \frac{\lambda}{2} \mathbb{E}\left[(g(X) - g(Y)) (e^{\lambda g(X)} - e^{\lambda g(Y)})\right] \\
@@ -366,9 +386,9 @@
 
 \subsubsection{Herbst方法}
 
-和次高斯随机变量的想法类似, 如果$e^{\lambda X}$的熵能被Gauss随机变量的熵所控制, 相应的矩母函数、尾部概率也会被控制.
+和次高斯随机变量的想法类似, 如果$e^{\lambda X}$的熵能像Gauss随机变量的熵那样被控制, 相应的矩母函数、尾部概率也会被控制.
 \begin{theorem}[Herbst方法]\label{thm:HerbstArgument}
-	若对任意的$\lambda \in I$ (这里$I$取$[0, \infty)$或者$\R$)总有熵$\cH(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \varphi_X(\lambda)$, 那么
+	若对任意的$\lambda \in I$ (这里$I$取$[0, \infty)$或者$\R$)总有熵$\mathcal{H}(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \varphi_X(\lambda)$, 那么
 	\begin{equation*}
 		\mathbb{E}\left[e^{\lambda(X - \mathbb{E}X)}\right] 
 		\leq \exp \left( \frac{\lambda^2 \sigma^2}{2} \right),\; 
@@ -378,7 +398,7 @@
 \end{theorem}
 \begin{proof}
 	对于$\lambda \in I \backslash \{0\}$, 令$G(\lambda) := \frac{\log \varphi_X(\lambda)}{\lambda}$. 
-	结合 \eqref{eq:EntropyByMGF}, 条件$\cH(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \varphi_X(\lambda)$意味着
+	结合 \eqref{eq:EntropyByMGF}, 条件$\mathcal{H}(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \varphi_X(\lambda)$意味着
 	\begin{equation*}
 		G'(\lambda) \leq \frac{\sigma^2}{2},\; \forall \lambda \in I \backslash \{0\}. 
 	\end{equation*}
@@ -393,8 +413,8 @@
 	其中
 	\begin{equation*}
 		G(0) 
-		= \lim_{\lambda \to 0} G(\lambda) 
-		= \lim_{\lambda \to 0} \frac{\varphi_X'(\lambda)}{\varphi_X(\lambda)}
+		= \lim_{\lambda \downarrow 0} G(\lambda) 
+		= \lim_{\lambda \downarrow 0} \frac{\varphi_X'(\lambda)}{\varphi_X(\lambda)}
 		= \mathbb{E}X. 
 	\end{equation*}
 	类似的, 我们可以证明目标不等式在$\lambda \leq 0$时成立. 
@@ -404,7 +424,7 @@
 \begin{proposition}[Bernstein熵的界]\label{thm:BernsteinEntropyBd}
 	若存在正常数$b$, $\sigma$使得
 	\begin{equation*}
-		\cH(e^{\lambda X}) 
+		\mathcal{H}(e^{\lambda X}) 
 		\leq \lambda^2 \left[ b \varphi_X'(\lambda) + \varphi_X(\lambda)(\sigma^2 - b \mathbb{E}X) \right],\;
 		\forall \lambda \in [0, 1/b), 
 	\end{equation*}
@@ -443,21 +463,24 @@
 
 \subsubsection{熵的张量化}
 
+鞅方法虽然可以得到随机变量函数的集中不等式, 但是并没有利用充分各分量$X_k$的分布信息, 例如定理\ref{thm:Azuma–Hoeffding}中有界随机变量$X_k$的次高斯参数可能远小于$\frac{b_k - a_k}{2}$. 
+本节我们利用熵的张量化, 
+
 由于独立随机变量的联合分布是边缘分布的张量积, 我们可以计算每个随机变量对函数的贡献得到随机变量的函数熵的界\footnote{最为经典的例子是独立随机变量和的方差熵是随机变量的方差和.}, 这种被称为\emph{熵的张量化}, 或者说, 熵具有次可加性. 
 
 
 具体地, 设$f \colon \R^n \to \R$, 随机向量$\bm X = (X_1, \dots, X_n)$各分量独立, 我们在保持$\bm X^{\backslash k}$不变的同时, 计算关于$X_k$的\emph{逐坐标条件熵}
 \begin{equation*}
-	\cH_k ( e^{\lambda f(\bm X)} )
-	:= \cH ( e^{\lambda f(\bm X)} | \bm X^{\backslash k} ). 
+	\mathcal{H}_k ( e^{\lambda f(\bm X)} )
+	:= \mathcal{H} ( e^{\lambda f(\bm X)} | \bm X^{\backslash k} ). 
 \end{equation*}
 不难看出这是$\bm X^{\backslash k}$的函数, 它的期望就是
 
 \begin{lemma}[熵的张量化]\label{lemma:EntropyTensorization}
 	在上述的假设和记号下, 
 	\begin{equation*}
-		\cH(e^{\lambda f(\bm X)})
-		\leq \mathbb{E}\left[ \sum_{k=1}^n \cH_k (e^{\lambda f(\bm X)}) \right],\; 
+		\mathcal{H}(e^{\lambda f(\bm X)})
+		\leq \mathbb{E}\left[ \sum_{k=1}^n \mathcal{H}_k (e^{\lambda f(\bm X)}) \right],\; 
 		\forall \lambda > 0. 
 	\end{equation*}
 \end{lemma}
@@ -512,8 +535,8 @@
 \begin{proof}
 	对于$\lambda > 0$, 由引理\ref{lemma:EntropyTensorization}、 \ref{lemma:EntropyBoundForUnivariateFunctions}, 
 	\begin{align*}
-		\cH(e^{\lambda f(\bm X)})
-		&\leq \mathbb{E}\left[ \sum_{k=1}^n \cH_k (e^{\lambda f(\bm X)}) \right]
+		\mathcal{H}(e^{\lambda f(\bm X)})
+		&\leq \mathbb{E}\left[ \sum_{k=1}^n \mathcal{H}_k (e^{\lambda f(\bm X)}) \right]
 		\leq \lambda^2 (b-a)^2  \mathbb{E}\left[ \sum_{k=1}^n \mathbb{E}_k\left[ \left(\frac{\partial f(\bm X)}{\partial X_k} \right)^2 e^{\lambda f(\bm X)}\right] \right] \\
 		&= \lambda^2 (b-a)^2  \mathbb{E}\left[ \sum_{k=1}^n \left(\frac{\partial f(\bm X)}{\partial X_k} \right)^2 e^{\lambda f(\bm X)}\right]
 		\leq \lambda^2 (b-a)^2 L^2 \mathbb{E}[e^{\lambda f(\bm X)}]. 

@@ -4,8 +4,10 @@
 \hline
 	$I^*$ & 区间$I$的非负部分: $I \cap [0, \infty)$ \\
 	$\bm x_j^k$, $\bm X_j^k$ & $(x_j, x_{j+1} \dots, x_k)$, $(X_j, X_{j+1} \dots, X_k)$ \\
-	$\E_{\P} f$ & $\E_{\P} [f(X)]$, 其中$X \sim \P$ \\
-	$\E_i$ & 逐坐标期望 \\
+	$\bm x^{\backslash k}$, $\bm X^{\backslash k}$ & 除去第$k$个分量后的向量$(x_1, \dots, x_{k-1}, x_{k+1}, \dots, x_n)$, $(X_1, \dots, X_{k-1}, X_{k+1}, \dots, X_n)$ \\
+	$\E_{\P} f$ & $\E_{X \sim \P} [f(X)] = \int f \dd \P$ \\
+	$\E_k$ & 保持其他分量不变, 对第$k$个分量求逐坐标期望$\E_k[f(\bm X)] = \E[f(\bm X) | \bm X^{\backslash k}]$ \\
 	$\vol$ & 体积 \\
-	$\Pi(\Q, \P)$ & 分布对$(\Q, \P)$的所有可能的耦合
+	$\Pi(\Q, \P)$ & 分布对$(\Q, \P)$的所有可能的耦合 \\
+\hline
 \end{tabular}
