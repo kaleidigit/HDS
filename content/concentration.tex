@@ -345,7 +345,7 @@ $1$-范数-通常与维数$n$有关
 		=& \mathbb{E}^g  \left[ (\lambda f(X) - g(X)) e^{\lambda f(X) - g(X)} \right] - \mathbb{E}^g[ e^{\lambda f(X) - g(X)}] \log \mathbb{E}^g[ e^{\lambda f(X) - g(X)}] \\
 		=& \mathcal{H}^g(e^{\lambda f(X) - g(X)}) \geq 0. 
 	\end{align*}
-	另一方面, 容易验证$g(x) = \lambda f(x) - \log \mathbb{E}[e^{\lambda f(X)}]$使得等式成立. 
+	另一方面, 容易验证$\tilde g(x) = \lambda f(x) - \log \mathbb{E}[e^{\lambda f(X)}]$使得等式成立. 
 \end{proof}
 
 使用独立复制的方法可以对单变量函数熵的界做如下估计. 
@@ -394,7 +394,7 @@ $1$-范数-通常与维数$n$有关
 		\leq \exp \left( \frac{\lambda^2 \sigma^2}{2} \right),\; 
 		\forall \lambda \in I. 
 	\end{equation*}
-	进一步地, 由Chernoff方法, $I = [0, \infty)$时, $X$满足次高斯随机变量的上偏差不等式; $I = \R$时, $X$满足集中不等式 \eqref{eq:SubGuassianConcentration}.
+	进一步地, 由Chernoff方法, $I = [0, \infty)$时, $X$满足次高斯随机变量的上偏差不等式; $I = \R$时, $X$为参数是$\sigma$的次高斯随机变量, 从而满足集中不等式 \eqref{eq:SubGuassianConcentration}.
 \end{theorem}
 \begin{proof}
 	对于$\lambda \in I \backslash \{0\}$, 令$G(\lambda) := \frac{\log \varphi_X(\lambda)}{\lambda}$. 
@@ -403,22 +403,20 @@ $1$-范数-通常与维数$n$有关
 		G'(\lambda) \leq \frac{\sigma^2}{2},\; \forall \lambda \in I \backslash \{0\}. 
 	\end{equation*}
 	当$\lambda > 0$时, 对任意的$0 < \lambda_0 < \lambda$, 在区间$[\lambda_0, \lambda]$上积分有$G(\lambda) - G(\lambda_0) \leq \frac{\sigma^2 (\lambda - \lambda_0)}{2}$. 
-	再令$\lambda_0 \to 0^+$有
+	由洛必达法则, $ \lim_{\lambda \downarrow 0} G(\lambda) = \lim_{\lambda \downarrow 0} \frac{\varphi_X'(\lambda)}{\varphi_X(\lambda)} = \mathbb{E}X$. 
+	于是令$\lambda_0 \to 0^+$有
 	\begin{equation*}
 		\log \mathbb{E}\left[e^{\lambda(X - \mathbb{E}X)}\right]
 		= \lambda(G(\lambda) - \mathbb{E}X)
 		\leq \frac{\lambda^2 \sigma^2}{2} ,\; 
 		\forall \lambda \geq 0. 
 	\end{equation*}
-	其中
-	\begin{equation*}
-		G(0) 
-		= \lim_{\lambda \downarrow 0} G(\lambda) 
-		= \lim_{\lambda \downarrow 0} \frac{\varphi_X'(\lambda)}{\varphi_X(\lambda)}
-		= \mathbb{E}X. 
-	\end{equation*}
 	类似的, 我们可以证明目标不等式在$\lambda \leq 0$时成立. 
 \end{proof}
+
+\begin{remark}
+	反过来, 若$X$为参数是$\sigma/2$的次高斯随机变量, 可以证明$\mathcal{H}(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \varphi_X(\lambda)$. 
+\end{remark}
 
 自然地, 我们可以将上述方法由次高斯随机变量推广至次指数随机变量. 
 \begin{proposition}[Bernstein熵的界]\label{thm:BernsteinEntropyBd}
@@ -469,12 +467,13 @@ $1$-范数-通常与维数$n$有关
 由于独立随机变量的联合分布是边缘分布的张量积, 我们可以计算每个随机变量对函数的贡献得到随机变量的函数熵的界\footnote{最为经典的例子是独立随机变量和的方差熵是随机变量的方差和.}, 这种被称为\emph{熵的张量化}, 或者说, 熵具有次可加性. 
 
 
-具体地, 设$f \colon \R^n \to \R$, 随机向量$\bm X = (X_1, \dots, X_n)$各分量独立, 我们在保持$\bm X^{\backslash k}$不变的同时, 计算关于$X_k$的\emph{逐坐标条件熵}
+具体地, 设$f \colon \R^n \to \R$, 随机向量$\bm X = (X_1, \dots, X_n)$各分量独立. 
+条件随机变量$e^{\lambda f(\bm X)} | \bm X^{\backslash k}$可以看作其它分量$\bm X^{\backslash k}$已经给定, 关于$X_k$的函数. 
+于是我们可以在保持$\bm X^{\backslash k}$不变的同时, 计算关于第$k$个分量的\emph{逐坐标条件熵}
 \begin{equation*}
 	\mathcal{H}_k ( e^{\lambda f(\bm X)} )
 	:= \mathcal{H} ( e^{\lambda f(\bm X)} | \bm X^{\backslash k} ). 
 \end{equation*}
-不难看出这是$\bm X^{\backslash k}$的函数, 它的期望就是
 
 \begin{lemma}[熵的张量化]\label{lemma:EntropyTensorization}
 	在上述的假设和记号下, 
@@ -495,26 +494,22 @@ $1$-范数-通常与维数$n$有关
 		\leq \sum_{k=1}^n \mathbb{E}[ g^k(\bm X_k^n) e^{\lambda f(\bm X)} ] 
 		= \sum_{k=1}^n \mathbb{E}\left[ \mathbb{E}[ g^k(\bm X_k^n) e^{\lambda f(\bm X)} | \bm X^{\backslash k} ] \right]. 
 	\end{equation*}
-	条件随机变量$g^k(\bm X_k^n)| \bm X^{\backslash k}$的期望满足
+	注意到条件随机变量$e^{g^k(\bm X_k^n)}| \bm X^{\backslash k}$的期望满足
 	\begin{equation*}
-		\mathbb{E}\left[ g^k(\bm X_k^n) | \bm X^{\backslash k} \right]
-		\geq \log \mathbb{E}\left[ \exp(g^k(\bm X_k^n)) |\bm X_{k+1}^n \right] = 0. 
+		\mathbb{E}[e^{g^k(\bm X_k^n)}| \bm X^{\backslash k}]
+		= \mathbb{E} \left[ \frac{\mathbb{E}[e^{g(\bm X)} | \bm X_k^n]}{\mathbb{E}[e^{g(\bm X)} | \bm X_{k+1}^n]} \bigg| \bm X^{\backslash k} \right]
+		=1,  
 	\end{equation*}
-	
-	$\mathbb{E}\left[ \exp(g^k(\bm X_k^n)) |\bm X_{k+1}^n \right] = 1$. 
-	
-	$\mathbb{E}\left[ g^k(\bm X_k^n) | \bm X^{\backslash k} \right] = 1$
-	
+	于是由定理\ref{thm:VariationalRepresentationForEntropy}, $\mathbb{E}[ g^k(\bm X_k^n) e^{\lambda f(\bm X)} | \bm X^{\backslash k} ] \leq \mathcal{H}_k(e^{\lambda f(\bm X)})$. 
+	再次利用定理\ref{thm:VariationalRepresentationForEntropy}, 对满足条件的$g$取上确界可知引理成立. 
 	%------
 	\sp 
 	$\bm X = (X_1, \dots, X_n)$为独立随机变量构成的随机向量,记$\bm X_k^n = (X_k, \dots, X_n)$, $\bm X^{\backslash k} = (X_1, \dots, X_{k-1}, X_{k+1}, \dots, X_n)$. 
-	考虑满足$\mathbb{E}[e^{g(\bm X)}] \leq 1$的函数$g$, 定义函数序列$\{g^1, \dots, g^n\}$: 
-	\begin{align*}
-		g^k(\bm X_k^n) &:= \log \mathbb{E}[e^{g(\bm X)} | \bm X_k^n] - \log \mathbb{E}[e^{g(\bm X)} | \bm X_{k+1}^n]. 
-	\end{align*}
-	说明$\mathbb{E}\left[ g^k(\bm X_k^n) | \bm X^{\backslash k} \right] =1$
-	
-	由定理\ref{thm:VariationalRepresentationForEntropy}, 对左侧满足条件的$g$取上确界可知引理成立. 
+	考虑满足$\mathbb{E}[e^{g(\bm X)}] \leq 1$的函数$g$, 是否有
+	\begin{equation*}
+		\mathbb{E} \left[ \frac{\mathbb{E}[e^{g(\bm X)} | \bm X_k^n]}{\mathbb{E}[e^{g(\bm X)} | \bm X_{k+1}^n]} \bigg| \bm X^{\backslash k} \right] \leq 1
+	\end{equation*}
+	\sp 
 \end{proof}
 
 特别地, 熵的张量化在处理\emph{可分凸函数}时, 可以得到很好的结论. 
@@ -537,10 +532,11 @@ $1$-范数-通常与维数$n$有关
 	\begin{align*}
 		\mathcal{H}(e^{\lambda f(\bm X)})
 		&\leq \mathbb{E}\left[ \sum_{k=1}^n \mathcal{H}_k (e^{\lambda f(\bm X)}) \right]
-		\leq \lambda^2 (b-a)^2  \mathbb{E}\left[ \sum_{k=1}^n \mathbb{E}_k\left[ \left(\frac{\partial f(\bm X)}{\partial X_k} \right)^2 e^{\lambda f(\bm X)}\right] \right] \\
+		\leq \lambda^2 (b-a)^2  \mathbb{E}\left[ \sum_{k=1}^n \mathbb{E}\left[ \left(\frac{\partial f(\bm X)}{\partial X_k} \right)^2 e^{\lambda f(\bm X)} \bigg| \bm X^{\backslash k} \right] \right] \\
 		&= \lambda^2 (b-a)^2  \mathbb{E}\left[ \sum_{k=1}^n \left(\frac{\partial f(\bm X)}{\partial X_k} \right)^2 e^{\lambda f(\bm X)}\right]
-		\leq \lambda^2 (b-a)^2 L^2 \mathbb{E}[e^{\lambda f(\bm X)}]. 
+		\leq \lambda^2 (b-a)^2 L^2 \mathbb{E}[e^{\lambda f(\bm X)}], 
 	\end{align*}
+	其中$\sum_k \left( \frac{\partial f(\bm x)}{\partial x_k} \right)^2 = \|\nabla f\|_2^2 \leq L^2$由Lipchitz条件得到. 
 	再由Herbst方法(定理\ref{thm:HerbstArgument})可见命题成立. 
 \end{proof}
 
