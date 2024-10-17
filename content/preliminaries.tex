@@ -1,5 +1,7 @@
 \section{预备知识}
 
+\subsection{Landau记号}
+
 \subsection{概率论}
 
 \begin{theorem}[Borel-Cantelli引理]
@@ -66,7 +68,7 @@
 Randon-Nikodym导数是定义密度和条件期望的关键. 
 
 \begin{theorem}[Radon-Nikodym 定理]
-	设$\mu$, $\nu$为可测空间$(\cX, \cA)$上的两个概率测度, $\nu$关于$\mu$\emph{绝对连续}, 即对于满足$\mu(A) = 0$的$A \in \cA$, 一定有$\nu(A) = 0$, 记做$\nu \ll \mu$. 
+	设$\mu$, $\nu$为可测空间$(\cX, \cA)$上的两个概率测度, $\nu$关于$\mu$\textbf{绝对连续}, 即对于满足$\mu(A) = 0$的$A \in \cA$, 一定有$\nu(A) = 0$, 记做$\nu \ll \mu$. 
 	存在$\cX$上的非负函数$f$, 使得$\nu(A) = \int_A f \dd \mu$, 且$f$在$\mu$-a.e.意义下唯一, 记做$f = \frac{\dd \nu}{\dd \mu}$. 
 \end{theorem}
 
@@ -95,7 +97,7 @@ Randon-Nikodym导数是定义密度和条件期望的关键.
 
 \subsubsection{矩的求法}
 
-对于随机变量$X$, 若函数$\varphi_X(\lambda) = \E[e^{\lambda X}]$存在, 则称$\varphi_X$为$X$的\emph{矩母函数}.
+对于随机变量$X$, 若函数$\varphi_X(\lambda) = \E[e^{\lambda X}]$存在, 则称$\varphi_X$为$X$的\textbf{矩母函数}.
 我们可以利用矩母函数来导出$X$的各阶矩: 
 \begin{equation*}
 	\frac{\dd^n}{\dd \lambda^n} \varphi_X(\lambda)
@@ -140,7 +142,7 @@ Randon-Nikodym导数是定义密度和条件期望的关键.
 \subsubsection{条件期望、鞅、鞅差}
 
 给定概率空间$(\Omega, \cF_0, \mathbb{P})$, 子$\sigma$-域$\cF \subset \cF_0$, 随机变量$X \in \cF_0$可积. 
-称$Y$为$X$关于$\cF$的\emph{条件期望}, 如果
+称$Y$为$X$关于$\cF$的\textbf{条件期望}, 如果
 \begin{center}
 	(1) $Y \in \cF$; \quad
 	(2) 对任意$A \in \cF$, $\E(Y;A) = \E(X;A)$. 
@@ -158,13 +160,13 @@ Randon-Nikodym导数是定义密度和条件期望的关键.
 		\item \textbf{(Jensen不等式)} 若$\varphi$为凸函数且$\E X, \E \varphi(X) < \infty$, 则$\E(\varphi(X) | \cF) \geq \varphi(\E(X|\cF))$; 
 		\item \textbf{(塔性质)} 若$\cF_1 \subset \cF_2$, 则$\E(\E(X|\cF_1)|\cF_2) = \E(X|\cF_1) = \E(\E(X|\cF_2)|\cF_1)$. 
 	\end{enumerate}
-随机变量序列$\{X_k\}$是适应于$\{\cF_k\}$的\emph{鞅}, 如果满足
+随机变量序列$\{X_k\}$是适应于$\{\cF_k\}$的\textbf{鞅}, 如果满足
 \begin{center}
 	(1) $\E |X_k| < \infty$; \quad
 	(2) $X_k \in \cF_k$; \quad
 	(3) $\E(X_{k+1}|\cF_k) = X_k$.
 \end{center}
-如果我们记$D_k := X_k - X_{k-1}$, 容易验证$\{D_k\}$期望为$0$, 并且也是适应于$\{\cF_k\}$的鞅, 我们称其为\emph{鞅差}. 
+如果我们记$D_k := X_k - X_{k-1}$, 容易验证$\{D_k\}$期望为$0$, 并且也是适应于$\{\cF_k\}$的鞅, 我们称其为\textbf{鞅差}. 
 
 \subsubsection{方差的表示}
 
@@ -238,7 +240,7 @@ Randon-Nikodym导数是定义密度和条件期望的关键.
 
 很多情况下, 构造乘积空间
 
-的\emph{耦合}, 是指$\cX \times \cX$上的联合分布$\M$, 其边缘分布满足
+的\textbf{耦合}, 是指$\cX \times \cX$上的联合分布$\M$, 其边缘分布满足
 
 满足第一和第二坐标的边缘分布分别是$\Q$和$\P$.
 
@@ -260,11 +262,11 @@ Randon-Nikodym导数是定义密度和条件期望的关键.
 \subsubsection{Fenchel共轭}
 
 Fenchel共轭是Fourier变换在凸分析中的对应. 
-对于实Hilbert空间$\cX$上的正则函数$g \colon \cX \to (-\infty, +\infty]$, 即$\mathrm{dom} f := \{x \in \cX \colon f(x) \in \R \neq \emptyset$, 其在$u \in \cX$的\emph{Fenchel共轭}为
+对于实Hilbert空间$\cX$上的正则函数$g \colon \cX \to (-\infty, +\infty]$, 即$\mathrm{dom} f := \{x \in \cX \colon f(x) \in \R \neq \emptyset$, 其在$u \in \cX$的\textbf{Fenchel共轭}为
 \begin{equation}
 	f^*(u) = \sup_{x \in \cX} \left\{ \langle x, u \rangle - f(x) \right\}. 
 \end{equation}
-通过定义可以看到Fenchel共轭满足\emph{Fenchel-Young不等式}
+通过定义可以看到Fenchel共轭满足\textbf{Fenchel-Young不等式}
 \begin{equation}
 	f(x) + f^*(u) \geq \langle x, u \rangle. 
 \end{equation}
