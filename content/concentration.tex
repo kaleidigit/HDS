@@ -20,9 +20,9 @@
 \begin{equation}\label{eq:Markov'sInequality}
 	\mathbb{P}[X \geq t] \leq \frac{\mathbb{E}[f(X)]}{f(t)}.
 \end{equation}
-对于随机变量$Y \in L^2$, 取$X = |Y - \mathbb{E}Y|$, $f(u) = u^k\; (u \geq 0)$, 可以得到基于高阶矩的集中不等式\footnote{$k=2$时, 就是经典的Chebyshev不等式. }
+对于随机变量$Y \in L^2$, 取$X = |Y - \mathbb{E}[Y]|$, $f(u) = u^k\; (u \geq 0)$, 可以得到基于高阶矩的集中不等式\footnote{$k=2$时, 就是经典的Chebyshev不等式. }
 \begin{equation*}
-	\mathbb{P}[|Y - \mathbb{E}Y| \geq t] \leq \frac{ \mathbb{E}[ |Y - \mathbb{E}Y|^k]}{t^k}. 
+	\mathbb{P}[|Y - \mathbb{E}[Y]| \geq t] \leq \frac{ \mathbb{E}[ |Y - \mathbb{E}[Y]|^k]}{t^k}. 
 \end{equation*} 
 
 
@@ -44,13 +44,13 @@ $1$-范数-通常与维数$n$有关
 可以看到, Markov不等式 \eqref{eq:Markov'sInequality} 中尾部概率由$f$的增长速度所控制——这意味着选取增长速度最快的函数, 可以得到更有效的尾部概率不等式. 
 自然地, 我们考虑指数函数. 
 
-若随机变量$X$在$0$的某个邻域$I$内有\textbf{中心矩母函数}, 即在$\lambda \in I$上有$\varphi_X(\lambda) := \mathbb{E}[e^{\lambda (X - \mathbb{E}X)}] < \infty$, 那么$\lambda \in I \cap [0, \infty)$时, 取$f(u) = e^{\lambda u}$可以得到下述的\textbf{Chernoff不等式}: 
+若中心化随机变量$X - \mathbb{E}[X]$在$0$的某个邻域$I$内有\textbf{矩母函数}, 即在$\lambda \in I$上有$\varphi_X(\lambda) := \mathbb{E}[e^{\lambda (X - \mathbb{E}X)}] < \infty$, 那么$\lambda \in I \cap [0, \infty)$时, 取$f(u) = e^{\lambda u}$可以得到下述的\textbf{Chernoff不等式}: 
 \begin{equation*}
 	\mathbb{P}[X - \mathbb{E}X \geq t] 
 	\leq \frac{\mathbb{E}[e^{\lambda(X - \mathbb{E}X)}]}{e^{\lambda t}},\;
 	\forall \lambda \in I \cap [0, \infty).
 \end{equation*}
-通过选取最优的$\lambda$, 我们可以得到\textbf{Chernoff界}\footnote{在最优的$k$下, 基于高阶矩的Markov不等式不会比Chernoff界中基于矩母函数获得的界更差. 但在实际应用中, 由于矩母函数计算的便利性, Chernoff界仍有着广泛的应用.}
+通过选取最优的参数$\lambda$, 我们可以得到\textbf{Chernoff界}\footnote{在最优的$k$下, 基于高阶矩的Markov不等式不会比Chernoff界中基于矩母函数获得的界更差. 但在实际应用中, 由于矩母函数计算的便利性, Chernoff界仍有着广泛的应用.}
 \begin{equation*}
 	\mathbb{P}[X \geq \mathbb{E}X + t]
 	\leq \exp \left[ \inf_{\lambda \in I \cap [0, \infty)} \left\{ \log \mathbb{E}[e^{\lambda(X - \mathbb{E}X)}] - \lambda t \right\} \right]. 
@@ -58,12 +58,12 @@ $1$-范数-通常与维数$n$有关
 于是随机变量的集中不等式可以从其矩母函数的界得到. 
 
 \begin{example}[Gauss随机变量的上偏差不等式]
-	考虑最经典的Gauss随机变量$X \sim N(\mu, \sigma^2)$, 其矩母函数
+	Gauss随机变量$X \sim N(\mu, \sigma^2)$的矩母函数
 	\begin{equation}
 		\mathbb{E}[e^{\lambda X}] = e^{\frac{\sigma^2 \lambda^2}{2} + \mu \lambda} 		
 	\end{equation}
 	在$\lambda \in \R$总是存在. 
-	通过简单的求导可以看到最优的$\lambda^* = \frac{t}{\sigma^2}$, 于是有
+	通过简单的求导可以看到最优参数$\lambda^* = \frac{t}{\sigma^2}$, 于是有
 	\begin{equation}\label{eq:UpperDeviationOfSubGuassianRV}
 		\mathbb{P}[X \geq \mu + t] \leq e^{- \frac{t^2}{2 \sigma^2}},\; \forall t \geq 0. 
 	\end{equation}
@@ -74,13 +74,12 @@ $1$-范数-通常与维数$n$有关
 我们将Gauss随机变量作为“模版”来研究其他随机变量: 如果某个随机变量的中心矩母函数能被中心Gauss随机变量的矩母函数所控制, 利用Chernoff方法, 它的尾概率也会被中心Gauss随机变量的尾概率控制. 
 
 \begin{definition}[次高斯随机变量]\label{def:subGaussianRV}
-	称期望为$\mu$的随机变量$X$为次高斯的, 如果存在$\sigma > 0$, 使得
+	称期望为$\mu$的随机变量$X$为为$\sigma$-次高斯随机的, 如果存在$\sigma > 0$, 使得
 	\begin{equation*}
-		\mathbb{E}[e^{\lambda(X - \mu)}] \leq e^{\sigma^2 \lambda^2 /2},\; \forall \lambda \in \R. 
-	\end{equation*}
-	称$\sigma$为$X$的次高斯参数. 
+		\mathbb{E}[e^{\lambda(X - \mu)}] \leq e^{\sigma^2 \lambda^2 /2},\; \forall \lambda \in \R.   
+	\end{equation*}  
 \end{definition}
-可以看到, 参数为$\sigma$的次高斯随机变量$X$总是满足上偏差不等式 \eqref{eq:UpperDeviationOfSubGuassianRV}.  
+容易看到, 参数为$\sigma$的次高斯随机变量$X$总是满足上偏差不等式 \eqref{eq:UpperDeviationOfSubGuassianRV}.  
 此外, 由于$-X$也是次高斯随机变量, 可以得到下偏差不等式: $\mathbb{P}[X \leq \mu - t] \leq e^{- \frac{t^2}{2 \sigma^2}}$对任意$t \geq 0$成立, 于是次高斯随机变量满足\textbf{集中不等式}
 \begin{equation}\label{eq:SubGuassianConcentration}
 	\mathbb{P}[|X - \mu| \geq t] \leq 2 e^{- \frac{t^2}{2 \sigma^2}},\; \forall t > 0. 
@@ -89,7 +88,7 @@ $1$-范数-通常与维数$n$有关
 \begin{remark}[辅助函数的构造]
 	定义\ref{def:subGaussianRV}实际上是说, 次高斯随机变量的矩母函数的对数满足$\psi(\lambda) := \log \mathbb{E}[e^{\lambda X}] = O(\lambda^2)$, 等价地, $\psi''(\lambda) = O(1)$; 
 	或者说$G(\lambda) := \lambda^{-1} \psi(\lambda) = O(\lambda)$, 等价地$G'(\lambda) = O(1)$. 
-	引理\ref{lemma:SubGaussianParameterOfBddRV}和定理\ref{thm:HerbstArgument}的证明分别利用了这两种等价表述. 
+	引理\ref{lemma:SubGaussianParameterOfBddRV}和定理\ref{thm:HerbstArgument}的证明分别利用了这两种等价表述来构造辅助函数. 
 \end{remark}
 
 \begin{theorem}[次高斯随机变量的等价定义]
@@ -126,8 +125,8 @@ $1$-范数-通常与维数$n$有关
 
 直观上, 一个有界随机变量没有无限的尾部, 因此它应当是次高斯随机变量. 
 事实上, 我们有如下强结论. 
-\begin{lemma}[有界随机变量的次高斯参数]\label{lemma:SubGaussianParameterOfBddRV}
-	若随机变量$X \in [a, b]$ a.s., 那么它是参数为$\frac{b-a}{2}$的次高斯随机变量. 
+\begin{lemma}[有界随机变量]\label{lemma:SubGaussianParameterOfBddRV}
+	若随机变量$X \in [a, b]$ a.s., 那么它是$\frac{b-a}{2}$-次高斯的. 
 \end{lemma}
 \begin{proof}
 	定义随机变量$X_{\lambda}$, 其关于$X$的分布的Radon–Nikodym导数为$\frac{e^{\lambda X}}{\mathbb{E}[e^{\lambda X}]}$. 
@@ -158,7 +157,7 @@ $1$-范数-通常与维数$n$有关
 
 很多时候随机变量的中心矩母函数只会在$0$的某个邻域内存在, 相应地, 我们将次高斯随机变量的条件放宽如下. 
 \begin{definition}[次指数随机变量]
-	称期望为$\mu$的随机变量$X$为次指数的, 如果存在非负参数对$(\nu, \alpha)$使得
+	称期望为$\mu$的随机变量$X$为$(\nu, \alpha)$-次指数的, 如果存在非负参数对$(\nu, \alpha)$使得
 	\begin{equation*}
 		\mathbb{E}[ e^{\lambda(X - \mu)} ] 
 		\leq e^{\frac{\nu^2 \lambda^2}{2}},\; 
@@ -170,7 +169,7 @@ $1$-范数-通常与维数$n$有关
 和次高斯随机变量类似, 我们利用Chernoff方法可以得到它的尾部不等式
 
 \begin{theorem}[次指数随机变量的上偏差不等式]\label{thm:UpperDeviationOfSubExpRV}
-	设$X$是参数为$(\nu, \alpha)$的次指数随机变量, 那么
+	设随机变量$X$是$(\nu, \alpha)$-次指数的, 那么
 	\begin{equation*}
 		\mathbb{P}[X \geq \mathbb{E}X + t] \leq 
 		\begin{cases}
@@ -181,7 +180,19 @@ $1$-范数-通常与维数$n$有关
 \end{theorem}
 
 \begin{theorem}[次高斯随机变量的等价定义]
-	
+	对任意均值为$0$的随机变量$X$, 下述几条命题等价: 
+	\begin{enumerate}[label=(\Roman*)]
+		\item 存在非负参数$(\nu, \alpha)$使得
+			\begin{equation*}
+				\mathbb{E}[e^{\lambda X} ] \leq e^{\frac{\lambda^2 \sigma^2}{2}},\; \forall |\lambda| < \frac{1}{\alpha}. 
+			\end{equation*}
+		\item 存在常数$c_0 > 0$, 使得对于任意$|\lambda| \leq c_0$, 都有$\mathbb{E}[e^{\lambda X}] < \infty$. 
+		\item 存在常数$c_1, c_2 > 0$, 使得
+			\begin{equation*}
+				\P[|X| \geq t] \leq c_1 e^{-c_2 t},\quad \forall t > 0. 
+			\end{equation*}
+		\item 量$\displaystyle \gamma:= \sup_{k \geq 2} \left[ \frac{\mathbb{E}[X^k]}{k!} \right]^{1/k}$是有限的. 
+	\end{enumerate}
 \end{theorem}
 
 
@@ -191,23 +202,23 @@ $1$-范数-通常与维数$n$有关
 之前我们讨论了独立随机变量和$f(X_1, \dots, X_n) = \sum_i X_i$的一些尾概率界. 
 对于更一般的函数$f$，建立尾概率界的经典方法方法是利用鞅差对鞅进行分解. 
 
-设随机向量$\bm X = (X_1, \dots, X_n)$各分量独立, 函数$f \colon \R^n \to \R$满足$\mathbb{E}[f(\bm X)] < \infty$. 
-考虑随机变量序列$Y_0 = \mathbb{E}[f(\bm X)]$, $Y_k = \mathbb{E}[f(\bm X)|\bm X_1^k]$, $k = 1, \dots, n$. 
-由条件期望的性质易见$Y_n = f(\bm X)$ a.s. 且$\{Y_k\}_{k=1}^n$是适应于$\{\bm X_1^k\}_{k=1}^n$的鞅: 
+设随机向量$\bm{X} = (X_1, \dots, X_n)$各分量独立, 函数$f \colon \R^n \to \R$满足$\mathbb{E}[f(\bm{X})] < \infty$. 
+考虑随机变量序列$Y_0 = \mathbb{E}[f(\bm{X})]$, $Y_k = \mathbb{E}[f(\bm{X})|\bm{X}_1^k]$, $k = 1, \dots, n$. 
+由条件期望的性质易见$Y_n = f(\bm{X})$ a.s. 且$\{Y_k\}_{k=1}^n$是适应于$\{\bm{X}_1^k\}_{k=1}^n$的鞅: 
 \begin{itemize}
 	\item 由Jensen不等式和重期望公式, 
 		\begin{equation*}
 			\mathbb{E}[|Y_k|]
-			= \mathbb{E}\left[\left|\mathbb{E}[f(\bm X)|\bm X_1^k]\right|\right] 
-			\leq \mathbb{E}\left[\mathbb{E}[|f(\bm X)||\bm X_1^k] \right]
-			= \mathbb{E}[|f(\bm X)|]
+			= \mathbb{E}\left[\left|\mathbb{E}[f(\bm{X})|\bm{X}_1^k]\right|\right] 
+			\leq \mathbb{E}\left[\mathbb{E}[|f(\bm{X})||\bm{X}_1^k] \right]
+			= \mathbb{E}[|f(\bm{X})|]
 			< \infty
 		\end{equation*}
-	\item $\mathbb{E}[Y_{k+1}|\bm X_1^k] = \mathbb{E}\left[\mathbb{E}[f(\bm X)|\bm X_1^{k+1}] \big|\bm X_1^k\right] = \mathbb{E}[f(\bm X) | X_1^k] = Y_k$. 
+	\item $\mathbb{E}[Y_{k+1}|\bm{X}_1^k] = \mathbb{E}\left[\mathbb{E}[f(\bm{X})|\bm{X}_1^{k+1}] \big|\bm{X}_1^k\right] = \mathbb{E}[f(\bm{X}) | X_1^k] = Y_k$. 
 \end{itemize}
-从而$f(\bm X)$和$\mathbb{E}f(\bm X)$的偏差可以表示为鞅差分解
+从而$f(\bm{X})$和$\mathbb{E}f(\bm{X})$的偏差可以表示为鞅差分解
 \begin{equation*}
-	f(\bm X) - \mathbb{E}[f(\bm X)] 
+	f(\bm{X}) - \mathbb{E}[f(\bm{X})] 
 	= Y_n - Y_0 
 	= \sum_{k=1}^n (Y_k - Y_{k-1})
 	=: \sum_{k=1}^n D_k.
@@ -220,7 +231,7 @@ $1$-范数-通常与维数$n$有关
 		\mathbb{E}\left[ e^{\lambda D_k} | \cF_{k-1} \right] 
 		\leq e^{\frac{\lambda^2 \nu_k^2}{2}} \text{ a.e. },\; \forall |\lambda| < \frac{1}{\alpha_k}, 
 	\end{equation*}
-	那么和式$\sum_k D_k$是参数为$\left( \sqrt{\sum_k \nu_k^2}, \alpha_* \right)$的次指数随机变量, 其中$\alpha_* := \max_k \alpha_k$.  
+	那么和式$\sum_k D_k$是$\left( \sqrt{\sum_k \nu_k^2}, \alpha_* \right)$-次指数随机变量, 其中$\alpha_* := \max_k \alpha_k$.  
 	再沿用Chernoff方法, 可以得到集中不等式
 	\begin{equation*}
 		\mathbb{P} \left[ \left| \sum_{k=1}^n D_k \right| \geq t \right] \leq 
@@ -243,7 +254,7 @@ $1$-范数-通常与维数$n$有关
 \end{proof} 
 
 \begin{theorem}[Azuma–Hoeffding不等式]\label{thm:Azuma–Hoeffding}
-	若鞅差序列$\{(D_k, \cF_k)\}_{k=1}^{\infty}$满足$D_k \in [a_k, b_k]$ a.s., 则有集中不等式
+	若鞅差序列$\{(D_k, \cF_k)\}_{k=1}^{\infty}$满足$D_k \in [a_k, b_k]$ a.s., 则$\sum_k D_k$是$\frac{1}{2}\sqrt{\sum_k L_k^2}$-次高斯的, 且有集中不等式
 	\begin{equation*}
 		\mathbb{P} \left[ \left| \sum_{k=1}^n D_k \right| \geq t \right]
 		\leq 2 \exp \left(- \frac{2 t^2}{\sum_k (b_k - a_k)^2} \right), 
@@ -257,16 +268,16 @@ $1$-范数-通常与维数$n$有关
 
 称函数$f \colon \R^n \to \R$满足参数为$(L_1, \dots, L_n)$的\textbf{有界差不等式}, 如果对指标$k = 1, \dots, n$, 总有
 \begin{equation*}
-	|f(\bm x_1^{k-1}, x_k, \bm x_{k-2}^n) - f(\bm x_1^{k-1}, x_k', \bm x_{k-2}^n)| 
+	|f(\bm{X}_1^{k-1}, x_k, \bm{X}_{k-2}^n) - f(\bm{X}_1^{k-1}, x_k', \bm{X}_{k-2}^n)| 
 	\leq L_k. 
 \end{equation*}
 可以证明, 满足有界差不等式的函数一定有界, 而有界函数显然满足有界差不等式. 
 参数的好处只是为了做出更精确的估计罢了. 
 
 \begin{corollary}[有界差不等式]\label{cor:BddDiffIneq}
-	设函数$f \colon \R^n \to \R$满足参数为$(L_1, \dots, L_n)$的有界差不等式, 随机向量$\bm X = (X_1, \dots, X_n)$各分量独立, 我们有集中不等式
+	设函数$f \colon \R^n \to \R$满足参数为$(L_1, \dots, L_n)$的有界差不等式, 随机向量$\bm{X} = (X_1, \dots, X_n)$各分量独立, 那么$f(\bm X)$是$\frac{1}{2} \sqrt{\sum_k L_k^2}$-次高斯的, 从而有集中不等式
 	\begin{equation*}
-		\mathbb{P}[|f(X) - \mathbb{E}[f(X)]| \geq t] 
+		\mathbb{P}[|f(\bm X) - \mathbb{E}[f(\bm X)]| \geq t] 
 		\leq 2 \exp\left( - \frac{2 t^2}{\sum_k L_k^2} \right), 
 		\quad \forall t \geq 0. 
 	\end{equation*}
@@ -274,21 +285,21 @@ $1$-范数-通常与维数$n$有关
 \begin{proof}
 	定义随机变量 
 	\begin{align*}
-		A_k &:= \inf_x \mathbb{E}[f(\bm X)|\bm X_1^{k-1}, X_k = x] - \mathbb{E}[f(\bm X)|\bm X_1^{k-1}], \\
-		B_k &:= \sup_x \mathbb{E}[f(\bm X)|\bm X_1^{k-1}, X_k = x] - \mathbb{E}[f(\bm X)|\bm X_1^{k-1}]. 
+		A_k &:= \inf_x \mathbb{E}[f(\bm{X})|\bm{X}_1^{k-1}, X_k = x] - \mathbb{E}[f(\bm{X})|\bm{X}_1^{k-1}], \\
+		B_k &:= \sup_x \mathbb{E}[f(\bm{X})|\bm{X}_1^{k-1}, X_k = x] - \mathbb{E}[f(\bm{X})|\bm{X}_1^{k-1}]. 
 	\end{align*} 
 	于是$D_k \in [A_k, B_k]$ a.s. 且区间长度
 	\begin{equation*}
 		B_k - A_k
-		= \sup_{x, y} \mathbb{E}[f(\bm X_1^k, x, \bm X_{k+1}^n) - f(\bm X_1^k, y, \bm X_{k+1}^n) | X_1^{k-1}] 
+		= \sup_{x, y} \mathbb{E}[f(\bm{X}_1^k, x, \bm{X}_{k+1}^n) - f(\bm{X}_1^k, y, \bm{X}_{k+1}^n) | X_1^{k-1}] 
 		\leq L_k. 
 	\end{equation*}
 	于是由定理\ref{thm:Azuma–Hoeffding}可以得到集中不等式
 \end{proof}
 
 \begin{example}
-	若函数$f$关于Hamming距离$d_H(\bm x, \bm y) = \sum_k \I{\{x_k \neq y_k\}}$是$L$-Lipschitz的, 那么$f$满足参数为$(L, \dots, L)$的有界差不等式. 
-	于是对于各分量独立的随机向量$\bm X$, 有$\mathbb{P}[|f(X) - \mathbb{E}[f(X)]| \geq t] \leq 2 e^{-\frac{2 t^2}{n L^2}}$, $\forall t \geq 0$. 
+	若函数$f$关于Hamming距离$d_H(\bm{X}, \bm{Y}) = \sum_k \I{\{x_k \neq y_k\}}$是$L$-Lipschitz的, 那么$f$满足参数为$(L, \dots, L)$的有界差不等式. 
+	于是对于各分量独立的随机向量$\bm{X}$, $f(\bm X)$是$\frac{\sqrt{n} L}{2}$-次高斯的, 从而有$\mathbb{P}[|f(\bm X) - \mathbb{E}[f(\bm X)]| \geq t] \leq 2 e^{-\frac{2 t^2}{n L^2}}$, $\forall t \geq 0$. 
 \end{example}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{熵方法}
@@ -471,53 +482,53 @@ $1$-范数-通常与维数$n$有关
 由于独立随机变量的联合分布是边缘分布的张量积, 我们可以计算每个随机变量对函数的贡献得到随机变量的函数熵的界\footnote{最为经典的例子是独立随机变量和的方差熵是随机变量的方差和.}, 这种被称为\textbf{熵的张量化}, 或者说, 熵具有次可加性. 
 
 
-具体地, 设$f \colon \R^n \to \R$, 随机向量$\bm X = (X_1, \dots, X_n)$各分量独立. 
-条件随机变量$e^{\lambda f(\bm X)} | \bm X^{\backslash k}$可以看作其它分量$\bm X^{\backslash k}$已经给定, 关于$X_k$的函数. 
-于是我们可以在保持$\bm X^{\backslash k}$不变的同时, 计算关于第$k$个分量的\textbf{逐坐标条件熵}
+具体地, 设$f \colon \R^n \to \R$, 随机向量$\bm{X} = (X_1, \dots, X_n)$各分量独立. 
+条件随机变量$e^{\lambda f(\bm{X})} | \bm{X}^{\backslash k}$可以看作其它分量$\bm{X}^{\backslash k}$已经给定, 关于$X_k$的函数. 
+于是我们可以在保持$\bm{X}^{\backslash k}$不变的同时, 计算关于第$k$个分量的\textbf{逐坐标条件熵}
 \begin{equation*}
-	\mathcal{H}_k ( e^{\lambda f(\bm X)} )
-	:= \mathcal{H} ( e^{\lambda f(\bm X)} | \bm X^{\backslash k} ). 
+	\mathcal{H}_k ( e^{\lambda f(\bm{X})} )
+	:= \mathcal{H} ( e^{\lambda f(\bm{X})} | \bm{X}^{\backslash k} ). 
 \end{equation*}
 
 \begin{lemma}[熵的张量化]\label{lemma:EntropyTensorization}
 	在上述的假设和记号下, 
 	\begin{equation*}
-		\mathcal{H}(e^{\lambda f(\bm X)})
-		\leq \mathbb{E}\left[ \sum_{k=1}^n \mathcal{H}_k (e^{\lambda f(\bm X)}) \right],\; 
+		\mathcal{H}(e^{\lambda f(\bm{X})})
+		\leq \mathbb{E}\left[ \sum_{k=1}^n \mathcal{H}_k (e^{\lambda f(\bm{X})}) \right],\; 
 		\forall \lambda > 0. 
 	\end{equation*}
 \end{lemma}
 \begin{proof}
-	考虑满足$\mathbb{E}[e^{g(\bm X)}] \leq 1$的函数$g$, 定义函数序列$\{g^1, \dots, g^n\}$: 
+	考虑满足$\mathbb{E}[e^{g(\bm{X})}] \leq 1$的函数$g$, 定义函数序列$\{g^1, \dots, g^n\}$: 
 	\begin{align*}
-		g^k(\bm X_k^n) &:= \log \mathbb{E}[e^{g(\bm X)} | \bm X_k^n] - \log \mathbb{E}[e^{g(\bm X)} | \bm X_{k+1}^n]. 
+		g^k(\bm{X}_k^n) &:= \log \mathbb{E}[e^{g(\bm{X})} | \bm{X}_k^n] - \log \mathbb{E}[e^{g(\bm{X})} | \bm{X}_{k+1}^n]. 
 	\end{align*}
-	于是$\sum_{k=1}^n g^k(\bm X_k^n) = g(\bm X) - \log \mathbb{E}[ e^{g(\bm X)} ] \geq g(\bm X)$, 利用这一分解可得
+	于是$\sum_{k=1}^n g^k(\bm{X}_k^n) = g(\bm{X}) - \log \mathbb{E}[ e^{g(\bm{X})} ] \geq g(\bm{X})$, 利用这一分解可得
 	\begin{equation*}
-		\mathbb{E}[ g(\bm X) e^{\lambda f(\bm X)}]
-		\leq \sum_{k=1}^n \mathbb{E}[ g^k(\bm X_k^n) e^{\lambda f(\bm X)} ] 
-		= \sum_{k=1}^n \mathbb{E}\left[ \mathbb{E}[ g^k(\bm X_k^n) e^{\lambda f(\bm X)} | \bm X^{\backslash k} ] \right]. 
+		\mathbb{E}[ g(\bm{X}) e^{\lambda f(\bm{X})}]
+		\leq \sum_{k=1}^n \mathbb{E}[ g^k(\bm{X}_k^n) e^{\lambda f(\bm{X})} ] 
+		= \sum_{k=1}^n \mathbb{E}\left[ \mathbb{E}[ g^k(\bm{X}_k^n) e^{\lambda f(\bm{X})} | \bm{X}^{\backslash k} ] \right]. 
 	\end{equation*}
-	注意到条件随机变量$e^{g^k(\bm X_k^n)}| \bm X^{\backslash k}$的期望满足
+	注意到条件随机变量$e^{g^k(\bm{X}_k^n)}| \bm{X}^{\backslash k}$的期望满足
 	\begin{equation*}
-		\mathbb{E}[e^{g^k(\bm X_k^n)}| \bm X^{\backslash k}]
-		= \mathbb{E} \left[ \frac{\mathbb{E}[e^{g(\bm X)} | \bm X_k^n]}{\mathbb{E}[e^{g(\bm X)} | \bm X_{k+1}^n]} \bigg| \bm X^{\backslash k} \right]
+		\mathbb{E}[e^{g^k(\bm{X}_k^n)}| \bm{X}^{\backslash k}]
+		= \mathbb{E} \left[ \frac{\mathbb{E}[e^{g(\bm{X})} | \bm{X}_k^n]}{\mathbb{E}[e^{g(\bm{X})} | \bm{X}_{k+1}^n]} \bigg| \bm{X}^{\backslash k} \right]
 		=1,  
 	\end{equation*}
-	于是由定理\ref{thm:VariationalRepresentationForEntropy}, $\mathbb{E}[ g^k(\bm X_k^n) e^{\lambda f(\bm X)} | \bm X^{\backslash k} ] \leq \mathcal{H}_k(e^{\lambda f(\bm X)})$. 
+	于是由定理\ref{thm:VariationalRepresentationForEntropy}, $\mathbb{E}[ g^k(\bm{X}_k^n) e^{\lambda f(\bm{X})} | \bm{X}^{\backslash k} ] \leq \mathcal{H}_k(e^{\lambda f(\bm{X})})$. 
 	再次利用定理\ref{thm:VariationalRepresentationForEntropy}, 对满足条件的$g$取上确界可知引理成立. 
 	%------
 	\sp 
-	$\bm X = (X_1, \dots, X_n)$为独立随机变量构成的随机向量,记$\bm X_k^n = (X_k, \dots, X_n)$, $\bm X^{\backslash k} = (X_1, \dots, X_{k-1}, X_{k+1}, \dots, X_n)$. 
-	考虑满足$\mathbb{E}[e^{g(\bm X)}] \leq 1$的函数$g$, 是否有
+	$\bm{X} = (X_1, \dots, X_n)$为独立随机变量构成的随机向量,记$\bm{X}_k^n = (X_k, \dots, X_n)$, $\bm{X}^{\backslash k} = (X_1, \dots, X_{k-1}, X_{k+1}, \dots, X_n)$. 
+	考虑满足$\mathbb{E}[e^{g(\bm{X})}] \leq 1$的函数$g$, 是否有
 	\begin{equation*}
-		\mathbb{E} \left[ \frac{\mathbb{E}[e^{g(\bm X)} | \bm X_k^n]}{\mathbb{E}[e^{g(\bm X)} | \bm X_{k+1}^n]} \bigg| \bm X^{\backslash k} \right] \leq 1
+		\mathbb{E} \left[ \frac{\mathbb{E}[e^{g(\bm{X})} | \bm{X}_k^n]}{\mathbb{E}[e^{g(\bm{X})} | \bm{X}_{k+1}^n]} \bigg| \bm{X}^{\backslash k} \right] \leq 1
 	\end{equation*}
 	\sp 
 \end{proof}
 
 特别地, 熵的张量化在处理\textbf{可分凸函数}时, 可以得到很好的结论. 
-称函数$f \colon \R^n \to \R$是可分凸的, 如果对任意指标$k \in \{1, \dots, n\}$, 给定向量$\bm x^{\backslash k} := (x_1, \dots, x_{k-1}, x_{k+1}, \dots x_n) \in \R^{n-1}$, 单变量函数
+称函数$f \colon \R^n \to \R$是可分凸的, 如果对任意指标$k \in \{1, \dots, n\}$, 给定向量$\bm{X}^{\backslash k} := (x_1, \dots, x_{k-1}, x_{k+1}, \dots x_n) \in \R^{n-1}$, 单变量函数
 \begin{equation*}
 	y_k \mapsto f(x_1, \dots x_{k-1}, y_k, x_{k+1}, \dots x_n)
 \end{equation*}
@@ -527,20 +538,20 @@ $1$-范数-通常与维数$n$有关
 \begin{proposition}
 	令$\{X_i\}_{i=1}^n$为区间$[a, b]$上的独立随机变量, $f \colon \R^n \to \R$为可分凸函数且关于$2$范数为$L$-Lipschitz的, 那么对任意$t \geq 0$, 成立
 	\begin{equation*}
-		\mathbb{P}[f(\bm X) \geq \mathbb{E}f(\bm X) + t] 
+		\mathbb{P}[f(\bm{X}) \geq \mathbb{E}f(\bm{X}) + t] 
 		\leq \exp \left( - \frac{t^2}{4L^2 (b-a)^2} \right). 
 	\end{equation*}	
 \end{proposition}
 \begin{proof}
 	对于$\lambda > 0$, 由引理\ref{lemma:EntropyTensorization}、 \ref{lemma:EntropyBoundForUnivariateFunctions}, 
 	\begin{align*}
-		\mathcal{H}(e^{\lambda f(\bm X)})
-		&\leq \mathbb{E}\left[ \sum_{k=1}^n \mathcal{H}_k (e^{\lambda f(\bm X)}) \right]
-		\leq \lambda^2 (b-a)^2  \mathbb{E}\left[ \sum_{k=1}^n \mathbb{E}\left[ \left(\frac{\partial f(\bm X)}{\partial X_k} \right)^2 e^{\lambda f(\bm X)} \bigg| \bm X^{\backslash k} \right] \right] \\
-		&= \lambda^2 (b-a)^2  \mathbb{E}\left[ \sum_{k=1}^n \left(\frac{\partial f(\bm X)}{\partial X_k} \right)^2 e^{\lambda f(\bm X)}\right]
-		\leq \lambda^2 (b-a)^2 L^2 \mathbb{E}[e^{\lambda f(\bm X)}], 
+		\mathcal{H}(e^{\lambda f(\bm{X})})
+		&\leq \mathbb{E}\left[ \sum_{k=1}^n \mathcal{H}_k (e^{\lambda f(\bm{X})}) \right]
+		\leq \lambda^2 (b-a)^2  \mathbb{E}\left[ \sum_{k=1}^n \mathbb{E}\left[ \left(\frac{\partial f(\bm{X})}{\partial X_k} \right)^2 e^{\lambda f(\bm{X})} \bigg| \bm{X}^{\backslash k} \right] \right] \\
+		&= \lambda^2 (b-a)^2  \mathbb{E}\left[ \sum_{k=1}^n \left(\frac{\partial f(\bm{X})}{\partial X_k} \right)^2 e^{\lambda f(\bm{X})}\right]
+		\leq \lambda^2 (b-a)^2 L^2 \mathbb{E}[e^{\lambda f(\bm{X})}], 
 	\end{align*}
-	其中$\sum_k \left( \frac{\partial f(\bm x)}{\partial x_k} \right)^2 = \|\nabla f\|_2^2 \leq L^2$由Lipchitz条件得到. 
+	其中$\sum_k \left( \frac{\partial f(\bm{X})}{\partial x_k} \right)^2 = \|\nabla f\|_2^2 \leq L^2$由Lipchitz条件得到. 
 	再由Herbst方法(定理\ref{thm:HerbstArgument})可见命题成立. 
 \end{proof}
 
@@ -682,8 +693,8 @@ $\R^n$中的凸体$C$和$D$的Minkowski和定义为
 \subsubsection{Kantorovich–Rubinstein对偶}
 
 \begin{equation*}
-	\inf_{\M \in \mathbb{P}i(\mathbb{Q}, \mathbb{P})} \mathbb{E}_{\M} \left[ \rho(X, X') \right]
-	= \inf_{\M \in \mathbb{P}i(\mathbb{Q}, \mathbb{P})} \int_{\mathcal{X} \times \mathcal{X}} \rho(x, x') \dd \M(x, x'). 
+	\inf_{\M \in \Pi(\mathbb{Q}, \mathbb{P})} \mathbb{E}_{\M} \left[ \rho(X, X') \right]
+	= \inf_{\M \in \Pi(\mathbb{Q}, \mathbb{P})} \int_{\mathcal{X} \times \mathcal{X}} \rho(x, x') \dd \M(x, x'). 
 \end{equation*}
 
 \subsubsection{信息不等式}

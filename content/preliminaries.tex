@@ -75,20 +75,20 @@ Randon-Nikodym导数是定义密度和条件期望的关键.
 \begin{example}[分布的密度]
 	随机变量$X \colon (\cX, \cA, \P) \to (\R, \cB, \mu)$的分布是前推测度$X_* \P (B) := \P \circ X^{-1} (B) = \P[X \in B]$, 它的关于$\mu$的密度由Randon-Nikodym导数给出: 
 	\begin{equation*}
-		f_X = \frac{\dd X_* \P}{\dd \mu}. 
+		p_X = \frac{\dd X_* \P}{\dd \mu}. 
 	\end{equation*}
 	从而由积分变换定理\ref{thm:IntegralTransform}, 
 	\begin{equation*}
 		\P[X \in B] 
 		= \int_{X^{-1}(B)} \dd \P 
 		= \int_B \dd X_* \P 
-		= \int_B f_X \dd \mu
-		= \E[f_X; B]
+		= \int_B p_X \dd \mu
+		= \E[p_X; B]
 	\end{equation*}
 	\begin{equation*}
 		\E[f(X); B]
 		= \int_B f \dd X_* \P 
-		= \int_B f(x) f_X(x) \dd \mu(x)
+		= \int_B f(x) p_X(x) \dd \mu(x)
 	\end{equation*}
 	此外, 由于分布总是(前推)测度, 我们可以通过给出关于随机变量分布的密度函数来定义新的随机变量, 例如引理\ref{lemma:SubGaussianParameterOfBddRV}的证明; 也可以定义新的测度, 例如定理\ref{thm:VariationalRepresentationForEntropy}的证明. 
 \end{example}

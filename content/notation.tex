@@ -1,12 +1,12 @@
 \section*{记号表}
 
-\begin{tabular}{p{0.15 \textwidth} p{0.7 \textwidth}}
+\begin{tabular}{p{0.13 \textwidth} p{0.85 \textwidth}}
 \hline
-	$\bm x_j^k$, $\bm X_j^k$ & $(x_j, x_{j+1} \dots, x_k)$, $(X_j, X_{j+1} \dots, X_k)$ \\
-	$\bm x^{\backslash k}$, $\bm X^{\backslash k}$ & 除去第$k$个分量后的向量$(x_1, \dots, x_{k-1}, x_{k+1}, \dots, x_n)$, $(X_1, \dots, X_{k-1}, X_{k+1}, \dots, X_n)$ \\
-	$\E_{\P} f$ & $\E_{X \sim \P} [f(X)] = \int f \dd \P$ \\
-	$\E_k$ & 保持其他分量不变, 对第$k$个分量求逐坐标期望$\E_k[f(\bm X)] = \E[f(\bm X) | \bm X^{\backslash k}]$ \\
+	$\bm{X}_j^k$, $\bm{X}_j^k$ & $(x_j, x_{j+1} \dots, x_k)$, $(X_j, X_{j+1} \dots, X_k)$ \\
+	$\bm{X}^{\backslash k}$, $\bm{X}^{\backslash k}$ & 除去第$k$个分量后的向量$(x_1, \dots, x_{k-1}, x_{k+1}, \dots, x_n)$, $(X_1, \dots, X_{k-1}, X_{k+1}, \dots, X_n)$ \\
+	$\mathbb{P}(f) = \mathbb{E}_{\mathbb{P}}[f]$ & $\int f \dd \mathbb{P} = \mathbb{E}_{X \sim \mathbb{P}} [f(X)]$ \\
+	$\mathbb{E}_k$ & 保持其他分量不变, 对第$k$个分量求逐坐标期望$\mathbb{E}_k[f(\bm{X})] = \mathbb{E}[f(\bm{X}) | \bm{X}^{\backslash k}]$ \\
 	$\vol$ & 体积 \\
-	$\Pi(\Q, \P)$ & 分布对$(\Q, \P)$的所有可能的耦合 \\
+	$\Pi(\mathbb{Q}, \mathbb{P})$ & 分布对$(\mathbb{Q}, \mathbb{P})$的所有可能的耦合 \\
 \hline
 \end{tabular}
