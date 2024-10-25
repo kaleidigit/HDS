@@ -44,21 +44,21 @@ $1$-范数-通常与维数$n$有关
 可以看到, Markov不等式 \eqref{eq:Markov'sInequality} 中尾部概率由$f$的增长速度所控制——这意味着选取增长速度最快的函数, 可以得到更有效的尾部概率不等式. 
 自然地, 我们考虑指数函数. 
 
-若中心化随机变量$X - \mathbb{E}[X]$在$0$的某个邻域$I$内有\textbf{矩母函数}, 即在$\lambda \in I$上有$\varphi_X(\lambda) := \mathbb{E}[e^{\lambda (X - \mathbb{E}X)}] < \infty$, 那么$\lambda \in I \cap [0, \infty)$时, 取$f(u) = e^{\lambda u}$可以得到下述的\textbf{Chernoff不等式}: 
+若中心化随机变量$X - \mathbb{E}[X]$在$0$的某个邻域$I$内有\textbf{矩生成函数}, 即在$\lambda \in I$上有$M_X(\lambda) := \mathbb{E}[e^{\lambda (X - \mathbb{E}X)}] < \infty$, 那么$\lambda \in I \cap [0, \infty)$时, 取$f(u) = e^{\lambda u}$可以得到下述的\textbf{Chernoff不等式}: 
 \begin{equation*}
 	\mathbb{P}[X - \mathbb{E}X \geq t] 
 	\leq \frac{\mathbb{E}[e^{\lambda(X - \mathbb{E}X)}]}{e^{\lambda t}},\;
 	\forall \lambda \in I \cap [0, \infty).
 \end{equation*}
-通过选取最优的参数$\lambda$, 我们可以得到\textbf{Chernoff界}\footnote{在最优的$k$下, 基于高阶矩的Markov不等式不会比Chernoff界中基于矩母函数获得的界更差. 但在实际应用中, 由于矩母函数计算的便利性, Chernoff界仍有着广泛的应用.}
+通过选取最优的参数$\lambda$, 我们可以得到\textbf{Chernoff界}\footnote{在最优的$k$下, 基于高阶矩的Markov不等式不会比Chernoff界中基于矩生成函数获得的界更差. 但在实际应用中, 由于矩生成函数计算的便利性, Chernoff界仍有着广泛的应用.}
 \begin{equation*}
 	\mathbb{P}[X \geq \mathbb{E}X + t]
 	\leq \exp \left[ \inf_{\lambda \in I \cap [0, \infty)} \left\{ \log \mathbb{E}[e^{\lambda(X - \mathbb{E}X)}] - \lambda t \right\} \right]. 
 \end{equation*}
-于是随机变量的集中不等式可以从其矩母函数的界得到. 
+于是随机变量的集中不等式可以从其矩生成函数的界得到. 
 
 \begin{example}[Gauss随机变量的上偏差不等式]
-	Gauss随机变量$X \sim N(\mu, \sigma^2)$的矩母函数
+	Gauss随机变量$X \sim N(\mu, \sigma^2)$的矩生成函数
 	\begin{equation}
 		\mathbb{E}[e^{\lambda X}] = e^{\frac{\sigma^2 \lambda^2}{2} + \mu \lambda} 		
 	\end{equation}
@@ -71,7 +71,7 @@ $1$-范数-通常与维数$n$有关
 
 \subsubsection{次高斯随机变量与Hoeffding界}
 
-我们将Gauss随机变量作为“模版”来研究其他随机变量: 如果某个随机变量的中心矩母函数能被中心Gauss随机变量的矩母函数所控制, 利用Chernoff方法, 它的尾概率也会被中心Gauss随机变量的尾概率控制. 
+我们将Gauss随机变量作为“模版”来研究其他随机变量: 如果某个随机变量的中心矩生成函数能被中心Gauss随机变量的矩生成函数所控制, 利用Chernoff方法, 它的尾概率也会被中心Gauss随机变量的尾概率控制. 
 
 \begin{definition}[次高斯随机变量]\label{def:subGaussianRV}
 	称期望为$\mu$的随机变量$X$为为$\sigma$-次高斯随机的, 如果存在$\sigma > 0$, 使得
@@ -86,8 +86,8 @@ $1$-范数-通常与维数$n$有关
 \end{equation}
 
 \begin{remark}[辅助函数的构造]
-	定义\ref{def:subGaussianRV}实际上是说, 次高斯随机变量的矩母函数的对数满足$\psi(\lambda) := \log \mathbb{E}[e^{\lambda X}] = O(\lambda^2)$, 等价地, $\psi''(\lambda) = O(1)$; 
-	或者说$G(\lambda) := \lambda^{-1} \psi(\lambda) = O(\lambda)$, 等价地$G'(\lambda) = O(1)$. 
+	定义\ref{def:subGaussianRV}实际上是说, 次高斯随机变量的累积生成函数满足$K(\lambda) := \log \mathbb{E}[e^{\lambda X}] = O(\lambda^2)$, 等价地, $K''(\lambda) = O(1)$; 
+	或者说$G(\lambda) := \lambda^{-1} K(\lambda) = O(\lambda)$, 等价地$G'(\lambda) = O(1)$. 
 	引理\ref{lemma:SubGaussianParameterOfBddRV}和定理\ref{thm:HerbstArgument}的证明分别利用了这两种等价表述来构造辅助函数. 
 \end{remark}
 
@@ -163,14 +163,14 @@ $1$-范数-通常与维数$n$有关
 		\leq \mathbb{E}\left[X_{\lambda} - \frac{a+b}{2} \right]^2 
 		\leq \left(\frac{b-a}{2}\right)^2. 
 	\end{equation*}
-	记$\mathbb{E}[X] = \mu$, $\psi(\lambda) := \log \mathbb{E}[e^{\lambda X}]$, 它满足$\psi(0) = 0$, $\psi'(0) = \frac{\mathbb{E}[X e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} \big|_{\lambda = 0} = \mu$, 且对任意$\lambda$,  
+	记$\mathbb{E}[X] = \mu$, $K(\lambda) := \log \mathbb{E}[e^{\lambda X}]$, 它满足$K(0) = 0$, $K'(0) = \frac{\mathbb{E}[X e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} \big|_{\lambda = 0} = \mu$, 且对任意$\lambda$,  
 	\begin{equation*}
-		\psi''(\lambda) 
+		K''(\lambda) 
 		= \frac{\mathbb{E}[X^2 e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} - \left( \frac{\mathbb{E}[X e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} \right)^2
 		= \mathbb{E}X_{\lambda}^2 - (\mathbb{E}X_{\lambda})^2
 		= \var X_{\lambda}.  
 	\end{equation*}
-	于是$\psi(\lambda)$的在原点的Taylor展开为$\psi(\lambda) = \lambda \mu + \frac{\lambda^2}{2} \psi''(\xi) \leq \lambda \mu + \frac{\lambda^2}{2} \left(\frac{b-a}{2}\right)^2$. 
+	于是$K(\lambda)$的在原点的Taylor展开为$K(\lambda) = \lambda \mu + \frac{\lambda^2}{2} K''(\xi) \leq \lambda \mu + \frac{\lambda^2}{2} \left(\frac{b-a}{2}\right)^2$. 
 	从而$\mathbb{E}[e^{\lambda(X - \mu)}] \leq \exp\left(\frac{\lambda^2}{2} \cdot \left(\frac{b-a}{2}\right)^2\right)$, 即$X$是参数为$\frac{b-a}{2}$的次高斯随机变量. 
 \end{proof}
 
@@ -181,7 +181,7 @@ $1$-范数-通常与维数$n$有关
 
 \subsubsection{次指数随机变量与Bernstein界}
 
-很多时候随机变量的中心矩母函数只会在$0$的某个邻域内存在, 相应地, 我们将次高斯随机变量的条件放宽如下. 
+很多时候随机变量的中心矩生成函数只会在$0$的某个邻域内存在, 相应地, 我们将次高斯随机变量的条件放宽如下. 
 \begin{definition}[次指数随机变量]
 	称期望为$\mu$的随机变量$X$为$(\nu, \alpha)$-次指数的, 如果存在非负参数对$(\nu, \alpha)$使得
 	\begin{equation*}
@@ -381,7 +381,7 @@ $1$-范数-通常与维数$n$有关
 			= - \lambda \mathbb{E}X + \log \mathbb{E}[e^{\lambda X}] 
 			= \log \mathbb{E}[e^{\lambda(X - \mathbb{E}X)}], 
 		\end{equation*}
-		这样的熵对应的是中心化的矩母函数, 可以用来计算尾部概率的Chernoff界. 
+		这样的熵对应的是中心化的矩生成函数, 可以用来计算尾部概率的Chernoff界. 
 \end{itemize}
 之后, 我们总是考虑非负随机变量$e^{\lambda X}$由凸函数$\Phi \colon [0, \infty) \to \mathbb{R}$: 
 \begin{equation*}
@@ -394,16 +394,16 @@ $1$-范数-通常与维数$n$有关
 \begin{equation}\label{eq:EntropyByMGF}
 	\mathcal{H}(e^{\lambda X}) 
 	= \lambda \mathbb{E}[ X e^{\lambda X}] - \mathbb{E}[e^{\lambda X}] \log \mathbb{E}[e^{\lambda X}]
-	= \lambda \varphi_X'(\lambda) - \varphi_X(\lambda) \log \varphi_X(\lambda), 
+	= \lambda M_X'(\lambda) - M_X(\lambda) \log M_X(\lambda), 
 \end{equation}
-其中$\varphi_X(\lambda) = \mathbb{E}[e^{\lambda X}]$为矩母函数. 
+其中$M_X(\lambda) = \mathbb{E}[e^{\lambda X}]$为矩生成函数. 
 
 \begin{example}[Gauss随机变量的熵]
-	对于$X \sim \cN(\mu, \sigma^2)$, 其矩母函数为$\varphi_X(\lambda) = e^{\lambda^2 \sigma^2 / 2 + \lambda \mu}$, 于是
+	对于$X \sim \cN(\mu, \sigma^2)$, 其矩生成函数为$M_X(\lambda) = e^{\lambda^2 \sigma^2 / 2 + \lambda \mu}$, 于是
 	\begin{equation}\label{eq:EntropyOfGaussianRV}
 		\mathcal{H}(e^{\lambda X}) 
-		= (\lambda^2 \sigma^2 + \lambda \mu) \varphi_X(\lambda) - \left(\frac{\lambda^2 \sigma^2}{2} + \lambda\mu\right) \varphi_X(\lambda) 
-		= \frac{\lambda^2 \sigma^2}{2} \cdot \varphi_X(\lambda). 
+		= (\lambda^2 \sigma^2 + \lambda \mu) M_X(\lambda) - \left(\frac{\lambda^2 \sigma^2}{2} + \lambda\mu\right) M_X(\lambda) 
+		= \frac{\lambda^2 \sigma^2}{2} \cdot M_X(\lambda). 
 	\end{equation}
 \end{example}
 
@@ -463,24 +463,25 @@ $1$-范数-通常与维数$n$有关
 
 \subsubsection{Herbst方法}
 
-和次高斯随机变量的想法类似, 如果$e^{\lambda X}$的熵能像Gauss随机变量的熵那样被控制, 相应的矩母函数、尾部概率也会被控制.
+和次高斯随机变量的想法类似, 如果$e^{\lambda X}$的熵能像Gauss随机变量的熵那样被控制, 相应的矩生成函数、尾部概率也会被控制.
 \begin{theorem}[Herbst方法]\label{thm:HerbstArgument}
-	若对任意的$\lambda \in I$ (这里$I$取$[0, \infty)$或者$\mathbb{R}$)总有熵$\mathcal{H}(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \varphi_X(\lambda)$, 那么
+	若对任意的$\lambda \in I$ (这里$I$取$[0, \infty)$或者$\mathbb{R}$)总有熵$\mathcal{H}(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \E[e^{\lambda X}]$, 那么
 	\begin{equation*}
 		\mathbb{E}\left[e^{\lambda(X - \mathbb{E}X)}\right] 
 		\leq \exp \left( \frac{\lambda^2 \sigma^2}{2} \right),\; 
 		\forall \lambda \in I. 
 	\end{equation*}
-	进一步地, 由Chernoff方法, $I = [0, \infty)$时, $X$满足次高斯随机变量的上偏差不等式; $I = \mathbb{R}$时, $X$为参数是$\sigma$的次高斯随机变量, 从而满足集中不等式 \eqref{eq:SubGuassianConcentration}.
+	进一步地, 由Chernoff方法, $I = [0, \infty)$时, $X$满足次高斯随机变量的上偏差不等式; 当
+	$I = \mathbb{R}$时, $X$是$\sigma$-次高斯的, 从而满足集中不等式 \eqref{eq:SubGuassianConcentration}.
 \end{theorem}
 \begin{proof}
-	对于$\lambda \in I \backslash \{0\}$, 令$G(\lambda) := \frac{\log \varphi_X(\lambda)}{\lambda}$. 
-	结合 \eqref{eq:EntropyByMGF}, 条件$\mathcal{H}(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \varphi_X(\lambda)$意味着
+	对于$\lambda \in I \backslash \{0\}$, 令$G(\lambda) := \frac{\log M_X(\lambda)}{\lambda}$. 
+	结合 \eqref{eq:EntropyByMGF}, 条件$\mathcal{H}(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot M_X(\lambda)$意味着
 	\begin{equation*}
 		G'(\lambda) \leq \frac{\sigma^2}{2},\; \forall \lambda \in I \backslash \{0\}. 
 	\end{equation*}
 	当$\lambda > 0$时, 对任意的$0 < \lambda_0 < \lambda$, 在区间$[\lambda_0, \lambda]$上积分有$G(\lambda) - G(\lambda_0) \leq \frac{\sigma^2 (\lambda - \lambda_0)}{2}$. 
-	由洛必达法则, $ \lim_{\lambda \downarrow 0} G(\lambda) = \lim_{\lambda \downarrow 0} \frac{\varphi_X'(\lambda)}{\varphi_X(\lambda)} = \mathbb{E}X$. 
+	由洛必达法则, $ \lim_{\lambda \downarrow 0} G(\lambda) = \lim_{\lambda \downarrow 0} \frac{M_X'(\lambda)}{M_X(\lambda)} = \mathbb{E}X$. 
 	于是令$\lambda_0 \to 0^+$有
 	\begin{equation*}
 		\log \mathbb{E}\left[e^{\lambda(X - \mathbb{E}X)}\right]
@@ -492,7 +493,29 @@ $1$-范数-通常与维数$n$有关
 \end{proof}
 
 \begin{remark}
-	反之, 若$X$为参数是$\sigma/2$-的次高斯的, 可以证明$\mathcal{H}(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \varphi_X(\lambda)$. 
+	反之, 若$X$为参数是$\sigma/2$-的次高斯的, 那么有$\mathcal{H}(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \E[e^{\lambda X}]$. 
+	\begin{proof}
+		考虑随机变量$Z := e^{\lambda X} / \E[e^{\lambda X}]$, 那么
+		\begin{equation*}
+			\E[Z \log Z] 
+			= \frac{1}{\E[e^{\lambda X}]} \E \left[ e^{\lambda X} \left(\lambda X - \log \E[e^{\lambda X}] \right) \right]
+			= \frac{\cH(e^{\lambda X})}{\E[e^{\lambda X}]}. 
+		\end{equation*}
+		考虑指数加权期望, 我们还有
+		\begin{align*}
+			\E[Z \log Z]
+			= \frac{\E[\log Z \cdot e^{\lambda X}]}{\E[e^{\lambda X}]}
+			= \E_{\lambda}[\log Z]
+			\leq \log \E_{\lambda} [Z]
+			= \log \E[e^{2\lambda X}] - 2 \log \E[e^{\lambda X}]
+		\end{align*}
+		由假设, 其中$\log \E[e^{2\lambda X}] \leq \lambda \E[X] + \frac{\lambda^2 \sigma^2}{2}$, 而$\log \E[e^{\lambda X}] \geq \lambda \E[X]$, 于是
+		\begin{equation*}
+			\mathcal{H}(e^{\lambda X})
+			= \E[Z \log Z] \cdot \E[e^{\lambda X}]
+			\leq \frac{\lambda^2 \sigma^2}{2} \cdot \E[e^{\lambda X}]. 
+		\end{equation*}
+	\end{proof}
 \end{remark}
 
 自然地, 我们可以将上述方法由次高斯随机变量推广至次指数随机变量. 
@@ -500,7 +523,7 @@ $1$-范数-通常与维数$n$有关
 	若存在正常数$b$, $\sigma$使得
 	\begin{equation*}
 		\mathcal{H}(e^{\lambda X}) 
-		\leq \lambda^2 \left[ b \varphi_X'(\lambda) + \varphi_X(\lambda)(\sigma^2 - b \mathbb{E}X) \right],\;
+		\leq \lambda^2 \left[ b M_X'(\lambda) + M_X(\lambda)(\sigma^2 - b \mathbb{E}X) \right],\;
 		\forall \lambda \in [0, 1/b), 
 	\end{equation*}
 	那么$X$满足上界
@@ -520,12 +543,12 @@ $1$-范数-通常与维数$n$有关
 	类似地, 命题中的条件意味着
 	\begin{equation*}
 		G'(\lambda) 
-		\leq \sigma^2 - b \mathbb{E}X + b \cdot \frac{\varphi_X'(\lambda)}{\varphi_X(\lambda)}. 
+		\leq \sigma^2 - b \mathbb{E}X + b \cdot \frac{M_X'(\lambda)}{M_X(\lambda)}. 
 	\end{equation*}
 	在任意的区间$[\lambda_0, \lambda] \subseteq (0, 1/b)$上积分有
 	\begin{equation*}
 		G(\lambda) - G(\lambda_0) 
-		\leq (\sigma^2 - b \mathbb{E}X)(\lambda - \lambda_0) + b(\log \varphi_X(\lambda) - \log \varphi_X(\lambda_0)). 
+		\leq (\sigma^2 - b \mathbb{E}X)(\lambda - \lambda_0) + b(\log M_X(\lambda) - \log M_X(\lambda_0)). 
 	\end{equation*}
 	再令$\lambda_0 \to 0^+$有$G(\lambda) - \mathbb{E}X \leq \lambda \sigma^2 + b \lambda (G(\lambda) - \mathbb{E}X)$, 于是
 	\begin{equation*}

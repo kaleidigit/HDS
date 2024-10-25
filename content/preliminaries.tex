@@ -61,6 +61,53 @@
 \end{proof}
 
 
+\subsubsection{矩生成函数、累计生成函数}
+
+对于随机变量$X$, 若函数$M_X(\lambda) := \E[e^{\lambda X}]$在$0$的开邻域$I$内存在, 则称$M_X$为$X$的\textbf{矩生成函数}(moment generating function).
+我们可以利用矩生成函数来导出$X$的各阶矩: 
+\begin{equation*}
+	\frac{\dd^n}{\dd \lambda^n} M_X(\lambda)
+	= \frac{\dd^n}{\dd \lambda^n} \E \left[ 1 + \lambda X + \frac{\lambda^2}{2!} X^2 + \dots \right]
+	= \E X^n + \frac{\lambda}{n + 1} \E X^{n+1} + \dots, 
+\end{equation*}
+于是$\E X^n = M_X^{(n)}(0)$. 
+随机变量$X$的\textbf{累计生成函数}(cumulant generating function)是它的矩生成函数的自然对数 
+\begin{equation*}
+	K_X(\lambda) := \log \E[e^{\lambda X}], 
+\end{equation*}
+它的一个优点是它是加性函数——对于互相独立的随机变量$X$和$Y$, 
+\begin{equation*}
+	K_{X+Y}(\lambda) 
+	= \log \left(\E[e^{\lambda X}] \cdot \E[e^{\lambda Y}]\right)
+	= K_X(\lambda) + K_Y(\lambda). 
+\end{equation*}
+ 
+
+此外还可以按如下方式计算随机变量的各阶矩. 
+\begin{lemma}\label{lemma:trickOfExpectation}
+	若非负随机变量$X \in L^p$, $p > 0$, 则有
+	\begin{equation}
+		\E X^p = \int_0^{\infty} p x^{p-1} \P(X > x) \dd x. 
+	\end{equation}
+	特别的, 对于$X \geq 0$, 有
+	\begin{equation*}
+		\E X = \int_0^{\infty} \P(X > x) \dd x. 
+	\end{equation*}
+	进一步地, 若$X$取值范围为$\N$, 则有
+	\begin{equation*}
+		\E X = \sum_{k=0}^{\infty} \P(X \geq k). 
+	\end{equation*}
+\end{lemma}
+\begin{proof}
+	\begin{align*}
+		\E X^p 
+		&= \int_\Omega X^p \dd \P 
+		= \int_\Omega \int_0^Y p x^{p-1} \dd x \dd \P 
+		= \int_\Omega \int_0^{\infty} p x^{p-1} \I{X > x} \dd x \dd \P \\
+		&= \int_0^{\infty} p x^{p-1} \int_\Omega \I{X > x} \dd \P \dd x
+		= \int_0^{\infty} p x^{p-1} \P(X > x) \dd x.
+	\end{align*}
+\end{proof}
 
 
 \subsubsection{Randon-Nikodym导数、密度}
@@ -90,53 +137,20 @@ Randon-Nikodym导数是定义密度和条件期望的关键.
 		= \int_B f \dd X_* \P 
 		= \int_B f(x) p_X(x) \dd \mu(x)
 	\end{equation*}
-	此外, 由于分布总是(前推)测度, 我们可以通过给出关于随机变量分布的密度函数来定义新的随机变量, 例如引理\ref{lemma:SubGaussianParameterOfBddRV}的证明; 也可以定义新的测度, 例如定理\ref{thm:VariationalRepresentationForEntropy}的证明. 
 \end{example}
 
-
-
-\subsubsection{矩的求法}
-
-对于随机变量$X$, 若函数$\varphi_X(\lambda) = \E[e^{\lambda X}]$存在, 则称$\varphi_X$为$X$的\textbf{矩母函数}.
-我们可以利用矩母函数来导出$X$的各阶矩: 
-\begin{equation*}
-	\frac{\dd^n}{\dd \lambda^n} \varphi_X(\lambda)
-	= \frac{\dd^n}{\dd \lambda^n} \E \left[ 1 + \lambda X + \frac{\lambda^2}{2!} X^2 + \dots \right]
-	= \E X^n + \frac{\lambda}{n + 1} \E X^{n+1} + \dots, 
-\end{equation*}
-于是$\E X^n = \varphi_X^{(n)}(0)$. 
-
-并非所有随机变量都具有矩生成函数, 
-
-很多时候它可能只在某个$0$的开邻域内存在
-
-中心矩母函数
-
-
-\begin{lemma}\label{lemma:trickOfExpectation}
-	若非负随机变量$X \in L^p$, $p > 0$, 则有
-	\begin{equation}
-		\E X^p = \int_0^{\infty} p x^{p-1} \P(X > x) \dd x. 
-	\end{equation}
-	特别的, 对于$X \geq 0$, 有
+\begin{example}[指数加权]
+	若随机变量$X$的矩生成函数$\E[e^{\lambda X}]$在某个开区间$I$存在, 考虑指数加权期望$\E_{\lambda}$
 	\begin{equation*}
-		\E X = \int_0^{\infty} \P(X > x) \dd x. 
+		\E_{\lambda} [f(X)]
+		:= \frac{\E[f(X) e^{\lambda X}]}{\E[e^{\lambda X}]}
+		= \int f(X) \frac{e^{\lambda X}}{\E[e^{\lambda X}]} \dd \P 
 	\end{equation*}
-	进一步地, 若$X$取值范围为$\N$, 则有
-	\begin{equation*}
-		\E X = \sum_{k=0}^{\infty} \P(X \geq k). 
-	\end{equation*}
-\end{lemma}
-\begin{proof}
-	\begin{align*}
-		\E X^p 
-		&= \int_\Omega X^p \dd \P 
-		= \int_\Omega \int_0^Y p x^{p-1} \dd x \dd \P 
-		= \int_\Omega \int_0^{\infty} p x^{p-1} \I{X > x} \dd x \dd \P \\
-		&= \int_0^{\infty} p x^{p-1} \int_\Omega \I{X > x} \dd \P \dd x
-		= \int_0^{\infty} p x^{p-1} \P(X > x) \dd x.
-	\end{align*}
-\end{proof}
+	它借用了Gibbs分布的思想，用指数权重调整对随机变量的关注, 并将矩生成函数作为配分函数.  
+	也可以看作定义了新的概率测度$\P^{\lambda}$, 它关于$\P$的Randon-Nikodym导数即为$\frac{e^{\lambda X}}{\E[e^{\lambda X}]}$. 
+	这被用在引理\ref{lemma:SubGaussianParameterOfBddRV}和定理\ref{thm:VariationalRepresentationForEntropy}的证明.
+\end{example}
+
 
 
 \subsubsection{条件期望、鞅、鞅差}
@@ -157,7 +171,7 @@ Randon-Nikodym导数是定义密度和条件期望的关键.
 	\begin{enumerate}[label=(\roman*)]
 		\item 特别地, 如果$X \in \cF$, 则$\E(X|\cF) = X$ a.s.;
 		\item \textbf{(全期望公式)} $\E(\E(X|\cF)) = \E X$; (取$A = \Omega \in \cF$即可)
-		\item \textbf{(Jensen不等式)} 若$\varphi$为凸函数且$\E X, \E \varphi(X) < \infty$, 则$\E(\varphi(X) | \cF) \geq \varphi(\E(X|\cF))$; 
+		\item \textbf{(Jensen不等式)} 若$M$为凸函数且$\E X, \E M(X) < \infty$, 则$\E(M(X) | \cF) \geq M(\E(X|\cF))$; 
 		\item \textbf{(塔性质)} 若$\cF_1 \subset \cF_2$, 则$\E(\E(X|\cF_1)|\cF_2) = \E(X|\cF_1) = \E(\E(X|\cF_2)|\cF_1)$. 
 	\end{enumerate}
 随机变量序列$\{X_k\}$是适应于$\{\cF_k\}$的\textbf{鞅}, 如果满足
