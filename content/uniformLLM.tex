@@ -25,9 +25,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{经验过程}
 
-设$\{X_i\}_{i=1}^n$是来自分布$\mathbb{P}$的$n$个独立同分布样本, \textbf{经验分布}为$\mathbb{P}_n(A) := \frac{1}{n} \sum_{i=1}^n \I{A}(X_i)$, 其中集合$A \subseteq \cX$. 
+设$\{X_i\}_{i=1}^n$是来自分布$\mathbb{P}$的$n$个独立同分布样本, \textbf{经验分布}为$\mathbb{P}_n(A) := \frac{1}{n} \sum_{i=1}^n \I{A}(X_i)$, 其中集合$A \subseteq \mathcal{X}$. 
 
-对于$\cX$上的$\mathbb{P}$-可积实值函数类$\mathscr{F}$, 即对任意$f \in \mathscr{F}$, 都有$\mathbb{P}(f) = \int f \dd \mathbb{P} = \mathbb{E}[f(X)] < \infty$, 经验分布定义了随机过程
+对于$\mathcal{X}$上的$\mathbb{P}$-可积实值函数类$\mathscr{F}$, 即对任意$f \in \mathscr{F}$, 都有$\mathbb{P}(f) = \int f \dd \mathbb{P} = \mathbb{E}[f(X)] < \infty$, 经验分布定义了随机过程
 \begin{equation*}
 	\mathbb{P}_n \colon f \mapsto \mathbb{P}_n(f) 
 \end{equation*}
@@ -58,12 +58,12 @@ Vapnik-Čhervonenkis(1971)和Dudley(1978)
 未知分布$\mathbb{P}_{\theta^*}$, 其中$\theta^* \in \Theta$未知, $\{ \mathbb{P}_{\theta} \colon \theta \in \Theta\}$为概率分布族. 
 这里的$\Theta$可能是$\R^d$, 对应参数估计问题; 或者是某个函数类$\mathscr{G}$, 对应非参数问题. 
 
-估计$\theta^*$的决策方法总是基于最小化损失函数$\cL_{\theta} (X)$: 最优的$\theta$应当使得总体风险$R(\theta, \theta^*) := \mathbb{E}_{\mathbb{P}_{\theta^*}}[\cL_{\theta} (X)]$达到最小. 
+估计$\theta^*$的决策方法总是基于最小化损失函数$\mathcal{L}_{\theta} (X)$: 最优的$\theta$应当使得总体风险$R(\theta, \theta^*) := \mathbb{E}_{\mathbb{P}_{\theta^*}}[\mathcal{L}_{\theta} (X)]$达到最小. 
 然而在实践中, 我们通常无法获得总体数据, 只能根据有限个样本$\{ X_i \}_{i=1}^n$, 在$\Theta$的某个子集$\Theta_0$上最小化经验风险得到估计
 \begin{equation*}
 	\hat \theta 
 	= \argmin_{\theta \in \Theta_0} \hat R_n (\theta, \theta^*) 
-	= \argmin_{\theta \in \Theta_0} \frac{1}{n} \sum_{i=1}^n \cL_{\theta} (X_i). 
+	= \argmin_{\theta \in \Theta_0} \frac{1}{n} \sum_{i=1}^n \mathcal{L}_{\theta} (X_i). 
 \end{equation*}
 我们希望经验风险和总体风险足够接近, 即控制过度风险$\mathbb{E}(\hat \theta, \theta^*) := R(\hat \theta, \theta^*) - \inf_{\theta \in \Theta_0} R(\theta, \theta^*)$. 
 
@@ -75,21 +75,21 @@ Vapnik-Čhervonenkis(1971)和Dudley(1978)
 	+ \underbrace{\left[ \hat R_n(\hat \theta, \theta^*) - \hat R_n(\theta_0, \theta^*) \right]}_{T_2}
 	+ \underbrace{\left[ \hat R_n(\theta_0, \theta^*) - R(\theta_0, \theta^*) \right]}_{T_3}. 
 \end{equation*}
-其中$|T_1| = \left| \frac{1}{n} \sum_i \cL_{\theta} (X_i) - \mathbb{E}_{\mathbb{P}_{\theta^*}}[\cL_{\theta} (X)] \right| \leq \|\mathbb{P}_n - \mathbb{P}\|_{\cL_{\Theta_0}}$, 需要损失函数类$\cL_{\Theta_0} := \{ \cL_{\theta}(\cdot) \colon \theta \in \Theta_0 \}$的一致大数定律; 
+其中$|T_1| = \left| \frac{1}{n} \sum_i \mathcal{L}_{\theta} (X_i) - \mathbb{E}_{\mathbb{P}_{\theta^*}}[\mathcal{L}_{\theta} (X)] \right| \leq \|\mathbb{P}_n - \mathbb{P}\|_{\mathcal{L}_{\Theta_0}}$, 这需要需要考虑损失函数类$\mathcal{L}_{\Theta_0} := \{ \mathcal{L}_{\theta}(\cdot) \colon \theta \in \Theta_0 \}$的一致大数定律; 
 而$\hat \theta$最小化了经验风险, 可以看到$T_2 \leq 0$; 
-$T_3$对应的则是控制随机变量$\frac{1}{n} \sum_i \cL_{\theta_0}(X_i)$及其期望$\mathbb{E}_{\mathbb{P}_{\theta_0}}[\cL_{\theta} (X)]$之间的偏差, 这里$\theta_0$是一个未知但非随机的值, 因此可以用测度集中的方法来得到. 
-当然$\|\mathbb{P}_n - \mathbb{P}\|_{\cL_{\Theta_0}}$也是$T_3$的上界, 于是过度风险至多是$2 \|\mathbb{P}_n - \mathbb{P}\|_{\cL_{\Theta_0}}$. 
+$T_3$对应的则是控制随机变量$\frac{1}{n} \sum_i \mathcal{L}_{\theta_0}(X_i)$及其期望$\mathbb{E}_{\mathbb{P}_{\theta_0}}[\mathcal{L}_{\theta} (X)]$之间的偏差, 这里$\theta_0$是一个未知但非随机的值, 因此可以用测度集中的方法来得到. 
+当然$\|\mathbb{P}_n - \mathbb{P}\|_{\mathcal{L}_{\Theta_0}}$也是$T_3$的上界, 于是过度风险至多是$2 \|\mathbb{P}_n - \mathbb{P}\|_{\mathcal{L}_{\Theta_0}}$. 
 \end{example}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{经验过程的尾部概率界}
 
 设$(X_1, \dots, X_n)$来自乘积分布$\mathbb{P} = \otimes_{i=1}^n \mathbb{P}_i$, 其中$\mathbb{P}_i$的支撑集$\mathcal{X}_i \subseteq \mathcal{X}$. 
-对于定义域为$\cX$函数类$\mathscr{F}$, 考虑随机变量
+对于定义域为$\mathcal{X}$函数类$\mathscr{F}$, 考虑随机变量
 \begin{equation*}
 	Z := \sup_{f \in \mathscr{F}} \left\{ \frac{1}{n} \sum_{i=1}^n f(X_i) \right\}. 
 \end{equation*}
-注意这里的$\sup$是对每一点$\bm{X} \in \cX^n$取极大值. 
+注意这里的$\sup$是对每一点$\bm{X} \in \mathcal{X}^n$取极大值. 
 若要考虑$\sup_{f \in \mathscr{F}} \left| \frac{1}{n} \sum_i f(X_i) \right|$, 只需考虑在函数类$\tilde{\mathscr{F}} := \mathscr{F} \cup (- \mathscr{F})$上考虑上确界即可: 
 \begin{equation*}
 	\sup_{f \in \mathscr{F}} \left| \frac{1}{n} \sum_{i=1}^n f(X_i) \right|
@@ -100,7 +100,7 @@ $T_3$对应的则是控制随机变量$\frac{1}{n} \sum_i \cL_{\theta_0}(X_i)$�
 我们把Hoeffding
 
 \begin{theorem}[泛函Hoeffding不等式]
-	若对每个$f \in \mathscr{F}$, 都有$f(\cX_i) \subseteq  [a_{i, f}, b_{i, f}]$, $i = 1, \dots, n$,  那么对任意$\delta \geq 0$, 成立
+	若对每个$f \in \mathscr{F}$, 都有$f(\mathcal{X}_i) \subseteq  [a_{i, f}, b_{i, f}]$, $i = 1, \dots, n$,  那么对任意$\delta \geq 0$, 成立
 	\begin{equation}
 		\mathbb{P}[ Z \geq \mathbb{E}[Z] + \delta] 
 		\leq \exp \left( - \frac{n \delta^2}{4 L^2} \right), 
@@ -136,13 +136,41 @@ Peter L.Bartlett 与Shahar Mendelson （此人是Empirical Process的专家） �
 
 
 一致大数定律的的一个重要度量是函数类$\mathscr{F}$的\textbf{Rademacher复杂度}. 
-函数类$\mathscr{F}$关于随机样本$\bm{X}_1^n = (X_1, \dots, X_n)$的Rademacher复杂度为
+设$\mathscr{F}$为区域$\mathcal{X}$上的函数类, 对于点集$\bm{x}_1^n \in \mathcal{X}^n$, 记$\mathscr{F}(\bm{x}_1^n) := \{(f(x_1), \dots, f(x_n)) \colon f \in \mathscr{F}\}$. 
+$\mathscr{F}$关于点集$\bm{x}_1^n$的Rademacher复杂度为
+\begin{equation*}
+	\cR_n(\mathscr{F}) 
+	:= \mathbb{E}_{\bm{\epsilon}} \left[ \sup_{\bm{a} \in \mathscr{F}(\bm{x}_1^n)} \langle f(\bm{x}_1^n), \bm{\epsilon} \rangle  \right]
+	= \mathbb{E}_{\bm{\epsilon}} \left[ \sup_{f \in \mathscr{F}} \left| \frac{1}{n} \sum_{i=1}^n \epsilon_i f(x_i) \right| \right]. 
+\end{equation*}
+进一步地, 函数类$\mathscr{F}$关于经验分布$\P_n$的Rademacher复杂度为
 \begin{equation*}
 	\mathcal{R}_{\mathbb{P}_n}(\mathscr{F})
 	:= \mathbb{E}_{\bm{X}, \bm{\epsilon}} \left[ \sup_{f \in \mathscr{F}} \left| \frac{1}{n} \sum_{k=1}^n \epsilon_i f(X_i) \right| \right]. 
 \end{equation*}
 这可以看作随机向量$(f(X_1), \cdots, f(X_n))_{f \in \mathscr{F}}$和噪声向量$\bm{\epsilon}$之间最大相关关系的平均值. 
-对于一致有界函数类$\mathscr{F}$, 我们将看到“$\|\P_n - \P\|_{\sF} \approx \cR_{\mathbb{P}_n}(\sF)$”, 而的Rademacher复杂度的界是更为容易得到的. 
+
+
+
+对于一致有界函数类$\mathscr{F}$, 我们将看到“$\|\P_n - \P\|_{\mathscr{F}} \approx \cR_{\mathbb{P}_n}(\mathscr{F})$”, 而Rademacher复杂度的界是更为容易得到的. 
+
+\begin{lemma}
+	若函数类$\mathscr{F}$是$b$-一致有界	的, 那么随机变量$\|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}}$是$\frac{b}{\sqrt{n}}$-次高斯的. 
+\end{lemma}
+\begin{proof}
+	引入函数的中心化记号$\bar f(x) := f(x) - \mathbb{E}[f(X)]$, 则$\|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}}$可以简记为$\sup_{f \in \mathscr{F}} |\frac{1}{n} \sum_i \bar f(X_i)|$. 
+	考虑函数$G(x_1, \dots, x_n) = \sup_{f \in \mathscr{F}} |\frac{1}{n} \sum_i \bar f(x_i)|$, 它与各坐标的顺序置换无关. 
+	于是只需对第一个坐标分量进行扰动, 就可以说明它满足参数为$(\frac{2b}{n}, \dots, \frac{2b}{n})$的有界差不等式: 
+	设向量$\bm{X} = (x_1, \dots, x_n)$, $\bm{Y} = (y_1, \dots, y_n)$满足$x_i = y_i$, $i > 1$, 说明$|G(\bm{X}) - G(\bm{Y})| < \frac{2b}{n}$即可. 
+	对任意$f \in \mathscr{F}$, 由于$\|f\|_{\infty} \leq b$, 
+	\begin{align*}
+		\left|\frac{1}{n} \sum_{i=1}^n \bar f(x_i)\right| - \sup_{h \in \mathscr{F}} \left|\frac{1}{n} \sum_{i=1}^n \bar h(y_i)\right|
+		\leq \left|\frac{1}{n} \sum_{i=1}^n \bar f(x_i)\right| - \left|\frac{1}{n} \sum_{i=1}^n \bar f(y_i)\right|
+		\leq \frac{1}{n} |\bar f(x_1) - \bar f(y_1)| 
+		\leq \frac{2b}{n}. 
+	\end{align*}
+	结合推论\ref{cor:BddDiffIneq}, 可以看到$\|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}}$是$\frac{b}{\sqrt{n}}$-次高斯的. 
+\end{proof}
 
 \begin{theorem}\label{thm:EmpericalMeasureErrorUpperBddByRC}
 	设函数类$\mathscr{F}$是$b$-一致有界	的, 对任意$n \in \Z_+$, $\delta \geq 0$, 我们有
@@ -167,23 +195,7 @@ Peter L.Bartlett 与Shahar Mendelson （此人是Empirical Process的专家） �
 \end{equation}
 
 \begin{proof}
-	引入函数的中心化记号$\bar f(x) := f(x) - \mathbb{E}[f(X)]$, 则$\|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}}$可以简记为$\sup_{f \in \mathscr{F}} |\frac{1}{n} \sum_i \bar f(X_i)|$. 
-	考虑函数$G(x_1, \dots, x_n) = \sup_{f \in \mathscr{F}} |\frac{1}{n} \sum_i \bar f(x_i)|$, 它与各坐标的顺序置换无关. 
-	于是只需对第一个坐标分量进行扰动, 就可以说明它满足参数为$(\frac{2b}{n}, \dots, \frac{2b}{n})$的有界差不等式: 
-	设向量$\bm{X} = (x_1, \dots, x_n)$, $\bm{Y} = (y_1, \dots, y_n)$满足$x_i = y_i$, $i > 1$, 说明$|G(\bm{X}) - G(\bm{Y})| < \frac{2b}{n}$即可. 
-	对任意$f \in \mathscr{F}$, 由于$\|f\|_{\infty} \leq b$, 
-	\begin{align*}
-		\left|\frac{1}{n} \sum_{i=1}^n \bar f(x_i)\right| - \sup_{h \in \mathscr{F}} \left|\frac{1}{n} \sum_{i=1}^n \bar h(y_i)\right|
-		\leq \left|\frac{1}{n} \sum_{i=1}^n \bar f(x_i)\right| - \left|\frac{1}{n} \sum_{i=1}^n \bar f(y_i)\right|
-		\leq \frac{1}{n} |\bar f(x_1) - \bar f(y_1)| 
-		\leq \frac{2b}{n}. 
-	\end{align*}
-	结合推论\ref{cor:BddDiffIneq}, 我们可以得到$\|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}}$的上偏差不等式
-	\begin{equation*}
-		\mathbb{P} \left[ \|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}} \leq \mathbb{E} \left[ \|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}} \right] + \delta \right] 
-		\geq 1 - \exp\left( - \frac{n t^2}{2 b^2} \right), \quad \forall \delta \geq 0. 
-	\end{equation*}
-	于是我们只需证明$2 \mathcal{R}_{\mathbb{P}_n}(\mathscr{F})$是$\mathbb{E} \left[ \|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}} \right]$的上界, 这可以使用\textbf{对称化技巧}来得到: 
+	我们首先证明$2 \mathcal{R}_{\mathbb{P}_n}(\mathscr{F})$是$\mathbb{E} \left[ \|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}} \right]$的上界, 这可以使用\textbf{对称化技巧}来得到: 
 	设$\bm{Y} = (Y_1, \dots, Y_n)$与$\bm{X}$独立同分布, $\bm{\epsilon} = (\epsilon_1, \dots, \epsilon_n)$为独立的Rademacher向量, 于是$\epsilon_i (f(X_i) - f(Y_i))$和$f(X_i) - f(Y_i)$有相同的分布: 
 	\begin{align*}
 		&\mathbb{P}[f(X_i) - f(Y_i) \leq t] 
@@ -202,11 +214,15 @@ Peter L.Bartlett 与Shahar Mendelson （此人是Empirical Process的专家） �
 		\leq & \mathbb{E}_{\bm{X}, \bm{\epsilon}}  \left[ \sup_{f \in \mathscr{F}} \left|  \frac{1}{n} \sum_{i=1}^n \epsilon_i f(X_i) \right| \right] + \mathbb{E}_{\bm{Y}, \bm{\epsilon}}  \left[ \sup_{f \in \mathscr{F}} \left|  \frac{1}{n} \sum_{i=1}^n \epsilon_i f(Y_i) \right| \right]
 		= 2 \mathcal{R}_{\mathbb{P}_n}(\mathscr{F}). 
 	\end{align*}
+	于是根据$\frac{b}{\sqrt{n}}$-次高斯随机变量$\|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}}$的上偏差不等式, 对任意$\delta \geq 0$, 我们有
+	\begin{equation*}
+		\mathbb{P} \left[ \|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}} \leq 2 \mathcal{R}_{\mathbb{P}_n}(\mathscr{F}) + \delta \right]
+		\geq  \mathbb{P} \left[ \|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}} \leq \mathbb{E} \left[ \|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}} \right] + \delta \right] 
+		\geq 1 - \exp\left( - \frac{n t^2}{2 b^2} \right). 
+	\end{equation*}
 \end{proof}
 
-上述定理的证明实际上考虑了随机变量$\|\mathbb{S}_n\|_{\mathscr{F}} := \sup_{f \in \mathscr{F}} \left| \frac{1}{n} \sum_i \epsilon_i f(X_i) \right|$——它的期望就是Rademacher复杂度. 
-
-
+对称化技巧实际上考虑了随机变量$\|\mathbb{S}_n\|_{\mathscr{F}} := \sup_{f \in \mathscr{F}} \left| \frac{1}{n} \sum_i \epsilon_i f(X_i) \right|$——它的期望就是Rademacher复杂度, 我们有更强的结论. 
 \begin{proposition}
 	对于任意非减的凸函数$\Phi \colon \R \to \R$, 我们有
 	\begin{equation*}
@@ -259,12 +275,12 @@ Peter L.Bartlett 与Shahar Mendelson （此人是Empirical Process的专家） �
 \begin{proof}
 	根据三角不等式容易得到估计
 	\begin{equation*}
-		\|\bS_n\|_{\bar{\mathscr{F}}}
+		\|\mathbb{S}_n\|_{\bar{\mathscr{F}}}
 		= \sup_{f \in \mathscr{F}} \left|\frac{1}{n} \sum_{i=1}^n \epsilon_i f(X_i) - \frac{1}{n} \sum_{i=1}^n \epsilon_i \mathbb{E}_{\mathbb{P}}[f] \right|
 		\geq \sup_{f \in \mathscr{F}} \left|\frac{1}{n} \sum_{i=1}^n \epsilon_i f(X_i)\right| - \sup_{f \in \mathscr{F}} \left|\mathbb{E}_{\mathbb{P}}[f]\right| \cdot \frac{\left| \sum_{i=1}^n \epsilon_i \right|}{n}.
 	\end{equation*}
 	再由Cauchy–Schwarz不等式可得$\displaystyle \mathbb{E}\left[\left| \sum_{i=1}^n \epsilon_i \right|\right] \leq \sqrt{\mathbb{E}\left[ \left(\sum_{i=1}^n \epsilon_i\right)^2 \right]} = \sqrt{\mathbb{E}\left[ \sum_{i=1}^n \epsilon_i^2 \right]} = \sqrt{n}$. 
-	于是由不等式\eqref{eq:SandwichedByRC}, 定理\ref{thm:EmpericalMeasureErrorLowerBddByRC}证明中的$\|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}}$的上偏差不等式改为下偏差形式, 可见
+	于是由不等式\eqref{eq:SandwichedByRC}, $\frac{b}{\sqrt{n}}$-次高斯随机变量$\|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}}$的下偏差不等式, 可见
 	\begin{align*}
 		& \mathbb{P} \left[ \|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}} \geq \frac{1}{2} \mathcal{R}_{\mathbb{P}_n}(\mathscr{F}) - \frac{\sup_{f \in \mathscr{F}}\left|\mathbb{E}_{\mathbb{P}}[f]\right|}{2 \sqrt{n}} - \delta \right] \\
 		\geq & \mathbb{P} \left[ \|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}} \geq \frac{1}{2} \mathbb{E}_{\bm{X}, \bm{\epsilon}} \left[\|\mathbb{S}\|_{\bar{\mathscr{F}}}\right] - \delta \right]
@@ -275,8 +291,48 @@ Peter L.Bartlett 与Shahar Mendelson （此人是Empirical Process的专家） �
 
 为满足Glivenko-Cantelli性质提供了一个充分必要条件. 
 
-下面我们寻求控制Rademacher复杂度的方法
+下面我们寻求控制Rademacher复杂度的方法. 
 
+\begin{definition}[多项式识别]
+	称区域$\mathcal{X}$上的函数类$\mathscr{F}$有阶为$\nu \geq 1$的多项式识别, 如果对任意正整数$n$和点集$\bm{x}_1^n = (x_1, \dots, x_n) \subseteq \mathcal{X}^n$, 集合
+	\begin{equation*}
+		\mathscr{F}(\bm{x}_1^n) 
+		:= \{(f(x_1), \dots, f(x_n)) \colon f \in \mathscr{F}\}
+		\subseteq \R^n
+	\end{equation*}
+	的基数$\card(\mathscr{F}(\bm{x}_1^n)) \leq (n+1)^{\nu}$. 
+\end{definition}
+
+很多时候函数类的基数$\card(\sF) = \infty$, 但是
+
+\begin{lemma}
+	若区域$\mathcal{X}$上的函数类$\mathscr{F}$有阶为$\nu \geq 1$的多项式识别, 那么对任意正整数$n$, 函数类$\sF$关于点集$\bm{x}_1^n = (x_1, \dots, x_n) \subseteq \mathcal{X}^n$的Rademacher复杂度
+	\begin{equation*}
+		\cR_n(\sF)
+		= \mathbb{E}_{\bm{\epsilon}} \left[ \sup_{f \in \mathscr{F}} \left| \frac{1}{n} \sum_{i=1}^n \epsilon_i f(x_i) \right| \right]
+		\leq 2 D(\bm{x}_1^n) \sqrt{\frac{\nu \log(n+1)}{n}}, 
+	\end{equation*}
+	其中$D(\bm{x}_1^n) = \sup_{f \in \mathscr{F}} \sqrt{\frac{1}{n} \sum_i f(x_i)^2}$为集合$\mathscr{F}(\bm{x}_1^n) / \sqrt{n}$的$\ell^2$半径. 
+\end{lemma}
+\begin{proof}
+	考虑集合$A = \left\{ \frac{1}{n} (f(x_1), \dots, f(x_n)) \colon f \in \mathscr{F} \cup (-\mathscr{F}) \right\} \subseteq \R^n$, 由于$\mathscr{F}$有阶为$\nu$的多项式识别, 我们有$\card(A) \leq 2 (n+1)^{\nu}$. 
+	回忆示例\ref{ex:RCofPtSet}, 不等式左侧等价于点集$A$的Rademacher复杂度, 即
+	\begin{equation*}
+		\cR(A) 
+		= \mathbb{E}_{\bm{\epsilon}}\left[ \sup_{\bm{a} \in A} \langle \bm{a}, \bm{\epsilon} \rangle \right]
+		= \mathbb{E}_{\bm{\epsilon}}\left[ \max_{\bm{a} \in A} \langle \bm{a}, \bm{\epsilon} \rangle \right], 
+	\end{equation*}
+	其中$\langle \bm{a}, \bm{\epsilon} \rangle$总是$D(\bm{x}_1^n) / \sqrt{n}$-次高斯的, 于是由定理\ref{thm:UpperBdForMaximaOfSGRV}
+	\begin{align*}
+		\mathbb{E}_{\bm{\epsilon}}\left[ \max_{\bm{a} \in A} \langle \bm{a}, \bm{\epsilon} \rangle \right] 
+		\leq D(\bm{x}_1^n) / \sqrt{n} \cdot \sqrt{2 \log(\card(A))}
+		\leq 2 D(\bm{x}_1^n) \sqrt{\frac{\nu \log(n+1)}{n}}. 
+	\end{align*}
+\end{proof}
+\begin{remark}
+	若函数类$\sF$是$b$-一直有界的, 那么$\cR_n(\sF) \leq 2b \sqrt{\frac{\nu \log(n+1)}{n}}$. 
+	结合定理\ref{thm:EmpericalMeasureErrorUpperBddByRC}, 我们可以看到具有多项式识别的有界函数类总是Glivenko-Cantelli的. 
+\end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Vapnik-Čhervonenkis维数}

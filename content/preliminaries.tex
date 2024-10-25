@@ -41,7 +41,7 @@
 \subsubsection{积分变换、Stieltjes积分}
 
 \begin{theorem}[积分变换]\label{thm:IntegralTransform}
-	设$f \colon (\cX, \cA, \mu) \to (E, \mathcal{E})$为可测映射, $g$为$(E, \mathcal{E})$上的可测函数, 则
+	设$f \colon (\mathcal{X}, \cA, \mu) \to (E, \mathcal{E})$为可测映射, $g$为$(E, \mathcal{E})$上的可测函数, 则
 	\begin{equation*}
 		\int_{f^{-1}(B)} g \circ f \dd \mu 
 		= \int_B g \dd f_* \mu. 
@@ -68,12 +68,12 @@
 Randon-Nikodym导数是定义密度和条件期望的关键. 
 
 \begin{theorem}[Radon-Nikodym 定理]
-	设$\mu$, $\nu$为可测空间$(\cX, \cA)$上的两个概率测度, $\nu$关于$\mu$\textbf{绝对连续}, 即对于满足$\mu(A) = 0$的$A \in \cA$, 一定有$\nu(A) = 0$, 记做$\nu \ll \mu$. 
-	存在$\cX$上的非负函数$f$, 使得$\nu(A) = \int_A f \dd \mu$, 且$f$在$\mu$-a.e.意义下唯一, 记做$f = \frac{\dd \nu}{\dd \mu}$. 
+	设$\mu$, $\nu$为可测空间$(\mathcal{X}, \cA)$上的两个概率测度, $\nu$关于$\mu$\textbf{绝对连续}, 即对于满足$\mu(A) = 0$的$A \in \cA$, 一定有$\nu(A) = 0$, 记做$\nu \ll \mu$. 
+	存在$\mathcal{X}$上的非负函数$f$, 使得$\nu(A) = \int_A f \dd \mu$, 且$f$在$\mu$-a.e.意义下唯一, 记做$f = \frac{\dd \nu}{\dd \mu}$. 
 \end{theorem}
 
 \begin{example}[分布的密度]
-	随机变量$X \colon (\cX, \cA, \P) \to (\R, \cB, \mu)$的分布是前推测度$X_* \P (B) := \P \circ X^{-1} (B) = \P[X \in B]$, 它的关于$\mu$的密度由Randon-Nikodym导数给出: 
+	随机变量$X \colon (\mathcal{X}, \cA, \P) \to (\R, \mathcal{B}, \mu)$的分布是前推测度$X_* \P (B) := \P \circ X^{-1} (B) = \P[X \in B]$, 它的关于$\mu$的密度由Randon-Nikodym导数给出: 
 	\begin{equation*}
 		p_X = \frac{\dd X_* \P}{\dd \mu}. 
 	\end{equation*}
@@ -236,11 +236,11 @@ Randon-Nikodym导数是定义密度和条件期望的关键.
 
 耦合是一种应用广泛的概率技术: 比较两个概率测度$\Q$, $\P$, 我们可以考虑具有边缘分布$\Q$, $\P$的乘积概率空间. 
 
-为了比较概率空间$\cX$上两个概率测度$\Q$, $\P$, 我们可以
+为了比较概率空间$\mathcal{X}$上两个概率测度$\Q$, $\P$, 我们可以
 
 很多情况下, 构造乘积空间
 
-的\textbf{耦合}, 是指$\cX \times \cX$上的联合分布$\M$, 其边缘分布满足
+的\textbf{耦合}, 是指$\mathcal{X} \times \mathcal{X}$上的联合分布$\M$, 其边缘分布满足
 
 满足第一和第二坐标的边缘分布分别是$\Q$和$\P$.
 
@@ -262,15 +262,15 @@ Randon-Nikodym导数是定义密度和条件期望的关键.
 \subsubsection{Fenchel共轭}
 
 Fenchel共轭是Fourier变换在凸分析中的对应. 
-对于实Hilbert空间$\cX$上的正则函数$g \colon \cX \to (-\infty, +\infty]$, 即$\mathrm{dom} f := \{x \in \cX \colon f(x) \in \R \neq \emptyset$, 其在$u \in \cX$的\textbf{Fenchel共轭}为
+对于实Hilbert空间$\mathcal{X}$上的正则函数$g \colon \mathcal{X} \to (-\infty, +\infty]$, 即$\mathrm{dom} f := \{x \in \mathcal{X} \colon f(x) \in \R \neq \emptyset$, 其在$u \in \mathcal{X}$的\textbf{Fenchel共轭}为
 \begin{equation}
-	f^*(u) = \sup_{x \in \cX} \left\{ \langle x, u \rangle - f(x) \right\}. 
+	f^*(u) = \sup_{x \in \mathcal{X}} \left\{ \langle x, u \rangle - f(x) \right\}. 
 \end{equation}
 通过定义可以看到Fenchel共轭满足\textbf{Fenchel-Young不等式}
 \begin{equation}
 	f(x) + f^*(u) \geq \langle x, u \rangle. 
 \end{equation}
-此外, $f^*$是凸的、下半连续的, 这是由于它是放射连续函数族$(\langle x, \cdot \rangle - f(x))_{x \in \cX}$的上确界. 
+此外, $f^*$是凸的、下半连续的, 这是由于它是放射连续函数族$(\langle x, \cdot \rangle - f(x))_{x \in \mathcal{X}}$的上确界. 
 对偶$f = f^{**}$当且仅当$f$是凸的、下半连续函数
 
 

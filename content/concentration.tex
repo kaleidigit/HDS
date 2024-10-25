@@ -9,7 +9,7 @@
 例如正态分布的$3 \sigma$原则告诉我们, “几乎所有”的值都在平均值正负三个标准差的范围内 (若$X \sim \cN(\mu, \sigma^2)$, 则$\mathbb{P}(|X - \mu| \leq 3 \sigma) \approx 0.9973$). 
 
 经典的结果是(广义)Markov不等式和Chebyshev不等式.
-设函数$f \colon \R \to \R^*$单调增, 对任意$t > 0$, 注意到
+设函数$f \colon \mathbb{R} \to \mathbb{R}^*$单调增, 对任意$t > 0$, 注意到
 \begin{equation*}
 	\mathbb{E}[f(X)] 
 		\geq \mathbb{E}\left[f(X); X \geq t \right]
@@ -62,7 +62,7 @@ $1$-范数-通常与维数$n$有关
 	\begin{equation}
 		\mathbb{E}[e^{\lambda X}] = e^{\frac{\sigma^2 \lambda^2}{2} + \mu \lambda} 		
 	\end{equation}
-	在$\lambda \in \R$总是存在. 
+	在$\lambda \in \mathbb{R}$总是存在. 
 	通过简单的求导可以看到最优参数$\lambda^* = \frac{t}{\sigma^2}$, 于是有
 	\begin{equation}\label{eq:UpperDeviationOfSubGuassianRV}
 		\mathbb{P}[X \geq \mu + t] \leq e^{- \frac{t^2}{2 \sigma^2}},\; \forall t \geq 0. 
@@ -76,7 +76,7 @@ $1$-范数-通常与维数$n$有关
 \begin{definition}[次高斯随机变量]\label{def:subGaussianRV}
 	称期望为$\mu$的随机变量$X$为为$\sigma$-次高斯随机的, 如果存在$\sigma > 0$, 使得
 	\begin{equation*}
-		\mathbb{E}[e^{\lambda(X - \mu)}] \leq e^{\sigma^2 \lambda^2 /2},\; \forall \lambda \in \R.   
+		\mathbb{E}[e^{\lambda(X - \mu)}] \leq e^{\sigma^2 \lambda^2 /2},\; \forall \lambda \in \mathbb{R}.   
 	\end{equation*}  
 \end{definition}
 容易看到, 参数为$\sigma$的次高斯随机变量$X$总是满足上偏差不等式 \eqref{eq:UpperDeviationOfSubGuassianRV}.  
@@ -91,12 +91,38 @@ $1$-范数-通常与维数$n$有关
 	引理\ref{lemma:SubGaussianParameterOfBddRV}和定理\ref{thm:HerbstArgument}的证明分别利用了这两种等价表述来构造辅助函数. 
 \end{remark}
 
+类似的方法还可以用来得到次高斯随机变量最大值的上界. 
+\begin{theorem}[次高斯随机变量最大值的上界]\label{thm:UpperBdForMaximaOfSGRV}
+	设$\{X_i\}_{i=1}^n$为均值为$0$, 参数为$\sigma$的次高斯随机变量(对独立性未做要求). 
+	\begin{enumerate}[label=(\arabic*)]
+		\item $\mathbb{E} \left[ \max_i X_i \right] \leq \sigma \sqrt{2 \log n}$, $\forall n \geq 1$; 
+		\item $\mathbb{E} \left[ \max_i \left| X_i \right| \right] \leq \sigma \sqrt{2 \log (2n)} \leq 2 \sigma \sqrt{\log n}$, $\forall n \geq 2$. 
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+(1) 由Jensen不等式, 对任意$\lambda > 0$, 
+		\begin{align*}
+			& \exp \left(\lambda E \left[ \max_{1 \leq i \leq n} X_i \right] \right)
+			\leq E \left[ \exp \left( \lambda \max_{1 \leq i \leq n} X_i \right) \right] \\ 
+			= & E \left[ \max_{1 \leq i \leq n} e^{\lambda X_i} \right]
+			\leq \sum_{i=1}^n  E \left[ e^{\lambda X_i} \right]
+			\leq n e^{\frac{\lambda^2 \sigma^2}{2}}. 
+		\end{align*}
+		于是$\mathbb{E} \left[ \max_i X_i \right] \leq \inf_{\lambda > 0} \left\{ \frac{\log n}{\lambda} + \lambda \frac{\sigma^2}{2} \right\} = \sqrt{2 \sigma^2 \log n}$, $\forall n \geq 1$. 
+
+(2)由于上述结果的建立对独立性未做要求, 我们考虑$X_{n+i} := - X_i$, $i = 1, \dots, n$, 有
+		\begin{equation*}
+			\max_{1 \leq i \leq n} |X_i| = \max_{1 \leq i \leq 2n} X_i, 
+		\end{equation*}
+		于是将结果中$n$替换为$2n$可见结果成立. 
+\end{proof}
+
 \begin{theorem}[次高斯随机变量的等价定义]
 	对任意均值为$0$的随机变量$X$, 下述几条命题等价: 
 	\begin{enumerate}[label=(\Roman*)]
 		\item 存在常数$\sigma \geq 0$使得
 			\begin{equation*}
-				\mathbb{E}[e^{\lambda X} ] \leq e^{\frac{\lambda^2 \sigma^2}{2}},\; \forall \lambda \in \R; 
+				\mathbb{E}[e^{\lambda X} ] \leq e^{\frac{\lambda^2 \sigma^2}{2}},\; \forall \lambda \in \mathbb{R}; 
 			\end{equation*}
 		\item 存在常数$c \geq 0$和$Z \sim \cN(0, \tau^2)$使得
 			\begin{equation*}
@@ -113,7 +139,7 @@ $1$-范数-通常与维数$n$有关
 	\end{enumerate}
 \end{theorem}
 
-利用独立性和Chernoff方法, 容易证明下述命题. 
+利用独立性和Chernoff方法, 容易看到偏差不等式关于次高斯参数具有可加性: 
 \begin{proposition}[Hoeffding界]
 	设$\{X_i\}_{i=1}^n$为均值为$\mu_i$, 参数为$\sigma_i$的独立次高斯随机变量, 我们有上偏差不等式
 	\begin{equation}
@@ -137,7 +163,7 @@ $1$-范数-通常与维数$n$有关
 		\leq \mathbb{E}\left[X_{\lambda} - \frac{a+b}{2} \right]^2 
 		\leq \left(\frac{b-a}{2}\right)^2. 
 	\end{equation*}
-	记记$\mathbb{E}[X] = \mu$, $\psi(\lambda) := \log \mathbb{E}[e^{\lambda X}]$, 它满足$\psi(0) = 0$, $\psi'(0) = \frac{\mathbb{E}[X e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} \big|_{\lambda = 0} = \mu$, 且对任意$\lambda$,  
+	记$\mathbb{E}[X] = \mu$, $\psi(\lambda) := \log \mathbb{E}[e^{\lambda X}]$, 它满足$\psi(0) = 0$, $\psi'(0) = \frac{\mathbb{E}[X e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} \big|_{\lambda = 0} = \mu$, 且对任意$\lambda$,  
 	\begin{equation*}
 		\psi''(\lambda) 
 		= \frac{\mathbb{E}[X^2 e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} - \left( \frac{\mathbb{E}[X e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} \right)^2
@@ -145,7 +171,7 @@ $1$-范数-通常与维数$n$有关
 		= \var X_{\lambda}.  
 	\end{equation*}
 	于是$\psi(\lambda)$的在原点的Taylor展开为$\psi(\lambda) = \lambda \mu + \frac{\lambda^2}{2} \psi''(\xi) \leq \lambda \mu + \frac{\lambda^2}{2} \left(\frac{b-a}{2}\right)^2$. 
-	从而$\mathbb{E}[e^{\lambda(X - \mu)}] \leq \exp\left(\frac{\lambda^2}{2} \left(\frac{b-a}{2}\right)^2\right)$, 即$X$是参数为$\frac{b-a}{2}$的次高斯随机变量. 
+	从而$\mathbb{E}[e^{\lambda(X - \mu)}] \leq \exp\left(\frac{\lambda^2}{2} \cdot \left(\frac{b-a}{2}\right)^2\right)$, 即$X$是参数为$\frac{b-a}{2}$的次高斯随机变量. 
 \end{proof}
 
 \begin{corollary}
@@ -189,7 +215,7 @@ $1$-范数-通常与维数$n$有关
 		\item 存在常数$c_0 > 0$, 使得对于任意$|\lambda| \leq c_0$, 都有$\mathbb{E}[e^{\lambda X}] < \infty$. 
 		\item 存在常数$c_1, c_2 > 0$, 使得
 			\begin{equation*}
-				\P[|X| \geq t] \leq c_1 e^{-c_2 t},\quad \forall t > 0. 
+				\mathbb{P}[|X| \geq t] \leq c_1 e^{-c_2 t},\quad \forall t > 0. 
 			\end{equation*}
 		\item 量$\displaystyle \gamma:= \sup_{k \geq 2} \left[ \frac{\mathbb{E}[X^k]}{k!} \right]^{1/k}$是有限的. 
 	\end{enumerate}
@@ -200,9 +226,9 @@ $1$-范数-通常与维数$n$有关
 \subsection{鞅方法}
 
 之前我们讨论了独立随机变量和$f(X_1, \dots, X_n) = \sum_i X_i$的一些尾概率界. 
-对于更一般的函数$f$，建立尾概率界的经典方法方法是利用鞅差对鞅进行分解. 
+对于更一般的函数$f$，建立尾概率界的经典方法方法是利用鞅差分解, 再逐个做估计. 
 
-设随机向量$\bm{X} = (X_1, \dots, X_n)$各分量独立, 函数$f \colon \R^n \to \R$满足$\mathbb{E}[f(\bm{X})] < \infty$. 
+设随机向量$\bm{X} = (X_1, \dots, X_n)$各分量独立, 函数$f \colon \mathbb{R}^n \to \mathbb{R}$满足$\mathbb{E}[f(\bm{X})] < \infty$. 
 考虑随机变量序列$Y_0 = \mathbb{E}[f(\bm{X})]$, $Y_k = \mathbb{E}[f(\bm{X})|\bm{X}_1^k]$, $k = 1, \dots, n$. 
 由条件期望的性质易见$Y_n = f(\bm{X})$ a.s. 且$\{Y_k\}_{k=1}^n$是适应于$\{\bm{X}_1^k\}_{k=1}^n$的鞅: 
 \begin{itemize}
@@ -254,7 +280,7 @@ $1$-范数-通常与维数$n$有关
 \end{proof} 
 
 \begin{theorem}[Azuma–Hoeffding不等式]\label{thm:Azuma–Hoeffding}
-	若鞅差序列$\{(D_k, \cF_k)\}_{k=1}^{\infty}$满足$D_k \in [a_k, b_k]$ a.s., 则$\sum_k D_k$是$\frac{1}{2}\sqrt{\sum_k L_k^2}$-次高斯的, 且有集中不等式
+	若鞅差序列$\{(D_k, \cF_k)\}_{k=1}^{\infty}$满足$D_k \in [a_k, b_k]$ a.s., 则$\sum_k D_k$是$\frac{1}{2}\sqrt{\sum_k (b_k - a_k)^2}$-次高斯的, 且有集中不等式
 	\begin{equation*}
 		\mathbb{P} \left[ \left| \sum_{k=1}^n D_k \right| \geq t \right]
 		\leq 2 \exp \left(- \frac{2 t^2}{\sum_k (b_k - a_k)^2} \right), 
@@ -262,11 +288,11 @@ $1$-范数-通常与维数$n$有关
 	\end{equation*}	
 \end{theorem}
 \begin{proof}
-	由引理\ref{lemma:SubGaussianParameterOfBddRV}, 条件随机变量$e^{\lambda D_k} | \cF_{k-1}$是参数为$\frac{b_k - a_k}{2}$的次高斯随机变量. 
+	由引理\ref{lemma:SubGaussianParameterOfBddRV}, 条件随机变量$e^{\lambda D_k} | \cF_{k-1}$是$\frac{b_k - a_k}{2}$-次高斯的. 
 	再根据上一证明中控制鞅差和的方法, 不难得到Hoeffding型集中不等式. 
 \end{proof}
 
-称函数$f \colon \R^n \to \R$满足参数为$(L_1, \dots, L_n)$的\textbf{有界差不等式}, 如果对指标$k = 1, \dots, n$, 总有
+称函数$f \colon \mathbb{R}^n \to \mathbb{R}$满足参数为$(L_1, \dots, L_n)$的\textbf{有界差不等式}, 如果对指标$k = 1, \dots, n$, 总有
 \begin{equation*}
 	|f(\bm{X}_1^{k-1}, x_k, \bm{X}_{k-2}^n) - f(\bm{X}_1^{k-1}, x_k', \bm{X}_{k-2}^n)| 
 	\leq L_k. 
@@ -275,9 +301,9 @@ $1$-范数-通常与维数$n$有关
 参数的好处只是为了做出更精确的估计罢了. 
 
 \begin{corollary}[有界差不等式]\label{cor:BddDiffIneq}
-	设函数$f \colon \R^n \to \R$满足参数为$(L_1, \dots, L_n)$的有界差不等式, 随机向量$\bm{X} = (X_1, \dots, X_n)$各分量独立, 那么$f(\bm X)$是$\frac{1}{2} \sqrt{\sum_k L_k^2}$-次高斯的, 从而有集中不等式
+	设函数$f \colon \mathbb{R}^n \to \mathbb{R}$满足参数为$(L_1, \dots, L_n)$的有界差不等式, 随机向量$\bm{X} = (X_1, \dots, X_n)$各分量独立, 那么$f(\bm{X})$是$\frac{1}{2} \sqrt{\sum_k L_k^2}$-次高斯的, 从而有集中不等式
 	\begin{equation*}
-		\mathbb{P}[|f(\bm X) - \mathbb{E}[f(\bm X)]| \geq t] 
+		\mathbb{P}[|f(\bm{X}) - \mathbb{E}[f(\bm{X})]| \geq t] 
 		\leq 2 \exp\left( - \frac{2 t^2}{\sum_k L_k^2} \right), 
 		\quad \forall t \geq 0. 
 	\end{equation*}
@@ -291,7 +317,7 @@ $1$-范数-通常与维数$n$有关
 	于是$D_k \in [A_k, B_k]$ a.s. 且区间长度
 	\begin{equation*}
 		B_k - A_k
-		= \sup_{x, y} \mathbb{E}[f(\bm{X}_1^k, x, \bm{X}_{k+1}^n) - f(\bm{X}_1^k, y, \bm{X}_{k+1}^n) | X_1^{k-1}] 
+		= \sup_{x, y} \mathbb{E}[f(\bm{X}_1^k, x, \bm{X}_{k+1}^n) - f(\bm{X}_1^k, y, \bm{X}_{k+1}^n) | \bm{X}_1^{k-1}] 
 		\leq L_k. 
 	\end{equation*}
 	于是由定理\ref{thm:Azuma–Hoeffding}可以得到集中不等式
@@ -299,12 +325,48 @@ $1$-范数-通常与维数$n$有关
 
 \begin{example}
 	若函数$f$关于Hamming距离$d_H(\bm{X}, \bm{Y}) = \sum_k \I{\{x_k \neq y_k\}}$是$L$-Lipschitz的, 那么$f$满足参数为$(L, \dots, L)$的有界差不等式. 
-	于是对于各分量独立的随机向量$\bm{X}$, $f(\bm X)$是$\frac{\sqrt{n} L}{2}$-次高斯的, 从而有$\mathbb{P}[|f(\bm X) - \mathbb{E}[f(\bm X)]| \geq t] \leq 2 e^{-\frac{2 t^2}{n L^2}}$, $\forall t \geq 0$. 
+	于是对于各分量独立的随机向量$\bm{X}$, $f(\bm{X})$是$\frac{\sqrt{n} L}{2}$-次高斯的, 从而有$\mathbb{P}[|f(\bm{X}) - \mathbb{E}[f(\bm{X})]| \geq t] \leq 2 e^{-\frac{2 t^2}{n L^2}}$, $\forall t \geq 0$. 
+\end{example}
+
+\begin{example}[点集的Rademacher复杂度]\label{ex:RCofPtSet}
+	Rademacher随机变量$\epsilon$是指等概率地取$\{-1, 1\}$的随机变量, 
+	Rademacher随机向量$\bm{\epsilon} \subset \mathbb{R}^n$的各分量是相互独立的Rademacher随机变量. 
+	给定$\mathbb{R}^n$的子集$A$, 随机变量
+	\begin{equation*}
+		Z(A)
+		:= \sup_{\bm{a} \in A} \left[ \sum_{i=1}^n a_i \epsilon_i \right]
+		= \sup_{\bm{a} \in A} \langle \bm{a}, \bm{\epsilon} \rangle
+	\end{equation*}
+	在某种意义下度量了集合$A$的大小, 它的期望$\mathbb{E}_{\epsilon}[Z(A)] =: \cR(A)$称为点集$A$的Rademacher复杂度. 
+	
+	记$f(\bm{\epsilon}) := \sup_{\bm{a} \in A} \langle \bm{a}, \bm{\epsilon} \rangle$, 我们对第$k$个坐标分量进行扰动: 
+	考虑$\bm{\epsilon}' \in \{-1, 1\}^n$满足$\epsilon'_i = \epsilon_i$, $i \neq k$, 于是对任意$\bm{a} \in A$, 
+	\begin{equation*}
+		\langle \bm{a}, \bm{\epsilon} \rangle - f(\epsilon')
+		= \langle \bm{a}, \bm{\epsilon} \rangle - \sup_{\bm{a} \in A} \langle \bm{a}, \bm{\epsilon}' \rangle
+		\leq \langle \bm{a}, \epsilon - \epsilon' \rangle
+		= a_k (\epsilon_k - \epsilon'_k)
+		\leq 2 |a_k|, 
+	\end{equation*}
+	两边同时对$\bm{a}$在集合$A$上取上确界有$f(\bm{\epsilon}) - f(\bm{\epsilon}') \leq 2 \sup_{\bm{a} \in A} |a_k|$, 交换$\bm{\epsilon}$和$\bm{\epsilon}'$的位置可以得到相同的结论. 
+	
+	对于$k = 1, \dots, n$, 考虑鞅序列$Y_0 := \mathbb{E}[ f(\bm{\epsilon}) ]$,  $Y_k := \mathbb{E}[ f(\bm{\epsilon}) | \bm \epsilon_1^k ]$, 鞅差$D_k := Y_k - Y_{k-1}$, 随机变量 
+	\begin{align*}
+		A_k &:= \min_{s \in \{-1, 1\}} \mathbb{E}[f(\bm{\epsilon})|\bm{\epsilon}_1^{k-1}, \epsilon_k = s] - \mathbb{E}[f(\bm{\epsilon})|\bm{\epsilon}_1^{k-1}], \\
+		B_k &:= \max_{s \in \{-1, 1\}} \mathbb{E}[f(\bm{\epsilon})|\bm{\epsilon}_1^{k-1}, \epsilon_k = s] - \mathbb{E}[f(\bm{\epsilon})|\bm{\epsilon}_1^{k-1}]. 
+	\end{align*} 
+	于是$D_k \in [A_k, B_k]$ a.s. 且区间长度
+	\begin{equation*}
+		B_k - A_k
+		= \max_{s, t \in \{-1, 1\}} \mathbb{E}[f(\bm{\epsilon}_1^k, s, \bm{\epsilon}_{k+1}^n) - f(\bm{\epsilon}_1^k, t, \bm{\epsilon}_{k+1}^n) | \bm{\epsilon}_1^{k-1}] 
+		\leq 2 \sup_{\bm{a} \in A} |a_k|. 
+	\end{equation*}
+	于是由定理\ref{thm:Azuma–Hoeffding}, $f(\bm{\epsilon})$是$\sqrt{\sum_i \sup_{\bm{a} \in A} a_i^2}$-次高斯的. 
 \end{example}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{熵方法}
 
-设随机变量$X \sim \mathbb{P}$, 给定凸函数$\Phi \colon \R \to \R$, 若$X$和$\Phi(X)$的期望存在, 则称概率分布空间上的泛函
+设随机变量$X \sim \mathbb{P}$, 给定凸函数$\Phi \colon \mathbb{R} \to \mathbb{R}$, 若$X$和$\Phi(X)$的期望存在, 则称概率分布空间上的泛函
 \begin{equation*}
 	\mathcal{H}_\Phi(X) := \mathbb{E}[\Phi(X)] - \Phi(\mathbb{E}[X])  
 \end{equation*}
@@ -321,7 +383,7 @@ $1$-范数-通常与维数$n$有关
 		\end{equation*}
 		这样的熵对应的是中心化的矩母函数, 可以用来计算尾部概率的Chernoff界. 
 \end{itemize}
-之后, 我们总是考虑非负随机变量$e^{\lambda X}$由凸函数$\Phi \colon [0, \infty) \to \R$: 
+之后, 我们总是考虑非负随机变量$e^{\lambda X}$由凸函数$\Phi \colon [0, \infty) \to \mathbb{R}$: 
 \begin{equation*}
 	\Phi(u) = 
 	\begin{cases}
@@ -365,7 +427,7 @@ $1$-范数-通常与维数$n$有关
 
 使用独立复制的方法可以对单变量函数熵的界做如下估计. 
 \begin{lemma}[单变量函数熵的界]\label{lemma:EntropyBoundForUnivariateFunctions}
-	设独立随机变量$X, Y \sim \mathbb{E}$, 对任意函数$g \colon \R \to \R$, 我们有
+	设独立随机变量$X, Y \sim \mathbb{E}$, 对任意函数$g \colon \mathbb{R} \to \mathbb{R}$, 我们有
 	\begin{equation}\label{eq:EntropyBoundForUnivariateFunctions}
 		\mathcal{H}(e^{\lambda g(X)})
 		\leq \lambda^2 \mathbb{E}[ (g(X) - g(Y))^2 e^{\lambda g(X)}; g(X) \geq g(Y) ], \quad \forall \lambda > 0.
@@ -403,13 +465,13 @@ $1$-范数-通常与维数$n$有关
 
 和次高斯随机变量的想法类似, 如果$e^{\lambda X}$的熵能像Gauss随机变量的熵那样被控制, 相应的矩母函数、尾部概率也会被控制.
 \begin{theorem}[Herbst方法]\label{thm:HerbstArgument}
-	若对任意的$\lambda \in I$ (这里$I$取$[0, \infty)$或者$\R$)总有熵$\mathcal{H}(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \varphi_X(\lambda)$, 那么
+	若对任意的$\lambda \in I$ (这里$I$取$[0, \infty)$或者$\mathbb{R}$)总有熵$\mathcal{H}(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \varphi_X(\lambda)$, 那么
 	\begin{equation*}
 		\mathbb{E}\left[e^{\lambda(X - \mathbb{E}X)}\right] 
 		\leq \exp \left( \frac{\lambda^2 \sigma^2}{2} \right),\; 
 		\forall \lambda \in I. 
 	\end{equation*}
-	进一步地, 由Chernoff方法, $I = [0, \infty)$时, $X$满足次高斯随机变量的上偏差不等式; $I = \R$时, $X$为参数是$\sigma$的次高斯随机变量, 从而满足集中不等式 \eqref{eq:SubGuassianConcentration}.
+	进一步地, 由Chernoff方法, $I = [0, \infty)$时, $X$满足次高斯随机变量的上偏差不等式; $I = \mathbb{R}$时, $X$为参数是$\sigma$的次高斯随机变量, 从而满足集中不等式 \eqref{eq:SubGuassianConcentration}.
 \end{theorem}
 \begin{proof}
 	对于$\lambda \in I \backslash \{0\}$, 令$G(\lambda) := \frac{\log \varphi_X(\lambda)}{\lambda}$. 
@@ -430,7 +492,7 @@ $1$-范数-通常与维数$n$有关
 \end{proof}
 
 \begin{remark}
-	反过来, 若$X$为参数是$\sigma/2$的次高斯随机变量, 可以证明$\mathcal{H}(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \varphi_X(\lambda)$. 
+	反之, 若$X$为参数是$\sigma/2$-的次高斯的, 可以证明$\mathcal{H}(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \varphi_X(\lambda)$. 
 \end{remark}
 
 自然地, 我们可以将上述方法由次高斯随机变量推广至次指数随机变量. 
@@ -482,7 +544,7 @@ $1$-范数-通常与维数$n$有关
 由于独立随机变量的联合分布是边缘分布的张量积, 我们可以计算每个随机变量对函数的贡献得到随机变量的函数熵的界\footnote{最为经典的例子是独立随机变量和的方差熵是随机变量的方差和.}, 这种被称为\textbf{熵的张量化}, 或者说, 熵具有次可加性. 
 
 
-具体地, 设$f \colon \R^n \to \R$, 随机向量$\bm{X} = (X_1, \dots, X_n)$各分量独立. 
+具体地, 设$f \colon \mathbb{R}^n \to \mathbb{R}$, 随机向量$\bm{X} = (X_1, \dots, X_n)$各分量独立. 
 条件随机变量$e^{\lambda f(\bm{X})} | \bm{X}^{\backslash k}$可以看作其它分量$\bm{X}^{\backslash k}$已经给定, 关于$X_k$的函数. 
 于是我们可以在保持$\bm{X}^{\backslash k}$不变的同时, 计算关于第$k$个分量的\textbf{逐坐标条件熵}
 \begin{equation*}
@@ -528,7 +590,7 @@ $1$-范数-通常与维数$n$有关
 \end{proof}
 
 特别地, 熵的张量化在处理\textbf{可分凸函数}时, 可以得到很好的结论. 
-称函数$f \colon \R^n \to \R$是可分凸的, 如果对任意指标$k \in \{1, \dots, n\}$, 给定向量$\bm{X}^{\backslash k} := (x_1, \dots, x_{k-1}, x_{k+1}, \dots x_n) \in \R^{n-1}$, 单变量函数
+称函数$f \colon \mathbb{R}^n \to \mathbb{R}$是可分凸的, 如果对任意指标$k \in \{1, \dots, n\}$, 给定向量$\bm{X}^{\backslash k} := (x_1, \dots, x_{k-1}, x_{k+1}, \dots x_n) \in \mathbb{R}^{n-1}$, 单变量函数
 \begin{equation*}
 	y_k \mapsto f(x_1, \dots x_{k-1}, y_k, x_{k+1}, \dots x_n)
 \end{equation*}
@@ -536,7 +598,7 @@ $1$-范数-通常与维数$n$有关
 凸函数总是可分凸的. 
 
 \begin{proposition}
-	令$\{X_i\}_{i=1}^n$为区间$[a, b]$上的独立随机变量, $f \colon \R^n \to \R$为可分凸函数且关于$2$范数为$L$-Lipschitz的, 那么对任意$t \geq 0$, 成立
+	令$\{X_i\}_{i=1}^n$为区间$[a, b]$上的独立随机变量, $f \colon \mathbb{R}^n \to \mathbb{R}$为可分凸函数且关于$2$范数为$L$-Lipschitz的, 那么对任意$t \geq 0$, 成立
 	\begin{equation*}
 		\mathbb{P}[f(\bm{X}) \geq \mathbb{E}f(\bm{X}) + t] 
 		\leq \exp \left( - \frac{t^2}{4L^2 (b-a)^2} \right). 
@@ -560,7 +622,7 @@ $1$-范数-通常与维数$n$有关
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{等周不等式}
 
-经典的等周不等式断言, 欧氏空间$(\R^n, \rho)$中相同体积的子集中, 球的表面积最小. 
+经典的等周不等式断言, 欧氏空间$(\mathbb{R}^n, \rho)$中相同体积的子集中, 球的表面积最小. 
 一种等价表述是, 使得给定体积的子集的(一致) \textbf{$\epsilon$-扩张}
 \begin{equation*}
 	A^{\epsilon} := \left\{ x \in \mathcal{X} \colon \rho(x, A) < \epsilon \right\}
@@ -570,7 +632,7 @@ $1$-范数-通常与维数$n$有关
 它的经典证明基于数学家Minkowski的天才洞见. 
 
 Minkowski将空间的向量加法这一代数结构同凸体的体积这一几何结构联系在一起, 提出了\textbf{Minkowski和}的概念——
-$\R^n$中的凸体$C$和$D$的Minkowski和定义为
+$\mathbb{R}^n$中的凸体$C$和$D$的Minkowski和定义为
 \begin{equation*}
 	\lambda C + (1 - \lambda) D := \left\{ \lambda c + (1 - \lambda) d \colon c \in C,\; d \in D \right\}, 
 \end{equation*}
@@ -580,7 +642,7 @@ $\R^n$中的凸体$C$和$D$的Minkowski和定义为
 	\geq \lambda [\vol(C)]^{\frac1n} + (1-\lambda) [\vol(D)]^{\frac1n},\;
 	\forall \lambda \in [0,1]. 
 \end{equation*}
-从这一定理出发, 很容易证明经典等周不等式: 对任意$A \subseteq \R^n$满足$\vol(A) = \vol(\B^n)$, 
+从这一定理出发, 很容易证明经典等周不等式: 对任意$A \subseteq \mathbb{R}^n$满足$\vol(A) = \vol(\B^n)$, 
 \begin{align*}
 	[\vol(A^{\epsilon})]^{\frac1n}
 	&= [\vol(A + \epsilon \B^n)]^{\frac1n}
@@ -595,7 +657,7 @@ $\R^n$中的凸体$C$和$D$的Minkowski和定义为
 赋予$(\mathcal{X}, \rho)$赋予一个概率测度$\mathbb{P}$, 我们称三元组$(\mathcal{X}, \rho, \mathbb{P})$为\textbf{度量测度空间}. 
 考虑随机变量$X \sim \mathbb{P}$,  此时等周不等式表述为, 确定满足$\mathbb{P}[X \in A] \geq 1/2$、使得测度$\mathbb{P}[X \in A^{\epsilon}]$最小的集合$A \subseteq \mathcal{X}$.
 
-我们引入$(\mathcal{X}, \rho, \mathbb{P})$上的集中度函数$\alpha \colon \R^* \to [0, 1/2]$
+我们引入$(\mathcal{X}, \rho, \mathbb{P})$上的集中度函数$\alpha \colon \mathbb{R}^* \to [0, 1/2]$
 \begin{equation*}
 	\alpha_{\mathbb{P}}(\epsilon)
 	:= \sup_{A \subseteq \mathcal{X} \colon \mathbb{P}[A] \geq 1/2} \left\{ 1 - \mathbb{P}[A^{\epsilon}] \right\}. 
@@ -606,7 +668,7 @@ $\R^n$中的凸体$C$和$D$的Minkowski和定义为
 回忆$f(X)$的\textbf{中位数}是指满足$\mathbb{P}[f(X) \geq m_f] \geq 1/2$, $\mathbb{P}[f(X) \leq m_f] \geq 1/2$的某个常数$m_f$. 
 
 \begin{theorem}[Lévy不等式]
-	设$f \colon \mathcal{X} \to \R$关于$\rho$是$L$-Lipschitz连续的函数, $X \sim \mathbb{P}$, 有$\mathbb{P}[ |f(X) - m_f| \geq \epsilon] \leq 2 \alpha(\epsilon / L)$. 
+	设$f \colon \mathcal{X} \to \mathbb{R}$关于$\rho$是$L$-Lipschitz连续的函数, $X \sim \mathbb{P}$, 有$\mathbb{P}[ |f(X) - m_f| \geq \epsilon] \leq 2 \alpha(\epsilon / L)$. 
 	特别地, 当$f$是$1$-Lipschitz连续函数时, 我们有
 	\begin{equation*}
 		\mathbb{P}[ |f(X) - m_f| \geq \epsilon] \leq 2 \alpha(\epsilon / L). 
@@ -629,7 +691,7 @@ $\R^n$中的凸体$C$和$D$的Minkowski和定义为
 换而言之, 两种对尾部的控制是等价的. 
 
 \begin{theorem}
-	若存在函数$\beta \colon \R^* \to [0, 1]$使得对任意的$(\mathcal{X}, \rho)$上的$1$-Lipschitz函数都有
+	若存在函数$\beta \colon \mathbb{R}^* \to [0, 1]$使得对任意的$(\mathcal{X}, \rho)$上的$1$-Lipschitz函数都有
 	\begin{equation*}
 		\mathbb{P}[f(X) \geq \mathbb{E}f(X) + \epsilon] \leq \beta(\epsilon),\; \forall \epsilon \geq 0, 
 	\end{equation*}
