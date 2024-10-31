@@ -4,10 +4,12 @@
 \begin{equation*}
 	\hat F_n(t) := \frac{1}{n} \sum_{i=1}^n \I{(-\infty, t]}(X_i). 
 \end{equation*}
-可以证明, 经验分布$\hat F_n$是$F$在一致范数下的强相合估计: 
-\begin{theorem}[Glivenko-Cantelli定理]\label{thm:Glivenko-Cantelli}
-	$\|\hat F_n - F\|_{\infty} := \sup_{t \in \R} |\hat F_n(t) - F(t)| \stackrel{a.s.}{\to} 0$. 
-\end{theorem}
+经典的\textbf{Glivenko-Cantelli定理}告诉我们, 经验分布$\hat F_n$是$F$在一致范数下的强相合估计, 即
+\begin{equation*}
+	|\hat F_n - F\|_{\infty} 
+	:= \sup_{t \in \R} |\hat F_n(t) - F(t)| \stackrel{a.s.}{\to} 0
+\end{equation*}
+
 我们也称$\|\hat F_n - F\|_{\infty}$为分布$\hat F_n$和$F$之间的\textbf{Kolmogorov距离}. 
 在统计背景下,  将$\hat F_n$代入$F$的泛函$\gamma(F)$可以得到估计$\gamma(\hat F_n)$, 例如
 
@@ -25,23 +27,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{经验过程}
 
-设$\{X_i\}_{i=1}^n$是来自分布$\mathbb{P}$的$n$个独立同分布样本, \textbf{经验分布}为$\mathbb{P}_n(A) := \frac{1}{n} \sum_{i=1}^n \I{A}(X_i)$, 其中集合$A \subseteq \mathcal{X}$. 
-
-对于$\mathcal{X}$上的$\mathbb{P}$-可积实值函数类$\mathscr{F}$, 即对任意$f \in \mathscr{F}$, 都有$\mathbb{P}(f) = \int f \dd \mathbb{P} = \mathbb{E}[f(X)] < \infty$, 经验分布定义了随机过程
-\begin{equation*}
-	\mathbb{P}_n \colon f \mapsto \mathbb{P}_n(f) 
-\end{equation*}
-称为指标为$\mathscr{F}$的\emph{经验过程}. 
-
 Vapnik-Čhervonenkis(1971)和Dudley(1978)
 
+设$\{X_i\}_{i=1}^n$是来自分布$\mathbb{P}$的$n$个独立同分布样本, \textbf{经验分布}为$\mathbb{P}_n(A) := \frac{1}{n} \sum_{i=1}^n \I{A}(X_i)$, 其中集合$A \subseteq \mathcal{X}$. 
+考虑区域$\cX$上的$\mathbb{P}$-可积实值函数类$\mathscr{F}$, 函数$f \in \mathscr{F}$关于初始测度$\P$和经验测度$\P_n$的积分分别为 
+\begin{equation*}
+	\P(f) = \int f \dd \P = \E_{X \sim \P} [f(X)], \quad
+	\P_n(f) = \frac{1}{n} \sum_{i=1}^n f(X_i). 
+\end{equation*}
+于是经验过程$X_f = \P(f) - \P_n(f)$, $f \in \mathscr{F}$衡量了经验期望和总体期望的偏差. 
 经验过程理论的研究对象是$\mathbb{P}$在函数类$\mathscr{F}$上被$\mathbb{P}_n$一致逼近的性质, 更为具体的, 研究随机量 
 \begin{equation*}
 	\|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}} 
 	:= \sup_{f \in\mathscr{F}} \left| \mathbb{P}_n(f) - \mathbb{P}(f) \right|
 	= \sup_{f \in\mathscr{F}} \left| \frac{1}{n} \sum_{i=1}^n f(X_i) - \mathbb{E}[f(X)] \right|
 \end{equation*}
-%在函数类$\mathscr{F}$上衡量了样本平均$\frac{1}{n} \sum_i f(X_i)$和总体平均$\mathbb{E} f(X)$间的偏差. 
 的概率估计和随机过程$\{(\mathbb{P} - \mathbb{P}_n)(f) \colon f \in \mathscr{F}\}$的概率极限理论. 
 
 可测函数类的上确界未必可测, 恐有不测之忧
@@ -52,6 +52,7 @@ Vapnik-Čhervonenkis(1971)和Dudley(1978)
 \end{itemize}
 经典的Glivenko-Cantelli定理实际上是在示性函数类$\mathscr{F} = \{\I{(- \infty, t]} \colon t \in \R \}$上的强一致定律. 
 
+量$\E\left[\|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}}\right]$实际上是经验测度$\P_n$和$\P$之间的Wasserstein距离$W(\P, \P_n)$. 
 
  
 \begin{example}[M估计?\cite{nickl:2015a} P110]
@@ -178,7 +179,7 @@ $\mathscr{F}$关于点集$\bm{x}_1^n$的Rademacher复杂度为
 		\mathbb{P} \left[ \|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}} \leq 2 \mathcal{R}_{\mathbb{P}_n}(\mathscr{F}) + \delta \right]
 		\geq 1 - \exp \left(- \frac{n \delta^2}{2 b^2} \right). 
 	\end{equation*}
-	于是如果函数类$\mathscr{F}$满足$\mathcal{R}_{\mathbb{P}_n}(\mathscr{F}) = o(1)$, 就可以得到$\|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}} \stackrel{a.s.}{\to} 0$, 即$\mathscr{F}$为$\mathbb{P}$上的Glivenko-Cantelli类. 
+	于是如果函数类$\mathscr{F}$满足$\mathcal{R}_{\mathbb{P}_n}(\mathscr{F}) = o(1)$, 就可以得到$\|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}}$以指数速度几乎确定收敛到$0$, 即$\mathscr{F}$为$\mathbb{P}$上的Glivenko-Cantelli类. 
 \end{theorem}
 
 在证明之前, 我们给出一个函数类上确界期望的不等式, 它和Fatou不等式或者Jensen不等式类似:
@@ -282,19 +283,21 @@ $\mathscr{F}$关于点集$\bm{x}_1^n$的Rademacher复杂度为
 	再由Cauchy–Schwarz不等式可得$\displaystyle \mathbb{E}\left[\left| \sum_{i=1}^n \epsilon_i \right|\right] \leq \sqrt{\mathbb{E}\left[ \left(\sum_{i=1}^n \epsilon_i\right)^2 \right]} = \sqrt{\mathbb{E}\left[ \sum_{i=1}^n \epsilon_i^2 \right]} = \sqrt{n}$. 
 	于是由不等式\eqref{eq:SandwichedByRC}, $\frac{b}{\sqrt{n}}$-次高斯随机变量$\|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}}$的下偏差不等式, 可见
 	\begin{align*}
-		& \mathbb{P} \left[ \|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}} \geq \frac{1}{2} \mathcal{R}_{\mathbb{P}_n}(\mathscr{F}) - \frac{\sup_{f \in \mathscr{F}}\left|\mathbb{E}_{\mathbb{P}}[f]\right|}{2 \sqrt{n}} - \delta \right] \\
-		\geq & \mathbb{P} \left[ \|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}} \geq \frac{1}{2} \mathbb{E}_{\bm{X}, \bm{\epsilon}} \left[\|\mathbb{S}\|_{\bar{\mathscr{F}}}\right] - \delta \right]
-		\geq \mathbb{P} \left[ \|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}} \geq \mathbb{E} \left[ \|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}} \right] - \delta \right] \\
-		\geq & 1 - \exp \left(- \frac{n \delta^2}{2 b^2} \right). 
+		& 1 - \exp \left(- \frac{n \delta^2}{2 b^2} \right) 
+		\leq \mathbb{P} \left[ \|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}} \geq \mathbb{E} \left[ \|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}} \right] - \delta \right] \\
+		\leq & \mathbb{P} \left[ \|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}} \geq \frac{1}{2} \mathbb{E}_{\bm{X}, \bm{\epsilon}} \left[\|\mathbb{S}\|_{\bar{\mathscr{F}}}\right] - \delta \right]
+		\leq  \mathbb{P} \left[ \|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}} \geq \frac{1}{2} \mathcal{R}_{\mathbb{P}_n}(\mathscr{F}) - \frac{\sup_{f \in \mathscr{F}}\left|\mathbb{E}_{\mathbb{P}}[f]\right|}{2 \sqrt{n}} - \delta \right]
 	\end{align*}
 \end{proof}
 
-为满足Glivenko-Cantelli性质提供了一个充分必要条件. 
+于是Rademacher复杂度是$1$的高阶无穷小为满足Glivenko-Cantelli性质提供了一个充分必要条件. 
+下面两节我们寻求控制Rademacher复杂度的方法. 
 
-下面我们寻求控制Rademacher复杂度的方法. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{多项式识别函数类}
 
 \begin{definition}[多项式识别]
-	称区域$\mathcal{X}$上的函数类$\mathscr{F}$有阶为$\nu \geq 1$的多项式识别, 如果对任意正整数$n$和点集$\bm{x}_1^n = (x_1, \dots, x_n) \subseteq \mathcal{X}^n$, 集合
+	称区域$\mathcal{X}$上的函数类$\mathscr{F}$有阶为$\nu \geq 1$的多项式识别, 如果对任意正整数$n$和点集$\bm{x}_1^n = \{x_1, \dots, x_n\} \subseteq \mathcal{X}$, 集合
 	\begin{equation*}
 		\mathscr{F}(\bm{x}_1^n) 
 		:= \{(f(x_1), \dots, f(x_n)) \colon f \in \mathscr{F}\}
@@ -303,16 +306,16 @@ $\mathscr{F}$关于点集$\bm{x}_1^n$的Rademacher复杂度为
 	的基数$\card(\mathscr{F}(\bm{x}_1^n)) \leq (n+1)^{\nu}$. 
 \end{definition}
 
-很多时候函数类的基数$\card(\sF) = \infty$, 但是
+很多时候函数类的基数$\card(\mathscr{F}) = \infty$, 但是
 
-\begin{lemma}
-	若区域$\mathcal{X}$上的函数类$\mathscr{F}$有阶为$\nu \geq 1$的多项式识别, 那么对任意正整数$n$, 函数类$\sF$关于点集$\bm{x}_1^n = (x_1, \dots, x_n) \subseteq \mathcal{X}^n$的Rademacher复杂度
+\begin{lemma}\label{lemma:RCOfPolynomialDiscriminationFunClass}
+	若区域$\mathcal{X}$上的函数类$\mathscr{F}$有阶为$\nu \geq 1$的多项式识别, 那么对任意正整数$n$, 函数类$\mathscr{F}$关于点集$\bm{x}_1^n = \{x_1, \dots, x_n\} \subseteq \mathcal{X}$的Rademacher复杂度
 	\begin{equation*}
-		\cR_n(\sF)
+		\cR_n(\mathscr{F})
 		= \mathbb{E}_{\bm{\epsilon}} \left[ \sup_{f \in \mathscr{F}} \left| \frac{1}{n} \sum_{i=1}^n \epsilon_i f(x_i) \right| \right]
 		\leq 2 D(\bm{x}_1^n) \sqrt{\frac{\nu \log(n+1)}{n}}, 
 	\end{equation*}
-	其中$D(\bm{x}_1^n) = \sup_{f \in \mathscr{F}} \sqrt{\frac{1}{n} \sum_i f(x_i)^2}$为集合$\mathscr{F}(\bm{x}_1^n) / \sqrt{n}$的$\ell^2$半径. 
+	其中$D(\bm{x}_1^n) = \sup_{f \in \mathscr{F}} \sqrt{\frac{1}{n} \sum_i f(x_i)^2}$为向量集合$\mathscr{F}(\bm{x}_1^n) / \sqrt{n}$的$\ell^2$半径. 
 \end{lemma}
 \begin{proof}
 	考虑集合$A = \left\{ \frac{1}{n} (f(x_1), \dots, f(x_n)) \colon f \in \mathscr{F} \cup (-\mathscr{F}) \right\} \subseteq \R^n$, 由于$\mathscr{F}$有阶为$\nu$的多项式识别, 我们有$\card(A) \leq 2 (n+1)^{\nu}$. 
@@ -330,13 +333,139 @@ $\mathscr{F}$关于点集$\bm{x}_1^n$的Rademacher复杂度为
 	\end{align*}
 \end{proof}
 \begin{remark}
-	若函数类$\sF$是$b$-一直有界的, 那么$\cR_n(\sF) \leq 2b \sqrt{\frac{\nu \log(n+1)}{n}}$. 
+	若函数类$\mathscr{F}$是$b$-一致有界的, 那么它关于经验分布$\P_n$的Rademacher复杂度
+	\begin{align*}
+		& \cR_{\P_n}(\mathscr{F})
+		= \E_{\bm X} \left[ \mathbb{E}_{\bm{\epsilon}} \left[ \sup_{f \in \mathscr{F}} \left| \frac{1}{n} \sum_{i=1}^n \epsilon_i f(X_i) \right| \right] \right]
+		= \E_{\bm X} \left[ \mathbb{E}_{\bm{\epsilon}} \left[ \sup_{f \in \mathscr{F}} \left| \frac{1}{n} \sum_{i=1}^n \epsilon_i f(X_i) \right| \big| \bm{X} \right] \right] \\
+		\leq & \sup_{\bm{x}} \mathbb{E}_{\bm{\epsilon}} \left[ \sup_{f \in \mathscr{F}} \left| \frac{1}{n} \sum_{i=1}^n \epsilon_i f(X_i) \right| \big| \bm{X} = \bm x \right]
+		\leq 2 \sup_{\bm{x}} \sup_{f \in \mathscr{F}} \sqrt{\frac{1}{n} \sum_{i=1}^n f(x_i)^2} \cdot \sqrt{\frac{\nu \log(n+1)}{n}} \\
+		\leq & 2 b \sqrt{\frac{\nu \log(n+1)}{n}}. 
+	\end{align*} 
 	结合定理\ref{thm:EmpericalMeasureErrorUpperBddByRC}, 我们可以看到具有多项式识别的有界函数类总是Glivenko-Cantelli的. 
+	例如, 经典的Glivenko-Cantelli定理考虑的函数类$\mathscr{F} = \{\I{(- \infty, t]} \colon t \in \R \}$是$1$-一致有界的, 我们可以得到Glivenko-Cantelli定理的定量版本. 
 \end{remark}
+
+\begin{corollary}[Glivenko-Cantelli定理-定量版本]\label{thm:Glivenko-Cantelli}
+	对任意$\delta \geq 0$, 
+	\begin{equation*}
+		\P\left[ \|\hat F_n - F \|_{\infty} \geq 8 \sqrt{\frac{\log(n+1)}{n}} + \delta \right]
+		\leq \exp\left(- \frac{n \delta^2}{2}\right). 
+	\end{equation*}
+	于是$\|\hat F_n - F \|_{\infty}$以指数速度几乎确定收敛于$0$.   
+\end{corollary}
+\begin{proof}
+	对于任意样本$\bm{x}_1^n$, 考虑次序样本$x_{(1)} \leq x_{(2)} \leq \dots \leq x_{(n)}$, 我们有
+	\begin{equation*}
+		\mathscr{F}(\bm{x}_1^n) \subseteq \{(0,0, \dots, 0), (1,0, \dots, 0), (1,1, \dots, 0), \dots, (1,1,\dots, 1) \}. 
+	\end{equation*}
+	于是$\card(\mathscr{F}(\bm{x}_1^n)) \leq n+1$, 即多项式识别阶数$\nu = 1$, 于是$\cR_{\P_n}(\mathscr{F}) \leq 2 \sqrt{\frac{\log(n+1)}{n}}$. 
+	结合定理\ref{thm:EmpericalMeasureErrorUpperBddByRC}可见不等式成立. 
+\end{proof}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Vapnik-Čhervonenkis维数}
 
+对于布尔值函数类, 即值域为$\{0, 1\}$的函数构成的类, 我们常用\textbf{Vapnik-Chervonenkis维数}(简称VC维数)来衡量它的复杂度. 
+
+hypothesis class/ concept class
+
+例如集合类$\mathcal{S}$的示性函数类$\I{\mathcal{S}} := \{\I{S} \colon S \in \mathcal{S} \}$, 为了记号的方便, 我们将集合类$\mathcal{S}$等价于函数类$\I{\mathcal{S}}$. 
+ 
+ 
+
+
+集合$\Lambda$被函数类\textbf{打散}是指无论我们对每个点如何赋予布尔值标签, 都有函数类中的一个函数将它实现. 
+例如对于点集$\bm{x}_1^n =\{x_1, \dots, x_n\} \subseteq \cX$, 共有$2^n$种赋予布尔值标签的方式, 换而言之, 集合$\mathscr{F}(\bm{x}_1^n)$至多有$2^n$个元素, 于是$\bm{x}_1^n$被打散等价于$\card(\mathscr{F}(\bm{x}_1^n)) = 2^n$. 
+函数类的 VC 维定义为可以被其成员打散的点的最多数目．
+
+\begin{definition}[VC维数]
+	我们称集合$\Lambda \subseteq \cX$被$\mathscr{F}$打散, 如果对任意映射$g \colon \Lambda \to \{0, 1\}$, 都存在某个$f \in \mathscr{F}$使得$f|_{\Lambda} = g$.
+	函数类$\mathscr{F}$的VC维数为能被$\mathscr{F}$打散的集合的最大基数: 如果
+	\begin{equation*}
+		\vc(\mathscr{F}) = \max \{\card(\Lambda) \colon \card(\mathscr{F}(\Lambda)) = 2^{\card(\Lambda)} \} < \infty
+	\end{equation*}
+	则称函数类$\sF$为\textbf{VC类}, 否则, 记$\vc(\mathscr{F}) = \infty$. 
+\end{definition}
+
+\begin{example}[$\mathbb{R}$上的区间]
+	推论\ref{thm:Glivenko-Cantelli}的证明本质上考虑了$\R$上左侧半区间类$\mathcal{S}_{\text{left}} := \{(-\infty, t] \colon t \in \R \}$的示性函数类, 它的多项式识别的阶为$1$. 
+	对于$x_1 < x_2$, $\mathcal{S}_{\text{left}}(x_1, x_2) = \{(0,0), (0,1), (1,1)\}$, 于是$\vc(\mathcal{S}_{\text{left}}) = 1$. 
+	
+	进一步地, 双侧区间类$\mathcal{S}_{\text{two}} :\{(b, a] \colon a, b \in \R, b < a \}$的示性函数类可以打散任意的两点集, 但是对于三个不同的点$x_1 < x_2 < x_3$, 它不能选出集合$\{x_1, x_3\}$: 即$(1,0,1) \notin \mathcal{S}_{\text{two}}(\bm{x}_1^3)$, 于是$\vc(\mathcal{S}_{\text{two}}) = 2$. 
+	此外, $\card(\mathcal{S}_{\text{two}}(\bm{x}_1^n)) \leq (n+1)^2$, 于是$\mathcal{S}_{\text{two}}$多项式识别的阶为$2$. 
+\end{example}
+
+
+根据定义, 若$\vc(\mathscr{F}) < n$, 我们只能得到指数增长的结果$\card(\mathscr{F}(\bm{x}_1^n)) \leq 2^n - 1$.
+但是在上述示例中, 我们看到VC维数和多项式识别的阶数似乎存在着一定的联系.
+事实上, 利用组合的方法, 我们可以得到如下结论. 
+\begin{lemma}[Sauer-Shelah]\label{lemma:Sauer-Shelah}
+	设$\cS$是VC类, 对任意点集$\bm{x}_1^n$, 其中$n > \vc(\mathcal{S})$, 我们有
+	\begin{equation*}
+		\card(\mathcal{S}(\bm{x}_1^n))
+		\leq \sum_{i=1}^{\vc(\mathcal{S})} \binom ni
+		\leq (n+1)^{\vc(\mathcal{S})}. 
+	\end{equation*}
+\end{lemma}
+\begin{proof}
+	
+\end{proof}
+
+VC类在有限次集合运算下保持不变, 这被称为VC稳定性. 
+\begin{proposition}[VC稳定性]
+	若$\cS$和$\cT$是VC类, 那么下述集合类也是VC类: 
+	\begin{enumerate}[label=(\arabic*)]
+		\item $\cS^c := \{S^c \colon S \in \cS\}$;
+		\item $\cS \sqcap \cT := \{S \cap T \colon S \in \cS, T \in \cT\}$;
+		\item $\cS \sqcup \cT := \{S \cup T \colon S \in \cS, T \in \cT\}$.
+	\end{enumerate}
+\end{proposition}
+\begin{proof}
+	\begin{enumerate}[label=(\arabic*)]
+		\item 若点集$\bm{x}_1^n$可以被$\cS$打散, 对任意$S \in \cS$, 由于$S^c$会给$\bm{x}_1^n$和$S$完全相反的布尔值标签, 于是$\card(\cS^c(\bm{x}_1^n)) = 2^n = \card(\cS(\bm{x}_1^n))$, 即$\vc(\cS^c) = \vc(\cS)$. 
+		\item 注意到对任意的$S \in \cS, T \in \cT$, 我们有$\I{S \cap T} = \I{S} \cdot \I{T}$, 结合引理\ref{lemma:Sauer-Shelah}, 
+			\begin{equation*}
+				\card\left( \cS \sqcap \cT (\bm{x}_1^n) \right) 
+				\leq \card(\cS(\bm{x}_1^n)) \cdot \card(\cT(\bm{x}_1^n))
+				\leq (n+1)^{\vc(\cS) + \vc(\cT)}. 
+			\end{equation*}
+		\item 由$S \cup T = (S^c \cap T^c)^c$可见成立. 
+	\end{enumerate}
+\end{proof}
+
+
+实值函数类$\sF$可以通过取$0$-下水平集来定义\textbf{相伴集合类}$\cS(\sF):=\{S_f \colon f \in \sF\}$, 其中$S_f := \{x \in \cX \colon f(x) \leq 0\}$称为函数$f$的$0$-下水平集. 
+很多重要的集合类, 例如半平面、椭球体, 都可以用这种方式来表达. 
+
+\begin{proposition}
+	设函数类$\sG$为$\R^d$上实值函数的线性空间, 其中$\dim(\sG) < \infty$, 那么$\cS(\sG)$的VC维数至多为$\dim(\sG)$. 	
+\end{proposition}
+\begin{proof}
+	采用反证法, 假设存在点集$\bm{x}_1^n = \{x_1, \dots, x_n\} \subseteq \R^d$可以被$\cS(\sG)$打散, 其中$n = \dim(\sG) + 1$.
+	由于$\sG$构成了线性空间, 集合$\sG(\bm{x}_1^n) = \{(g(x_1), \dots, g(x_n)) \colon g \in \sG\}$构成了$\R^n$的子空间, 并且它的维数至多为$\dim(\sG) = n-1 < n$. 
+	因此, 存在某个非零向量$\bm\gamma \in \R^n$满足$\langle \bm{\gamma}, g(\bm{x}_1^n) \rangle = \sum_i \gamma_i g(x_i) = 0$, $\forall g \in \sG$. 
+	不失一般性地, 假定$\bm{\gamma}$至少存在一个正的分量, 于是
+	\begin{equation*}
+		\sum_{i \colon \gamma_i \leq 0} (-\gamma_i) g(x_i)
+		= \sum_{i \colon \gamma_i > 0} \gamma_i g(x_i), \quad
+		\forall g \in \sG. 
+	\end{equation*}
+	由于$\cS(\sG)$可以将$\bm{x}_1^n$打散, 于是存在$g \in \sG$使得$S_g \cap \bm{x}_1^n = \{x_i \colon \gamma_i \leq 0\}$, 此时等式右侧严格正而左侧非正, 推出矛盾. 
+\end{proof}
+
+\begin{example}[$\R^d$中的半平面]
+	$\R^n$中的半平面$H_{\bm{a},b} := \{\bm{x} \in \R^d \colon \langle \bm{a}, \bm{x} \rangle  \leq b\}$可以看作线性函数$l_{\bm{a},b}(\bm{x}) = \langle \bm{a}, \bm{x} \rangle - b$的$0$-下水平集. 
+	全体线性函数构成类$\sL^d := \{l_{\bm{a},b} \colon (\bm{a}, b) \in \R^d \times \R \}$, 由线性代数的知识, 不难看出它是$d+1$维的线性空间, 于是$\cS(\sL^d)$的VC维数不会大于$d+1$. 
+\end{example}
+
+
+\begin{example}[$\R^d$中的球]
+	考虑$\R^d$中全体的欧氏球$\cS^d_{\text{euc}} := \{S_{\bm{a},b} \colon (\bm{a},b) \in \R^d \times \R_{+}\}$, 其中$S_{\bm{a},b} := \{\bm{x} \in \R^d \colon \|\bm{x} - \bm{a}\|_2 \leq b\}$为以$\bm{a}$为圆心、$b$为半径的欧氏球, 可以看作是$s_{\bm{a},b} := \|\bm{x} - \bm{a}\|_2 - b$的$0$-下水平集. 
+	考虑特征映射$\phi \colon \R^d \to \R^{d+2}$, $\bm x \mapsto \left(1, x_1, \dots, x_n, \|\bm x\|_2^2 \right)$, 函数$g_{\bm{c}}(\bm{x}) := \langle\bm{c}, \bm{x}\rangle$构成的函数类$\sG = \{g_{\bm{c}} \colon \bm{c} \in \R^{d+2}$是一个$d+2$维的线性空间, 并且$s_{\bm{a},b}$就属于此类. 
+	于是$\vc(\cS^d_{\text{euc}}) \leq d+2$. \footnote{一个更加细致的分析可以得到它的VC维数实际上是$d+1$.}
+\end{example}
 
 
 
@@ -361,20 +490,3 @@ $\mathscr{F}$关于点集$\bm{x}_1^n$的Rademacher复杂度为
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1

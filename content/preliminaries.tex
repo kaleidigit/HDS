@@ -103,8 +103,8 @@
 		\E X^p 
 		&= \int_\Omega X^p \dd \P 
 		= \int_\Omega \int_0^Y p x^{p-1} \dd x \dd \P 
-		= \int_\Omega \int_0^{\infty} p x^{p-1} \I{X > x} \dd x \dd \P \\
-		&= \int_0^{\infty} p x^{p-1} \int_\Omega \I{X > x} \dd \P \dd x
+		= \int_\Omega \int_0^{\infty} p x^{p-1} \I{\{X > x\}} \dd x \dd \P \\
+		&= \int_0^{\infty} p x^{p-1} \int_\Omega \I{\{X > x\}} \dd \P \dd x
 		= \int_0^{\infty} p x^{p-1} \P(X > x) \dd x.
 	\end{align*}
 \end{proof}
@@ -165,7 +165,7 @@ Randon-Nikodym导数是定义密度和条件期望的关键.
 我们可以把$X | \cF$看作随机变量, 称为条件随机变量. 
 在这样的记号下, $X$等价于$X | \{\emptyset, \Omega\}$. 
 
-条件期望$\P(A | \cF) = \E[\I{A} | \cF]$
+条件概率$\P(A | \cF) = \E[\I{A} | \cF]$
 
 条件期望具有许多性质, 这里我们主要使用以下几个: 
 	\begin{enumerate}[label=(\roman*)]
