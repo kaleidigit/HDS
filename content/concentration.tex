@@ -8,7 +8,7 @@
 
 例如正态分布的$3 \sigma$原则告诉我们, “几乎所有”的值都在平均值正负三个标准差的范围内 (若$X \sim \cN(\mu, \sigma^2)$, 则$\mathbb{P}(|X - \mu| \leq 3 \sigma) \approx 0.9973$). 
 
-经典的结果是(广义)Markov不等式和Chebyshev不等式.
+经典的结果是(广义)\textbf{Markov不等式}: 
 设函数$f \colon \mathbb{R} \to \mathbb{R}^*$单调增, 对任意$t > 0$, 注意到
 \begin{equation*}
 	\mathbb{E}[f(X)] 
@@ -16,15 +16,15 @@
 		\geq \mathbb{E}\left[f(t) \I{\{X \geq t\}} \right] 
 		= f(t) \cdot \mathbb{P}[X \geq t].
 \end{equation*}
-于是我们有随机变量的\textbf{Markov不等式}: 
+于是我们有 
 \begin{equation}\label{eq:Markov'sInequality}
 	\mathbb{P}[X \geq t] \leq \frac{\mathbb{E}[f(X)]}{f(t)}.
 \end{equation}
-对于随机变量$Y \in L^2$, 取$X = |Y - \mathbb{E}[Y]|$, $f(u) = u^k\; (u \geq 0)$, 可以得到基于高阶矩的集中不等式\footnote{$k=2$时, 就是经典的Chebyshev不等式. }
+对于随机变量$Y \in L^p$, 取$X = |Y - \mathbb{E}[Y]|$, $f(u) = u^p\; (u \geq 0)$, 可以得到基于高阶矩的集中不等式
 \begin{equation*}
-	\mathbb{P}[|Y - \mathbb{E}[Y]| \geq t] \leq \frac{ \mathbb{E}[ |Y - \mathbb{E}[Y]|^k]}{t^k}. 
+	\mathbb{P}[|Y - \mathbb{E}[Y]| \geq t] \leq \frac{ \mathbb{E}[ |Y - \mathbb{E}[Y]|^p]}{t^p}. 
 \end{equation*} 
-
+特别地, $p=2$时就是经典的Chebyshev不等式.
 
 要进入高维统计, 我们自然地考虑多个随机变量的函数$f(X_1, \dots, X_n)$的集中不等式. 
 例如当$f$是求和函数时, 大数定律告诉
@@ -371,7 +371,7 @@ $1$-范数-通常与维数$n$有关
 	\mathcal{H}_\Phi(X) := \mathbb{E}[\Phi(X)] - \Phi(\mathbb{E}[X])  
 \end{equation*}
 为$X$的$\Phi$-熵.
-由Jensen不等式易见$\mathcal{H} \geq 0$, 它可以衡量随机变量随机性的大小: 
+由Jensen不等式易见$\mathcal{H} \geq 0$, 它可以用来衡量随机变量随机性的大小: 
 \begin{itemize}
 	\item 若$X = C$ a.e., 那么$\mathcal{H}_\Phi (X) = 0$; 
 	\item 特别地, 取$\Phi(u) = u^2$时, 此时熵$\mathcal{H}_\Phi(X) = \mathbb{E}[X^2] - (\mathbb{E}[X])^2$就是方差. 根据Chebyshev不等式, 我们可以利用方差熵来控制尾部概率; 
@@ -381,9 +381,9 @@ $1$-范数-通常与维数$n$有关
 			= - \lambda \mathbb{E}X + \log \mathbb{E}[e^{\lambda X}] 
 			= \log \mathbb{E}[e^{\lambda(X - \mathbb{E}X)}], 
 		\end{equation*}
-		这样的熵对应的是中心化的矩生成函数, 可以用来计算尾部概率的Chernoff界. 
+		这样的熵对应的是中心化的累计生成函数, 可以用来计算尾部概率的Chernoff界. 
 \end{itemize}
-之后, 我们总是考虑非负随机变量$e^{\lambda X}$由凸函数$\Phi \colon [0, \infty) \to \mathbb{R}$: 
+本节我们总是考虑非负随机变量$e^{\lambda X}$由凸函数$\Phi \colon [0, \infty) \to \mathbb{R}$: 
 \begin{equation*}
 	\Phi(u) = 
 	\begin{cases}
@@ -399,7 +399,7 @@ $1$-范数-通常与维数$n$有关
 其中$M_X(\lambda) = \mathbb{E}[e^{\lambda X}]$为矩生成函数. 
 
 \begin{example}[Gauss随机变量的熵]
-	对于$X \sim \cN(\mu, \sigma^2)$, 其矩生成函数为$M_X(\lambda) = e^{\lambda^2 \sigma^2 / 2 + \lambda \mu}$, 于是
+	随机变量$X \sim \cN(\mu, \sigma^2)$的矩生成函数为$M_X(\lambda) = e^{\lambda^2 \sigma^2 / 2 + \lambda \mu}$, 于是
 	\begin{equation}\label{eq:EntropyOfGaussianRV}
 		\mathcal{H}(e^{\lambda X}) 
 		= (\lambda^2 \sigma^2 + \lambda \mu) M_X(\lambda) - \left(\frac{\lambda^2 \sigma^2}{2} + \lambda\mu\right) M_X(\lambda) 
@@ -422,12 +422,12 @@ $1$-范数-通常与维数$n$有关
 		=& \mathbb{E}^g  \left[ (\lambda f(X) - g(X)) e^{\lambda f(X) - g(X)} \right] - \mathbb{E}^g[ e^{\lambda f(X) - g(X)}] \log \mathbb{E}^g[ e^{\lambda f(X) - g(X)}] \\
 		=& \mathcal{H}^g(e^{\lambda f(X) - g(X)}) \geq 0. 
 	\end{align*}
-	另一方面, 容易验证$\tilde g(x) = \lambda f(x) - \log \mathbb{E}[e^{\lambda f(X)}]$使得等式成立. 
+	另一方面, 容易验证函数$\tilde g(x) = \lambda f(x) - \log \mathbb{E}[e^{\lambda f(X)}]$恰好使得等式成立. 
 \end{proof}
 
 使用独立复制的方法可以对单变量函数熵的界做如下估计. 
 \begin{lemma}[单变量函数熵的界]\label{lemma:EntropyBoundForUnivariateFunctions}
-	设独立随机变量$X, Y \sim \mathbb{E}$, 对任意函数$g \colon \mathbb{R} \to \mathbb{R}$, 我们有
+	设独立随机变量$X, Y \sim \mathbb{P}$, 对任意函数$g \colon \mathbb{R} \to \mathbb{R}$, 我们有
 	\begin{equation}\label{eq:EntropyBoundForUnivariateFunctions}
 		\mathcal{H}(e^{\lambda g(X)})
 		\leq \lambda^2 \mathbb{E}[ (g(X) - g(Y))^2 e^{\lambda g(X)}; g(X) \geq g(Y) ], \quad \forall \lambda > 0.
@@ -455,17 +455,18 @@ $1$-范数-通常与维数$n$有关
 	\end{align*}
 	而在$\{g(X) \geq g(Y)\}$, $\lambda > 0$时, 有$e^{\lambda g(X)} - e^{\lambda g(Y)} \leq \lambda(g(X) - g(Y)) e^{\lambda g(X)}$, 从而\eqref{eq:EntropyBoundForUnivariateFunctions}成立. 
 	进一步地, 当$g$为凸的Lipschitz函数时, 由Rademacher定理\ref{thm:Rademacher}, $g'$几乎处处存在. 
-	于是在$\{g(X) \geq g(Y)\}$, $\lambda > 0$, $X$支撑集为$[a, b]$的条件下,
+	于是在$\{g(X) \geq g(Y)\}$, $\lambda > 0$, $X$支撑集为$[a, b]$的条件下, 我们有估计
 	\begin{equation*}
 		(g(X) - g(Y))^2 \leq (g'(X))^2 (X-Y)^2 \leq (b-a)^2 (g'(X))^2 \quad \text{a.s.}.
 	\end{equation*}
+	代入\eqref{eq:EntropyBoundForUnivariateFunctions}中可见引理成立. 
 \end{proof}
 
 \subsubsection{Herbst方法}
 
 和次高斯随机变量的想法类似, 如果$e^{\lambda X}$的熵能像Gauss随机变量的熵那样被控制, 相应的矩生成函数、尾部概率也会被控制.
 \begin{theorem}[Herbst方法]\label{thm:HerbstArgument}
-	若对任意的$\lambda \in I$ (这里$I$取$[0, \infty)$或者$\mathbb{R}$)总有熵$\mathcal{H}(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \E[e^{\lambda X}]$, 那么
+	若对任意的$\lambda \in I$ (这里$I$取$[0, \infty)$或者$\mathbb{R}$)总有熵$\mathcal{H}(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \mathbb{E}[e^{\lambda X}]$, 那么
 	\begin{equation*}
 		\mathbb{E}\left[e^{\lambda(X - \mathbb{E}X)}\right] 
 		\leq \exp \left( \frac{\lambda^2 \sigma^2}{2} \right),\; 
@@ -493,27 +494,27 @@ $1$-范数-通常与维数$n$有关
 \end{proof}
 
 \begin{remark}
-	反之, 若$X$为参数是$\sigma/2$-的次高斯的, 那么有$\mathcal{H}(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \E[e^{\lambda X}]$. 
+	反之, 若$X$为参数是$\sigma/2$-的次高斯的, 那么有$\mathcal{H}(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \mathbb{E}[e^{\lambda X}]$. 
 	\begin{proof}
-		考虑随机变量$Z := e^{\lambda X} / \E[e^{\lambda X}]$, 那么
+		考虑随机变量$Z := e^{\lambda X} / \mathbb{E}[e^{\lambda X}]$, 那么
 		\begin{equation*}
-			\E[Z \log Z] 
-			= \frac{1}{\E[e^{\lambda X}]} \E \left[ e^{\lambda X} \left(\lambda X - \log \E[e^{\lambda X}] \right) \right]
-			= \frac{\cH(e^{\lambda X})}{\E[e^{\lambda X}]}. 
+			\mathbb{E}[Z \log Z] 
+			= \frac{1}{\mathbb{E}[e^{\lambda X}]} \mathbb{E} \left[ e^{\lambda X} \left(\lambda X - \log \mathbb{E}[e^{\lambda X}] \right) \right]
+			= \frac{\cH(e^{\lambda X})}{\mathbb{E}[e^{\lambda X}]}. 
 		\end{equation*}
 		考虑指数加权期望, 我们还有
 		\begin{align*}
-			\E[Z \log Z]
-			= \frac{\E[\log Z \cdot e^{\lambda X}]}{\E[e^{\lambda X}]}
-			= \E_{\lambda}[\log Z]
-			\leq \log \E_{\lambda} [Z]
-			= \log \E[e^{2\lambda X}] - 2 \log \E[e^{\lambda X}]
+			\mathbb{E}[Z \log Z]
+			= \frac{\mathbb{E}[\log Z \cdot e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]}
+			= \mathbb{E}_{\lambda}[\log Z]
+			\leq \log \mathbb{E}_{\lambda} [Z]
+			= \log \mathbb{E}[e^{2\lambda X}] - 2 \log \mathbb{E}[e^{\lambda X}]
 		\end{align*}
-		由假设, 其中$\log \E[e^{2\lambda X}] \leq \lambda \E[X] + \frac{\lambda^2 \sigma^2}{2}$, 而$\log \E[e^{\lambda X}] \geq \lambda \E[X]$, 于是
+		由假设, 其中$\log \mathbb{E}[e^{2\lambda X}] \leq \lambda \mathbb{E}[X] + \frac{\lambda^2 \sigma^2}{2}$, 而$\log \mathbb{E}[e^{\lambda X}] \geq \lambda \mathbb{E}[X]$, 于是
 		\begin{equation*}
 			\mathcal{H}(e^{\lambda X})
-			= \E[Z \log Z] \cdot \E[e^{\lambda X}]
-			\leq \frac{\lambda^2 \sigma^2}{2} \cdot \E[e^{\lambda X}]. 
+			= \mathbb{E}[Z \log Z] \cdot \mathbb{E}[e^{\lambda X}]
+			\leq \frac{\lambda^2 \sigma^2}{2} \cdot \mathbb{E}[e^{\lambda X}]. 
 		\end{equation*}
 	\end{proof}
 \end{remark}
@@ -563,8 +564,18 @@ $1$-范数-通常与维数$n$有关
 
 鞅方法虽然可以得到随机变量函数的集中不等式, 但是并没有利用充分各分量$X_k$的分布信息, 例如定理\ref{thm:Azuma–Hoeffding}中有界随机变量$X_k$的次高斯参数可能远小于$\frac{b_k - a_k}{2}$. 
 本节我们利用熵的张量化, 
+\sp\sp
 
-由于独立随机变量的联合分布是边缘分布的张量积, 我们可以计算每个随机变量对函数的贡献得到随机变量的函数熵的界\footnote{最为经典的例子是独立随机变量和的方差熵是随机变量的方差和.}, 这种被称为\textbf{熵的张量化}, 或者说, 熵具有次可加性. 
+由于独立随机变量之和的方差等于方差的和, 利用Chebyshev不等式, 我们可以得到
+\begin{equation*}
+	\P \left[ \left|\sum_{i=1}^n (X_i - \E[X_i]) \right| \geq t \right]
+	\leq \frac{\var\left(\sum_i  X_i\right)}{t^2}
+	= \frac{\sum_i \var(X_i)}{t^2}. 
+\end{equation*}
+
+\sp 
+
+由于独立随机变量的联合分布是边缘分布的张量积, 我们可以计算每个随机变量对函数的贡献得到随机变量的函数熵的界\footnote{最为经典的例子是独立随机变量和的方差熵是随机变量的方差和.}, 这种被称为\textbf{熵的张量化}, 或者说, 熵具有次可加性.
 
 
 具体地, 设$f \colon \mathbb{R}^n \to \mathbb{R}$, 随机向量$\bm{X} = (X_1, \dots, X_n)$各分量独立. 
