@@ -261,7 +261,42 @@ Randon-Nikodym导数是定义密度和条件期望的关键.
 
 显然乘积测度$\Q \otimes \P$是$(\Q, \P)$的耦合, 
 
-耦合并不唯一, 记为$\Pi(\Q, \P)$. 
+耦合并不唯一, 记为$\cC(\Q, \P)$. 
+
+\begin{example}
+	例如甲乙两人射击命中的概率分别为$0.75$、$0.5$. 
+	现在两人独立地重复射击$100$次, 记$N_A$和$N_B$分别为两人射中的次数, 试证明对任意$1 \leq k \leq 100$, 都有
+	\begin{equation*}
+		\P(N_A \geq k) \geq \P(N_B \geq k). 
+	\end{equation*}
+	这一命题直观上是正确的, 但是如果我们显式地写出两者的概率
+	\begin{equation*}
+		\P(N_A \geq k) = \sum_{n=k}^{100} \binom{100}{n} 0.75^n 0.25^{100 - n}, \quad
+		\P(N_B \geq k) = \sum_{n=k}^{100} \binom{100}{n} 0.5^{100}.  
+	\end{equation*}
+	会发现两者是难以比较的. 
+ 	回忆分布的定义, 两个随机变量同分布并不意味着它们的样本空间相同, 换而言之, 相同的“输出”并不意味着有相同的“输入”. 
+ 	借助这样的想法, 我们可以通过匹配适当的样本空间来实现这一目的: 设$Z \sim U[0,1]$, 引入随机变量
+ 	\begin{equation*}
+ 		Y_{A,i} = 
+ 		\begin{cases}
+ 			1, & 0 \leq Z \leq 0.75 \\ 0, &0.75 < Z \leq 1, 
+ 		\end{cases}
+ 		\quad
+ 		Y_{B,i} = 
+ 		\begin{cases}
+ 			1, & 0 \leq Z \leq 0.5 \\ 0, &0.5 < Z \leq 1, 
+ 		\end{cases}
+ 	\end{equation*}
+ 	其中$Y_{A,i}, Y_{B,i}$分别表示甲和乙第$i$次射中的次数. 
+ 	显然有$Y_{A,i} \geq Y_{B,i}$, $\forall 1 \leq i \leq 100$, 并且$N_A$和$\sum_{n=1}^{100} Y_{A,i}$、 $N_B$和$\sum_{n=1}^{100} Y_{B,i}$同分布, 于是自然地
+ 	\begin{equation*}
+ 		\P(N_A \geq k) 
+ 		= \P\left(\sum_{n=1}^{100} Y_{A,i} \geq k \right)
+ 		\geq \P\left(\sum_{n=1}^{100} Y_{B,i} \geq k \right) 
+ 		= \P(N_B \geq k).
+ 	\end{equation*}
+\end{example}
 
 
 \subsection{凸分析}

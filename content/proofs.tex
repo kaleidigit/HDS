@@ -1,6 +1,28 @@
 \section{定理证明}
 
 
+Wasserstein距离构成了度量
+
+\begin{proof}
+
+\textbf{[正定性]}
+
+\textbf{[对称性]}
+对任意$\epsilon > 0$, 存在满足Lipschitz函数$f$使得$W_{\rho}(\mathbb{Q}, \mathbb{P}) - \epsilon \leq \mathbb{E}_{\mathbb{Q}} [f]- \mathbb{E}_{\mathbb{P}} [f]$, 于是
+\begin{equation*}
+	W_{\rho}(\mathbb{P}, \mathbb{Q})
+	\geq \mathbb{E}_{\mathbb{P}} [-f] - \mathbb{E}_{\mathbb{Q}} [-f] 
+	= \mathbb{E}_{\mathbb{Q}} [f] - \mathbb{E}_{\mathbb{P}} [f]
+	\geq W_{\rho}(\mathbb{Q}, \mathbb{P}) - \epsilon
+\end{equation*}
+令$\epsilon \to 0$, 可得$W_{\rho}(\mathbb{P}, \mathbb{Q}) \geq W_{\rho}(\mathbb{Q}, \mathbb{P})$.
+类似地, $W_{\rho}(\mathbb{Q}, \mathbb{P}) \geq W_{\rho}(\mathbb{P}, \mathbb{Q})$, 从而二者相等. 
+
+\textbf{[三角不等式]}
+
+\end{proof}
+
+
 
 王家卫在《一代宗师》里寄出一句台词：
 
