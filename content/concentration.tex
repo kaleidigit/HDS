@@ -301,12 +301,12 @@ $1$-范数-通常与维数$n$有关
 参数的好处只是为了做出更精确的估计罢了. 
 
 \begin{corollary}[有界差不等式]\label{cor:BddDiffIneq}
-	设函数$f \colon \mathbb{R}^n \to \mathbb{R}$满足参数为$(L_1, \dots, L_n)$的有界差不等式, 随机向量$\bm{X} = (X_1, \dots, X_n)$各分量独立, 那么$f(\bm{X})$是$\frac{1}{2} \sqrt{\sum_k L_k^2}$-次高斯的, 从而有集中不等式
-	\begin{equation*}
+	设函数$f \colon \mathbb{R}^n \to \mathbb{R}$满足参数为$(L_1, \dots, L_n)$的有界差不等式, 随机向量$\bm{X} = (X_1, \dots, X_n)$各分量独立, 那么$f(\bm{X})$是$\sqrt{\sum_k L_k^2} / 2$-次高斯的, 从而有集中不等式
+	\begin{equation}
 		\mathbb{P}[|f(\bm{X}) - \mathbb{E}[f(\bm{X})]| \geq t] 
 		\leq 2 \exp\left( - \frac{2 t^2}{\sum_k L_k^2} \right), 
 		\quad \forall t \geq 0. 
-	\end{equation*}
+	\end{equation}
 \end{corollary}
 \begin{proof}
 	定义随机变量 
@@ -568,7 +568,7 @@ $1$-范数-通常与维数$n$有关
 
 由于独立随机变量之和的方差等于方差的和, 利用Chebyshev不等式, 我们可以得到
 \begin{equation*}
-	\P \left[ \left|\sum_{i=1}^n (X_i - \E[X_i]) \right| \geq t \right]
+	\mathbb{P} \left[ \left|\sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \right| \geq t \right]
 	\leq \frac{\var\left(\sum_i  X_i\right)}{t^2}
 	= \frac{\sum_i \var(X_i)}{t^2}. 
 \end{equation*}
@@ -691,7 +691,7 @@ $\mathbb{R}^n$中的凸体$C$和$D$的Minkowski和定义为
 
 \subsubsection{Lipschitz函数的集中性}
 
-等周不等式可以表述为确定满足$\P[A] \geq 1/2$、使得测度$\mathbb{P}[A^{\epsilon}]$最小的集合$A \subseteq \mathcal{X}$.
+等周不等式可以表述为确定满足$\mathbb{P}[A] \geq 1/2$、使得测度$\mathbb{P}[A^{\epsilon}]$最小的集合$A \subseteq \mathcal{X}$.
 我们引入$(\mathcal{X}, \rho, \mathbb{P})$上的集中度函数$\alpha \colon \mathbb{R}^* \to [0, 1/2]$
 \begin{equation*}
 	\alpha_{\mathbb{P}}(\epsilon)
@@ -756,6 +756,8 @@ $\mathbb{R}^n$中的凸体$C$和$D$的Minkowski和定义为
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{传输成本不等式}
 
+\subsubsection{Wasserstein距离}
+
 给定$(\mathcal{X}, \rho)$上的两个概率分布$\mathbb{Q}$和$\mathbb{P}$, 它们之间由$\rho$诱导的\textbf{Wasserstein距离}为
 \begin{equation*}
 	W_{\rho}(\mathbb{Q}, \mathbb{P}) 
@@ -763,6 +765,49 @@ $\mathbb{R}^n$中的凸体$C$和$D$的Minkowski和定义为
 	= \sup_{\|f\|_{\text{Lip}} \leq 1} \int f (\dd \mathbb{Q} - \dd \mathbb{P}). 
 \end{equation*}
 可以证明这样的$W_{\rho}$构成了一个度量. 
+对任意耦合$\M \in \mathcal{C}(\mathbb{Q}, \mathbb{P})$, $f \colon \cX \to \R$为Lipschitz函数, 根据Fubini定理我们可以得到
+\begin{equation*}
+	\int \rho(x, x') \dd \M(x, x')
+	\geq \int (f(x) - f(x')) \dd \M(x, x')
+	= \int f(\dd \mathbb{P} - \dd \mathbb{Q}). 
+\end{equation*}
+\textbf{Kantorovich–Rubinstein对偶}告诉我们, 左侧关于耦合的下确界和右侧关于Lipschitz函数的上界是相等的, 即有
+\begin{equation*}
+	W_{\rho}(\mathbb{Q}, \mathbb{P})
+	= \inf_{\M \in \mathcal{C}(\mathbb{Q}, \mathbb{P})} \mathbb{E}_{\M} \left[ \rho \right]
+	= \inf_{\M \in \mathcal{C}(\mathbb{Q}, \mathbb{P})} \int_{\mathcal{X} \times \mathcal{X}} \rho(x, x') \dd \M(x, x'). 
+\end{equation*}
+于是Wasserstein距离也被称为\textbf{推土机距离}: 两个土堆的形状(分布$\mathbb{P}, \mathbb{Q}$)确定, 传输成本(距离$\rho$)确定, Wasserstein距离就是最优的搬运方案(最优的耦合$\M \in \mathcal{C}(\mathbb{Q}, \mathbb{P})$)下的传输成本, 等式右侧关于耦合的优化被称为最优传输问题. 
+
+\begin{example}[Hamming度量和全变差距离]\label{ex:HammingMetricAndTVDistance}
+	关于Hamming度量的Wasserstein距离$W_{\text{Ham}}(\mathbb{Q}, \mathbb{P})$等价于全变差距离$\|\mathbb{Q} - \mathbb{P}\|_{\text{TV}} := \sup_{A \subseteq \mathcal{X}} |\mathbb{Q}(A) - \mathbb{P}(A)|$, 再由Kantorovich–Rubinstein对偶, 我们有
+	\begin{equation*}
+		\|\mathbb{Q} - \mathbb{P}\|_{\text{TV}}
+		= \inf_{\M \in \mathcal{C}(\mathbb{Q}, \mathbb{P})} \int_{\cX \times \cX} \I{\{x \neq x'\}} \dd \M(x, x')
+		= \inf_{\M \in \mathcal{C}(\mathbb{Q}, \mathbb{P})} \M[Y \neq X], 
+	\end{equation*}
+	其中$X \sim \mathbb{P}$, $Y \sim \mathbb{Q}$. 
+	\begin{proof}
+	函数$f$关于Hamming度量Lipschitz连续等价于$f$值域在某个区间$[c, c+1]$中, 不失一般性地, 我们假定$c = 0$. 
+	记$\mathbb{Q}$和$\mathbb{P}$关于测度$\nu$的密度\footnote{这样的测度$\nu$是存在的, 例如$\mathbb{P}$和$\mathbb{Q}$都关于$(\mathbb{P} + \mathbb{Q})/2$绝对连续.}分别为$q$, $p$, 集合$A = \{x \in \mathcal{X} \colon q(x) \geq p(x)\} $, 于是有
+	\begin{equation*}
+		W_{\text{Ham}}(\mathbb{Q}, \mathbb{P})
+		= \sup_{f \colon \mathcal{X} \to [0, 1]} \int_{\mathcal{X}} f (q - p) \dd \nu 
+		\leq \int_A (\dd \mathbb{Q} - \dd \mathbb{P})
+		\leq \|\mathbb{Q} - \mathbb{P}\|_{\text{TV}}. 
+	\end{equation*}
+	另一方面, 对任意可测集$B \subseteq \mathcal{X}$, 注意到示性函数$\mathbb{I}_B$是Lipschitz连续的, 于是
+	\begin{equation*}
+		\mathbb{Q}(B) - \mathbb{P}(B) 
+		= \int \mathbb{I}_B (\dd \mathbb{Q} - \dd \mathbb{P}) 
+		\leq W_{\text{Ham}}(\mathbb{Q}, \mathbb{P}). 
+	\end{equation*}
+	于是有$\|\mathbb{Q} - \mathbb{P}\|_{\text{TV}} \leq W_{\text{Ham}}(\mathbb{Q}, \mathbb{P})$, 从而二者等价. 
+	\end{proof}
+\end{example}
+
+\subsubsection{KL散度与传输成本不等式}
+
  $\mathbb{Q}$和$\mathbb{P}$之间的\textbf{Kullback–Leibler散度}(亦称相对熵)定义为
 \begin{equation}
 	D(\mathbb{Q} \| \mathbb{P})
@@ -773,41 +818,26 @@ $\mathbb{R}^n$中的凸体$C$和$D$的Minkowski和定义为
 	\end{cases} 
 \end{equation}
 其中$q, p$为$\mathbb{Q}, \mathbb{P}$的密度, $\nu$为$\mathcal{X}$上的Lebesgue测度. 
-尽管KL散度给出了分布间的一个距离, 它实际上并不是一个度量: 它不满足对称性和三角不等式. 
-
-\begin{example}[Hamming度量和全变差距离]
-	关于Hamming度量的Wasserstein距离$W_{\text{Ham}}(\mathbb{Q}, \mathbb{P})$等价于全变差距离$\|\mathbb{Q} - \mathbb{P}\|_{\text{TV}} := \sup_{A \subseteq \mathcal{X}} |\mathbb{Q}(A) - \mathbb{P}(A)|$. 
-	
-	此时$f$是关于Hamming度量的Lipschitz连续函数等价于$f$值域为某个区间$[c, c+1]$, 不失一般性地, 我们假定$c = 0$. 
-	记$\mathbb{Q}$和$\mathbb{P}$关于Lebesgue测度$\nu$的密度分别为$q$, $p$, 集合$A = \{x \in \mathcal{X} \colon q(x) \geq p(x)\} $, 于是有
-	\begin{equation*}
-		W_{\text{Ham}}(\mathbb{Q}, \mathbb{P})
-		= \sup_{f \colon \mathcal{X} \to [0, 1]} \int_{\mathcal{X}} f (q - p) \dd \nu 
-		\leq \int_A (\dd \mathbb{Q} - \dd \mathbb{P})
-		\leq \|\mathbb{Q} - \mathbb{P}\|_{\text{TV}}. 
-	\end{equation*}
-	另一方面, 对任意可测集$B \subseteq \mathcal{X}$, 注意到$\mathbb{I}_B$是Lipschitz连续的, 于是
-	\begin{equation*}
-		\mathbb{Q}(B) - \mathbb{P}(B) 
-		= \int \mathbb{I}_B (\dd \mathbb{Q} - \dd \mathbb{P}) 
-		\leq W_{\text{Ham}}(\mathbb{Q}, \mathbb{P}). 
-	\end{equation*}
-	于是有$\|\mathbb{Q} - \mathbb{P}\|_{\text{TV}} \leq W_{\text{Ham}}(\mathbb{Q}, \mathbb{P})$, 从而二者等价. 
-\end{example}
+尽管KL散度可以描述分布间的差异, 它实际上并不是一个度量: 它不满足对称性和三角不等式. 
 
 称$(\mathcal{X}, \rho)$上的概率测度$\mathbb{P}$满足参数为$\gamma > 0$的\textbf{$\rho$-传输成本不等式}, 如果对任意的概率测度$\mathbb{Q}$总有
  \begin{equation}\label{eq:TransportationCostInequality}
  	W_{\rho} (\mathbb{Q}, \mathbb{P}) \leq \sqrt{2 \gamma D(\mathbb{Q} \| \mathbb{P})}.
  \end{equation}
-下述定理告诉我们, 在控制Lipschitz函数的矩生成函数时, 传输成本不等式是成立的. 
+ 这样的不等式在信息论中也被称为\textbf{信息不等式}, 例如经典的Pinsker–Csiszár–Kullback不等式: 对任意分布$\Q$, $\P$, 
+ \begin{equation}\label{eq:Pinsker–Csiszár–Kullback}
+ 	\|\Q - \P\|_{\text{TV}} \leq \sqrt{\frac{1}{2}D(\Q\|\|P)}, 
+ \end{equation}
+ 结合示例\ref{ex:HammingMetricAndTVDistance}, 这实际上是说任意分布$\P$都满足参数$\gamma = \frac{1}{4}$的Hamming度量传输成本不等式. 
+下述定理告诉我们, 在控制Lipschitz函数的矩生成函数时, 传输成本不等式成立. 
 
 \begin{theorem}[Bobkov-Götze]\label{thm:Bobkov-Götze}
-	设度量空间$\cX, \rho$上的随机变量$X \sim \P$, 下列命题等价: 
+	设度量空间$\cX, \rho$上的随机变量$X \sim \mathbb{P}$, 下列命题等价: 
 	\begin{enumerate}
 		\item 对任意Lipschitz连续的函数$f$, $f(X)$是$\sigma$-次高斯的;
-		\item 概率测度$\P$满足参数为$\sigma^2$的$\rho$-传输不等式, 即对任意概率测度$\Q$均成立
+		\item 概率测度$\mathbb{P}$满足参数为$\sigma^2$的$\rho$-传输不等式, 即对任意概率测度$\mathbb{Q}$均成立
 			\begin{equation*}
-				W_{\rho}(\Q, \P) \leq \sqrt{2 \sigma^2 D(\Q \| \P)}. 
+				W_{\rho}(\mathbb{Q}, \mathbb{P}) \leq \sqrt{2 \sigma^2 D(\mathbb{Q} \| \mathbb{P})}. 
 			\end{equation*}
 	\end{enumerate}
 \end{theorem}
@@ -815,57 +845,107 @@ $\mathbb{R}^n$中的凸体$C$和$D$的Minkowski和定义为
 证明的关键在于注意到相对熵和矩生成函数间的密切关系, 下述的结果可以追溯到统计力学最早的历史. 
 \begin{lemma}[Gibbs变分原理]\label{lemma:GibbsVariation}
 	\begin{equation*}
-		\log \E_{\P}[e^f] = \sup_{\Q} \left\{ \E_{\Q} [f] - D(\Q \| \P) \right\}
+		\log \mathbb{E}_{\mathbb{P}}[e^f] = \sup_{\mathbb{Q}} \left\{ \mathbb{E}_{\mathbb{Q}} [f] - D(\mathbb{Q} \| \mathbb{P}) \right\}
 	\end{equation*}
 \end{lemma}
 \begin{proof}
 	这里我们假定$f$有界来避免可积性的问题(否则, 考虑$f \wedge M$的结果, 再对$M$取上确界即可). 
-	考虑测度$\tilde{\P}$, 它关于$\P$的Radon–Nikodym导数为$\frac{e^{f}}{\mathbb{E}_{\P}[e^{f}]}$, 当$\Q \ll \P$时, 
+	考虑测度$\tilde{\mathbb{P}}$, 它关于$\mathbb{P}$的Radon–Nikodym导数为$\frac{e^{f}}{\mathbb{E}_{\mathbb{P}}[e^{f}]}$, 当$\mathbb{Q} \ll \mathbb{P}$时, 
 	\begin{align*}
-		\log \E_{\P}[e^f] - D(\Q \| \tilde{\P})
-		&= \log \E_{\P}[e^f] - \int \log \frac{\dd \Q}{\dd \tilde{\P}} \dd \Q \\
-		&= \log \E_{\P}[e^f] - \int \log \frac{\dd \Q}{\dd \P} \dd \Q + \int \log \frac{\dd \Q}{\dd \tilde{\P}} \dd \Q \\
-		&= \E_{\Q}[f] - D(\Q \| \P). 
+		\log \mathbb{E}_{\mathbb{P}}[e^f] - D(\mathbb{Q} \| \tilde{\mathbb{P}})
+		&= \log \mathbb{E}_{\mathbb{P}}[e^f] - \int \log \frac{\dd \mathbb{Q}}{\dd \tilde{\mathbb{P}}} \dd \mathbb{Q} \\
+		&= \log \mathbb{E}_{\mathbb{P}}[e^f] - \int \log \frac{\dd \mathbb{Q}}{\dd \mathbb{P}} \dd \mathbb{Q} + \int \log \frac{\dd \mathbb{Q}}{\dd \tilde{\mathbb{P}}} \dd \mathbb{Q} \\
+		&= \mathbb{E}_{\mathbb{Q}}[f] - D(\mathbb{Q} \| \mathbb{P}). 
 	\end{align*}
-	于是两侧关于$\Q$的上确界相同, 其中$- D(\Q \| \tilde{\P})$关于$\Q$的上确界为$0$.   
+	于是两侧关于$\mathbb{Q}$的上确界相同, 其中$- D(\mathbb{Q} \| \tilde{\mathbb{P}})$关于$\mathbb{Q}$的上确界为$0$.   
 \end{proof}
 
 \begin{proof}[\keben 定理\ref{thm:Bobkov-Götze}的证明]
 	由定义, 条件(1)等价于
 	\begin{equation*}
-		\log \E_{\P} [\exp(\lambda(f - \E_{\P}[f]))] \leq \frac{\lambda^2 \sigma^2}{2}, 
+		\log \mathbb{E}_{\mathbb{P}} [\exp(\lambda(f - \mathbb{E}_{\mathbb{P}}[f]))] \leq \frac{\lambda^2 \sigma^2}{2}, 
 		\quad \forall \lambda \in \R,\; \|f\|_{\text{Lip}} \leq 1. 
 	\end{equation*}
 	结合引理\ref{lemma:GibbsVariation}, 这等价于
 	\begin{equation*}
-		\sup_{\lambda \in \R} \sup_{\|f\|_{\text{Lip} \leq 1}} \sup_{\Q} \left\{\lambda(\E_{\Q}[f] - \E_{\P}[f]) - D(\Q \| \P) -  \frac{\lambda^2 \sigma^2}{2} \right\} \leq 0. 
+		\sup_{\lambda \in \R} \sup_{\|f\|_{\text{Lip} \leq 1}} \sup_{\mathbb{Q}} \left\{\lambda(\mathbb{E}_{\mathbb{Q}}[f] - \mathbb{E}_{\mathbb{P}}[f]) - D(\mathbb{Q} \| \mathbb{P}) -  \frac{\lambda^2 \sigma^2}{2} \right\} \leq 0. 
 	\end{equation*}
 	交换上确界的顺序并求出关于$f$和$\lambda$的上确界, 我们可以得到(2)的等价表述: 
 	\begin{equation*}
-		\sup_{\Q} \left\{\frac{W_{\rho}(\Q, \P)^2}{2 \sigma^2} - D(\Q \| \P) \right\} \leq 0
+		\sup_{\mathbb{Q}} \left\{\frac{W_{\rho}(\mathbb{Q}, \mathbb{P})^2}{2 \sigma^2} - D(\mathbb{Q} \| \mathbb{P}) \right\} \leq 0
 	\end{equation*}
 \end{proof}
 
-定理\ref{thm:Bobkov-Götze}描述了任意度量空间$(\cX, \rho)$上Lipschitz函数的次高斯性质, 但这并不是一个高维的结果, 而推广至高维的关键思想是张量化.
-在接下来的的部分中, 我们将从不同角度探讨传输成本不等式, 从而得到张量化的结果, 可以用于发展和理解无维度限制的Lipschitz集中不等式
+\subsubsection{传输成本的张量化}
+定理\ref{thm:Bobkov-Götze}描述了任意度量空间$(\cX, \rho)$上Lipschitz函数的次高斯性质, 但这并不是一个高维的结果, 而推广至高维的关键思想是张量化. 
+在此之前, 我们先介绍KL散度的链法则. 
+\begin{lemma}[Kullback–Leibler散度的链法则]\label{lemma:ChainRuleForKLDivergence}
+	给定两个$n$维分布$\mathbb{Q} \ll \mathbb{P}$, 它们之间的KL散度可以分解为
+	\begin{equation*}
+		D(\mathbb{Q} \| \mathbb{P})
+		= D(\mathbb{Q}_1 \| \mathbb{P}_1) + \sum_{j=2}^n \mathbb{E}_{\mathbb{Q}_1^{j-1}} \left[ D\left(\mathbb{Q}_{j | j-1}(\;\cdot\; | \bm{X}_1^{j-1}) \big\| \mathbb{P}_{j | j-1}(\;\cdot\; | \bm{X}_1^{j-1})\right) \right], 
+	\end{equation*}
+	其中$\mathbb{Q}_j, \mathbb{P}_j$分别为$\mathbb{Q}, \mathbb{P}$关于第$j$个分量的边缘分布, $\mathbb{Q}_{j | j-1}, \mathbb{P}_{j | j-1}$分别为给定前$j-1$维随机变量下, $\mathbb{Q}, \mathbb{P}$关于第$j$维的条件分布. 
+\end{lemma}
+\begin{proof}
+	我们只说明$n = 2$的情形, 更高维的结果可以通过归纳法得到. 
+	记$\mathbb{Q}$和$\mathbb{P}$关于测度$\nu$的密度分别为$q$, $p$, 
+	\begin{align*}
+		& D(\mathbb{Q} \| \mathbb{P})
+		= \int q(x_1, x_2) \log \frac{q(x_1, x_2)}{p(x_1, x_2)} \dd \nu(x_1, x_2) \\
+		=& \int q_1(x_1) q_{2|1}(x_2|x_1) \log \frac{q_1(x_1) q_{2|1}(x_2|x_1)}{p_1(x_1) p_{2|1}(x_2|x_1)} \dd \nu(x_1, x_2) \\
+		=& \int q_1(x_1) \log \frac{q_1(x_1)}{p_1(x_1)} \dd \nu_1(x_1) + \int q_1(x_1) \int q_{2|1}(x_2|x_1) \log \frac{q_{2|1}(x_2|x_1)}{p_{2|1}(x_2|x_1)} \dd \nu(x_1, x_2) \\
+		=& D(\mathbb{Q}_1 \| \mathbb{P}_1) + \E_{\Q_1} \left[ D\left(\Q_{2|1}(\;\cdot\; | \bm{X}_1) \| \P_{2|1}(\;\cdot\; | \bm{X}_1)\right) \right]. 
+	\end{align*}
+\end{proof}
 
-\subsubsection{Kantorovich–Rubinstein对偶}
+\begin{proposition}[传输成本不等式的张量化]\label{thm:TensorizationForTransportationCost}
+	若对于每个$k = 1, \dots, n$, 度量空间$\cX$上的概率测度$\mathbb{P}_k$满足参数为$\gamma_k$的$\rho_k$-传输成本不等式, 那么乘积空间$\cX^n$上的乘积测度$\mathbb{P} := \otimes_{k=1}^n \mathbb{P}_k$满足传输成本不等式
+	\begin{equation}
+		W_{\rho}(\mathbb{Q}, \mathbb{P})
+		\leq \sqrt{2 \left(\sum_{k=1}^n \gamma_k \right) D(\mathbb{Q} \| \mathbb{P})}, \quad \text{对任意$\cX^n$上的分布$\mathbb{Q}$,}
+	\end{equation}
+	其中$\rho(x, y) := \sum_{k=1}^n \rho_k(x_k, y_k)$. 
+\end{proposition}
+\begin{proof}
+	由Kantorovich–Rubinstein对偶, 只需说明对任意$\cX^n$上的分布$\mathbb{Q}$, 存在某个耦合$\M \in \mathcal{C}(\mathbb{Q}, \mathbb{P})$使得不等式$\mathbb{E}_{\M}[\rho] \leq \sqrt{2 \left(\sum_k \gamma_k \right) D(\mathbb{Q} \| \mathbb{P})}$成立. 
+	我们用归纳法证明这样的分布$\M$的存在性. 
+	
+	考虑随机变量 $(\bm{X}_1^n, \bm{Y}_1^n) \sim \M$, 对于$j = 1, \dots, n$, 记$\M_j$为$(X_j, Y_j)$的边缘分布. 
+	特别地, $\M_1 \in \mathcal{C}(\mathbb{Q}_1, \mathbb{P}_1)$为最佳耦合, 即有
+	\begin{equation*}
+		\mathbb{E}_{\M_1} [\rho_1] = W_{\rho_1} (\mathbb{Q}_1, \mathbb{P}_1) \leq \sqrt{2 \gamma_1 D(\mathbb{Q}_1 \| \mathbb{P}_1)}. 
+	\end{equation*}
+	记$\M_1^j$为$(\bm{X}_1^j, \bm{Y}_1^j)$的联合分布, $\M_{j | j-1}$为给定$(\bm{X}_1^{j-1}, \bm{Y}_1^{j-1})$下$(X_j, Y_j)$的条件分布. 
+	现在假定我们得到了满足不等式
+	\begin{equation*}
+		\mathbb{E}_{\M_1^{j-1}} \left[\sum_{k=1}^{j-1} \rho_k \right]
+		\leq \sqrt{2 \left(\sum_{k=1}^{j-1} \gamma_k \right) D(\mathbb{Q}_1^{j-1} \| \mathbb{P}_1^{j-1})}
+	\end{equation*}
+	的耦合$\M_1^{j-1}$, 由条件, 存在$\left(\mathbb{Q}_{j | j-1}(\;\cdot\; | \bm{x}_1^{j-1}), \mathbb{P}_j\right)$的耦合$\M_{j | j-1}(\;\cdot\; | \bm{x}_1^{j-1}, \bm{y}_1^{j-1})$使得
+	\begin{equation*}
+		\mathbb{E}_{\M_{j | j-1}}[ \rho_j] 
+		\leq \sqrt{2 \gamma_j D\left(\mathbb{Q}_{j | j-1}(\;\cdot\; | \bm{x}_1^{j-1}) \| \mathbb{P}_j\right)}, 
+		\quad \forall \bm{x}_1^{j-1} \in \cX^{j-1}, 
+	\end{equation*}
+	于是利用条件期望的塔形性质, 由平方根函数的凹性和Jensen不等式、Cauchy-Schwarz不等式、KL散度的链法则, 可以得到
+	\begin{align*}
+		& \mathbb{E}_{\M}[\rho]
+		= \sum_{k=1}^n \mathbb{E}_{\M}[ \rho_k]
+		= \mathbb{E}_{\M_1}[\rho_1] + \sum_{j=2}^n \mathbb{E}_{\M_1^{j-1}} \left[ \mathbb{E}_{\M_{j | j-1}} [\rho_j] \right] \\
+		\leq & \sqrt{2 \gamma_1 D(\mathbb{Q}_1 \| \mathbb{P}_1)} + \sum_{j=2}^n \sqrt{2 \gamma_j \mathbb{E}_{\M_1^{j-1}} \left[ D\left(\mathbb{Q}_{j | j-1}(\;\cdot\; | \bm{X}_1^{j-1}) \| \mathbb{P}_j\right) \right]} \\
+		\leq & \sqrt{2 \left(\sum_{k=1}^n \gamma_k \right)} \sqrt{D(\mathbb{Q}_1 \| \mathbb{P}_1) + \sum_{j=2}^n \mathbb{E}_{\M_1^{j-1}} \left[ D\left(\mathbb{Q}_{j | j-1}(\;\cdot\; | \bm{X}_1^{j-1}) \| \mathbb{P}_j\right) \right]} \\
+		= & \sqrt{2 \left(\sum_{k=1}^n \gamma_k \right) D(\mathbb{Q} \| \mathbb{P})}. 
+	\end{align*}
+\end{proof}
 
-对任意耦合$\M \in \cC(\mathbb{Q}, \mathbb{P})$, $f \colon \R$为Lipschitz函数, 根据Fubini定理我们可以得到
-\begin{equation*}
-	\int \rho(x, x') \dd \M(x, x')
-	\geq \int (f(x) - f(x')) \dd \M(x, x')
-	= \int f(\dd \P - \dd \Q). 
-\end{equation*}
-Kantorovich–Rubinstein对偶告诉我们, 左侧关于耦合的下确界和右侧关于Lipschitz函数的上界是相等的, 即有
-\begin{equation*}
-	W_{\rho}(\Q, \P)
-	= \inf_{\M \in \cC(\mathbb{Q}, \mathbb{P})} \mathbb{E}_{\M} \left[ \rho \right]
-	= \inf_{\M \in \cC(\mathbb{Q}, \mathbb{P})} \int_{\mathcal{X} \times \mathcal{X}} \rho(x, x') \dd \M(x, x'). 
-\end{equation*}
-于是Wasserstein距离也被称为\textbf{推土机距离}: 两个土堆的形状(分布$\P, \Q$)确定, 传输成本(距离$\rho$)确定, Wasserstein距离就是最优的搬运方案(最优的耦合$\M \in \cC(\Q, \P)$)下的传输成本, 等式右侧关于耦合的优化被称为最优传输问题. 
+下面我们利用传输成本不等式的张量化重新得到推论\ref{cor:BddDiffIneq}. 
+\begin{example}[有界差不等式']
+	设函数$f \colon \cX^n \to \R$满足参数为$(L_1, \cdots, L_n)$的有界差不等式, 利用三角不等式可以得到, $f$关于重尺度化的Hamming度量$\rho(x, y) := \sum_k L_k \I{\{x_k \neq y_k\}}$是Lipschitz连续的. 
+	于是由不等式\ref{eq:Pinsker–Csiszár–Kullback}, 每个边缘分布$\P_k$满足参数为$\gamma_k = L_k^2 / 4$的$L_k \I{\{x_k \neq y_k\}}$-传输成本不等式. 
+	结合定理\ref{thm:TensorizationForTransportationCost}和定理\ref{thm:Bobkov-Götze}, Lipschitz函数$f$是$\sqrt{\sum_k L_k^2} / 2$-次高斯的. 
+\end{example}
 
-\subsubsection{信息不等式}
 
  
 \begin{theorem}
@@ -902,14 +982,13 @@ Kantorovich–Rubinstein对偶告诉我们, 左侧关于耦合的下确界和右
 	\end{equation*}
 \end{proof}
 
-\subsubsection{传输成本的张量化}
 
 
 \subsubsection{非对称耦合成本}
 
 定义
 \begin{align*}
-	\cC(\mathbb{Q}, \mathbb{P})
+	\mathcal{C}(\mathbb{Q}, \mathbb{P})
 	= \sqrt{\int\left(1 - \frac{\dd \mathbb{Q}}{\dd \mathbb{P}} \right)_+^2 \dd \mathbb{P}}
 \end{align*}
 
