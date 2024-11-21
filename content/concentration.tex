@@ -1,14 +1,12 @@
 \section{测度集中}
 
-\epigraph{A random variable that depends (in a ‘smooth’ way) on the influence of many independent variables (but not too much on any of them) is essentially constant.}{---Michel Talagrand (1996)}
+\epigraph{A random variable that depends (in a ‘smooth’ way) on the influence of many independent variables (but not too much on any of them) is essentially constant.}{---Michel Talagrand (1996)} 
 
-驯服随机! 
+巡抚随机!
 
-在大尺度上, 无界随机变量的概率分布函数通常有着纤细、绵长的尾部, 这意味着集中现象: 
-
+在大尺度上, 无界随机变量的概率分布函数通常有着纤细、绵长的尾部, 这意味着集中现象: 一切随机变量几乎是一个有界随机变量.  
 例如正态分布的$3 \sigma$原则告诉我们, “几乎所有”的值都在平均值正负三个标准差的范围内 (若$X \sim \cN(\mu, \sigma^2)$, 则$\mathbb{P}(|X - \mu| \leq 3 \sigma) \approx 0.9973$). 
 
-经典的结果是(广义)\textbf{Markov不等式}: 
 设函数$f \colon \mathbb{R} \to \mathbb{R}^*$单调增, 对任意$t > 0$, 注意到
 \begin{equation*}
 	\mathbb{E}[f(X)] 
@@ -16,7 +14,7 @@
 		\geq \mathbb{E}\left[f(t) \I{\{X \geq t\}} \right] 
 		= f(t) \cdot \mathbb{P}[X \geq t].
 \end{equation*}
-于是我们有 
+于是我们有经典的(广义)\textbf{Markov不等式}: 
 \begin{equation}\label{eq:Markov'sInequality}
 	\mathbb{P}[X \geq t] \leq \frac{\mathbb{E}[f(X)]}{f(t)}.
 \end{equation}
@@ -24,14 +22,18 @@
 \begin{equation*}
 	\mathbb{P}[|Y - \mathbb{E}[Y]| \geq t] \leq \frac{ \mathbb{E}[ |Y - \mathbb{E}[Y]|^p]}{t^p}. 
 \end{equation*} 
-特别地, $p=2$时就是经典的Chebyshev不等式.
+特别地, $p=2$时就是经典的Chebyshev不等式. 
 
-要进入高维统计, 我们自然地考虑多个随机变量的函数$f(X_1, \dots, X_n)$的集中不等式. 
-例如当$f$是求和函数时, 大数定律告诉
-
-这是渐进结果
-
-非渐进视角
+于是通过发展Markov不等式, 我们可以得到单变量函数的集中不等式. 
+而在统计学的背景下, 统计量通常是多个随机变量的函数$f(X_1, \dots, X_n)$. 
+当函数$f$具有一些良好的性质时, 我们可以通过估计每个随机变量对$f$的贡献, 结合每个$X_i$的集中不等式得到$f$的集中不等式, 这种方法被称为\textbf{张量化}. 
+例如从Chebyshev不等式出发, 由于独立随机变量之和的方差等于方差的和, 我们可以得到独立随机变量$\{X_i\}_{i=1}^n$之和的集中不等式:  
+\begin{equation*}
+	\mathbb{P} \left[ \left|\sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \right| \geq t \right]
+	\leq \frac{\var\left(\sum_i  X_i\right)}{t^2}
+	= \frac{\sum_i \var(X_i)}{t^2}. 
+\end{equation*}
+相较于大数定律的渐进视角, 这提供了一种非渐进的方法, 在样本数量较小时也有很好的估计. 
 
 $1$-范数-通常与维数$n$有关
 
@@ -44,7 +46,7 @@ $1$-范数-通常与维数$n$有关
 可以看到, Markov不等式 \eqref{eq:Markov'sInequality} 中尾部概率由$f$的增长速度所控制——这意味着选取增长速度最快的函数, 可以得到更有效的尾部概率不等式. 
 自然地, 我们考虑指数函数. 
 
-若中心化随机变量$X - \mathbb{E}[X]$在$0$的某个邻域$I$内有\textbf{矩生成函数}, 即在$\lambda \in I$上有$M_X(\lambda) := \mathbb{E}[e^{\lambda (X - \mathbb{E}X)}] < \infty$, 那么$\lambda \in I \cap [0, \infty)$时, 取$f(u) = e^{\lambda u}$可以得到下述的\textbf{Chernoff不等式}: 
+若中心化随机变量$X - \mathbb{E}[X]$在$0$的某个邻域$I$内有\textbf{矩生成函数}, 即在$\lambda \in I$上有$M(\lambda) := \mathbb{E}[e^{\lambda (X - \mathbb{E}X)}] < \infty$, 那么$\lambda \in I \cap [0, \infty)$时, 取$f(u) = e^{\lambda u}$可以得到下述的\textbf{Chernoff不等式}: 
 \begin{equation*}
 	\mathbb{P}[X - \mathbb{E}X \geq t] 
 	\leq \frac{\mathbb{E}[e^{\lambda(X - \mathbb{E}X)}]}{e^{\lambda t}},\;
@@ -74,20 +76,20 @@ $1$-范数-通常与维数$n$有关
 我们将Gauss随机变量作为“模版”来研究其他随机变量: 如果某个随机变量的中心矩生成函数能被中心Gauss随机变量的矩生成函数所控制, 利用Chernoff方法, 它的尾概率也会被中心Gauss随机变量的尾概率控制. 
 
 \begin{definition}[次高斯随机变量]\label{def:subGaussianRV}
-	称期望为$\mu$的随机变量$X$为为$\sigma$-次高斯随机的, 如果存在$\sigma > 0$, 使得
+	称期望为$\mu$的随机变量$X$为参数为$\sigma$的次高斯随机变量, 如果存在$\sigma > 0$, 使得
 	\begin{equation*}
 		\mathbb{E}[e^{\lambda(X - \mu)}] \leq e^{\sigma^2 \lambda^2 /2},\; \forall \lambda \in \mathbb{R}.   
 	\end{equation*}  
 \end{definition}
-容易看到, 参数为$\sigma$的次高斯随机变量$X$总是满足上偏差不等式 \eqref{eq:UpperDeviationOfSubGuassianRV}.  
-此外, 由于$-X$也是次高斯随机变量, 可以得到下偏差不等式: $\mathbb{P}[X \leq \mu - t] \leq e^{- \frac{t^2}{2 \sigma^2}}$对任意$t \geq 0$成立, 于是次高斯随机变量满足\textbf{集中不等式}
+容易看到, $\sigma$-次高斯随机变量$X$总是满足上偏差不等式 \eqref{eq:UpperDeviationOfSubGuassianRV}.  
+此外, 由于$-X$也是次高斯的, 可以得到下偏差不等式: $\mathbb{P}[X \leq \mu - t] \leq e^{- \frac{t^2}{2 \sigma^2}}$对任意$t \geq 0$成立, 于是次高斯随机变量满足\textbf{集中不等式}
 \begin{equation}\label{eq:SubGuassianConcentration}
 	\mathbb{P}[|X - \mu| \geq t] \leq 2 e^{- \frac{t^2}{2 \sigma^2}},\; \forall t > 0. 
 \end{equation}
 
 \begin{remark}[辅助函数的构造]
-	定义\ref{def:subGaussianRV}实际上是说, 次高斯随机变量的累积生成函数满足$K(\lambda) := \log \mathbb{E}[e^{\lambda X}] = O(\lambda^2)$, 等价地, $K''(\lambda) = O(1)$; 
-	或者说$G(\lambda) := \lambda^{-1} K(\lambda) = O(\lambda)$, 等价地$G'(\lambda) = O(1)$. 
+	定义\ref{def:subGaussianRV}实际上是说, 中心化的次高斯随机变量的累积生成函数$K(\lambda) := \log \mathbb{E}[e^{\lambda X}] = O(\lambda^2)$, 等价地, $K''(\lambda) = O(1)$; 
+	或者说$G(\lambda) := \lambda^{-1} K(\lambda) = O(\lambda)$, 等价地, $G'(\lambda) = O(1)$. 
 	引理\ref{lemma:SubGaussianParameterOfBddRV}和定理\ref{thm:HerbstArgument}的证明分别利用了这两种等价表述来构造辅助函数. 
 \end{remark}
 
@@ -140,13 +142,13 @@ $1$-范数-通常与维数$n$有关
 \end{theorem}
 
 利用独立性和Chernoff方法, 容易看到偏差不等式关于次高斯参数具有可加性: 
-\begin{proposition}[Hoeffding界]
-	设$\{X_i\}_{i=1}^n$为均值为$\mu_i$, 参数为$\sigma_i$的独立次高斯随机变量, 我们有上偏差不等式
-	\begin{equation}
+\begin{proposition}[Hoeffding界]\label{thm:HoeffdingBd}
+	设$\{X_i\}_{i=1}^n$为均值为$\mu_i$, 参数为$\sigma_i$的独立次高斯随机变量, 那么$\sum_i X_i$是$\sqrt{\sum_i \sigma_i^2}$-次高斯的, 于是我们有上偏差不等式
+	\begin{equation*}
 		\mathbb{P} \left[ \sum_{i=1}^n (X_i - \mu_i) \geq t \right]
 		\leq \exp \left( - \frac{t^2}{2 \sum_{i=1}^n \sigma_i^2} \right ),\; 
 		\forall t \geq 0.
-	\end{equation}
+	\end{equation*}
 \end{proposition}
 
 直观上, 一个有界随机变量没有无限的尾部, 因此它应当是次高斯随机变量. 
@@ -155,7 +157,7 @@ $1$-范数-通常与维数$n$有关
 	若随机变量$X \in [a, b]$ a.s., 那么它是$\frac{b-a}{2}$-次高斯的. 
 \end{lemma}
 \begin{proof}
-	定义随机变量$X_{\lambda}$, 其关于$X$的分布的Radon–Nikodym导数为$\frac{e^{\lambda X}}{\mathbb{E}[e^{\lambda X}]}$. 
+	定义随机变量$X_{\lambda}$, 它的分布关于$X$的分布的Radon–Nikodym导数为$\frac{e^{\lambda X}}{\mathbb{E}[e^{\lambda X}]}$. 
 	于是$X_{\lambda} \in [a, b]$ a.s., 从而$\left|X_{\lambda} - \frac{a+b}{2} \right| \leq \frac{b-a}{2}$ a.s., 
 	\begin{equation*}
 		\var X_{\lambda}
@@ -163,7 +165,7 @@ $1$-范数-通常与维数$n$有关
 		\leq \mathbb{E}\left[X_{\lambda} - \frac{a+b}{2} \right]^2 
 		\leq \left(\frac{b-a}{2}\right)^2. 
 	\end{equation*}
-	记$\mathbb{E}[X] = \mu$, $K(\lambda) := \log \mathbb{E}[e^{\lambda X}]$, 它满足$K(0) = 0$, $K'(0) = \frac{\mathbb{E}[X e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} \big|_{\lambda = 0} = \mu$, 且对任意$\lambda$,  
+	记$\mathbb{E}[X] = \mu$, 累计生成函数$K(\lambda) := \log \mathbb{E}[e^{\lambda X}]$满足$K(0) = 0$, $K'(0) = \frac{\mathbb{E}[X e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} \big|_{\lambda = 0} = \mu$, 且对任意$\lambda$,  
 	\begin{equation*}
 		K''(\lambda) 
 		= \frac{\mathbb{E}[X^2 e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} - \left( \frac{\mathbb{E}[X e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} \right)^2
@@ -171,11 +173,11 @@ $1$-范数-通常与维数$n$有关
 		= \var X_{\lambda}.  
 	\end{equation*}
 	于是$K(\lambda)$的在原点的Taylor展开为$K(\lambda) = \lambda \mu + \frac{\lambda^2}{2} K''(\xi) \leq \lambda \mu + \frac{\lambda^2}{2} \left(\frac{b-a}{2}\right)^2$. 
-	从而$\mathbb{E}[e^{\lambda(X - \mu)}] \leq \exp\left(\frac{\lambda^2}{2} \cdot \left(\frac{b-a}{2}\right)^2\right)$, 即$X$是参数为$\frac{b-a}{2}$的次高斯随机变量. 
+	从而$\mathbb{E}[e^{\lambda(X - \mu)}] \leq \exp\left(\frac{\lambda^2}{2} \cdot \left(\frac{b-a}{2}\right)^2\right)$, 即$X$是$\frac{b-a}{2}$-次高斯的. 
 \end{proof}
 
 \begin{corollary}
-	经典的Hoeffding不等式. 
+	经典的Hoeffding不等式由命题\ref{thm:HoeffdingBd}结合引理\ref{lemma:SubGaussianParameterOfBddRV}得到. 
 \end{corollary}
 
 
@@ -564,14 +566,6 @@ $1$-范数-通常与维数$n$有关
 
 鞅方法虽然可以得到随机变量函数的集中不等式, 但是并没有利用充分各分量$X_k$的分布信息, 例如定理\ref{thm:Azuma–Hoeffding}中有界随机变量$X_k$的次高斯参数可能远小于$\frac{b_k - a_k}{2}$. 
 本节我们利用熵的张量化, 
-\sp\sp
-
-由于独立随机变量之和的方差等于方差的和, 利用Chebyshev不等式, 我们可以得到
-\begin{equation*}
-	\mathbb{P} \left[ \left|\sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \right| \geq t \right]
-	\leq \frac{\var\left(\sum_i  X_i\right)}{t^2}
-	= \frac{\sum_i \var(X_i)}{t^2}. 
-\end{equation*}
 
 \sp 
 
@@ -676,6 +670,29 @@ $\mathbb{R}^n$中的凸体$C$和$D$的Minkowski和定义为
 	\geq \lambda [\vol(C)]^{\frac1n} + (1-\lambda) [\vol(D)]^{\frac1n},\;
 	\forall \lambda \in [0,1]. 
 \end{equation*}
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		%--shape C
+		\draw[thick] (-1,1) rectangle (1,-1);
+		\node at (0,0) {\large $C$};
+		
+		\node at (1.5,0) {\large $+$};
+		%--shape D
+		\draw[thick] (2.4,0) circle (0.4);
+		\node at (2.4,0) {\large $D$};
+		
+		\node at (3.3,0) {\large $=$};
+		%--shape of Mikowski sum (C+D)
+		\draw[thick, dashed] (4.2,1) rectangle (6.2,-1);
+		\foreach \x in {4.2, 6.2}
+			\foreach \y in {-1,1}
+				\draw[thick, dashed] (\x, \y) circle (0.4);
+		\draw[rounded corners=0.4cm, thick] (3.8,1.4) rectangle (6.6,-1.4);
+		\node at (5.2,0) {\large $C+D$};
+	\end{tikzpicture}
+	\caption{正方形和圆的Minkowski和是一个具有圆角的正方形.}
+\end{figure}
 从这一定理出发, 很容易证明经典等周不等式: 对任意$A \subseteq \mathbb{R}^n$满足$\vol(A) = \vol(\B^n)$, 
 \begin{align*}
 	[\vol(A^{\epsilon})]^{\frac1n}
@@ -826,7 +843,7 @@ $\mathbb{R}^n$中的凸体$C$和$D$的Minkowski和定义为
  \end{equation}
  这样的不等式在信息论中也被称为\textbf{信息不等式}, 例如经典的Pinsker–Csiszár–Kullback不等式: 对任意分布$\Q$, $\P$, 
  \begin{equation}\label{eq:Pinsker–Csiszár–Kullback}
- 	\|\Q - \P\|_{\text{TV}} \leq \sqrt{\frac{1}{2}D(\Q\|\|P)}, 
+ 	\|\Q - \P\|_{\text{TV}} \leq \sqrt{\frac{1}{2}D(\Q\|\P)}, 
  \end{equation}
  结合示例\ref{ex:HammingMetricAndTVDistance}, 这实际上是说任意分布$\P$都满足参数$\gamma = \frac{1}{4}$的Hamming度量传输成本不等式. 
 下述定理告诉我们, 在控制Lipschitz函数的矩生成函数时, 传输成本不等式成立. 
@@ -857,7 +874,7 @@ $\mathbb{R}^n$中的凸体$C$和$D$的Minkowski和定义为
 		&= \log \mathbb{E}_{\mathbb{P}}[e^f] - \int \log \frac{\dd \mathbb{Q}}{\dd \mathbb{P}} \dd \mathbb{Q} + \int \log \frac{\dd \mathbb{Q}}{\dd \tilde{\mathbb{P}}} \dd \mathbb{Q} \\
 		&= \mathbb{E}_{\mathbb{Q}}[f] - D(\mathbb{Q} \| \mathbb{P}). 
 	\end{align*}
-	于是两侧关于$\mathbb{Q}$的上确界相同, 其中$- D(\mathbb{Q} \| \tilde{\mathbb{P}})$关于$\mathbb{Q}$的上确界为$0$.   
+	于是两侧关于$\mathbb{Q}$的上确界相同, 特别是左侧中$- D(\mathbb{Q} \| \tilde{\mathbb{P}})$关于$\mathbb{Q}$的上确界为$0$.   
 \end{proof}
 
 \begin{proof}[\keben 定理\ref{thm:Bobkov-Götze}的证明]
@@ -939,8 +956,9 @@ $\mathbb{R}^n$中的凸体$C$和$D$的Minkowski和定义为
 	\end{align*}
 \end{proof}
 
-下面我们利用传输成本不等式的张量化重新得到推论\ref{cor:BddDiffIneq}. 
+ 
 \begin{example}[有界差不等式']
+	下面我们利用张量化的传输成本不等式重新得到推论\ref{cor:BddDiffIneq}.
 	设函数$f \colon \cX^n \to \R$满足参数为$(L_1, \cdots, L_n)$的有界差不等式, 利用三角不等式可以得到, $f$关于重尺度化的Hamming度量$\rho(x, y) := \sum_k L_k \I{\{x_k \neq y_k\}}$是Lipschitz连续的. 
 	于是由不等式\ref{eq:Pinsker–Csiszár–Kullback}, 每个边缘分布$\P_k$满足参数为$\gamma_k = L_k^2 / 4$的$L_k \I{\{x_k \neq y_k\}}$-传输成本不等式. 
 	结合定理\ref{thm:TensorizationForTransportationCost}和定理\ref{thm:Bobkov-Götze}, Lipschitz函数$f$是$\sqrt{\sum_k L_k^2} / 2$-次高斯的. 
