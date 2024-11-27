@@ -90,17 +90,16 @@ $T_3$对应的则是控制随机变量$\frac{1}{n} \sum_i \mathcal{L}_{\theta_0}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{经验过程的尾部概率界}
 
-设$(X_1, \dots, X_n)$来自乘积分布$\mathbb{P} = \otimes_{i=1}^n \mathbb{P}_i$, 其中$\mathbb{P}_i$的支撑集$\mathcal{X}_i \subseteq \mathcal{X}$. 
+设$\bm{X}_1^n = (X_1, \dots, X_n)$来自乘积分布$\mathbb{P} = \otimes_{i=1}^n \mathbb{P}_i$, 其中$\mathbb{P}_i$的支撑集$\mathcal{X}_i \subseteq \mathcal{X}$. 
 对于定义域为$\mathcal{X}$函数类$\mathscr{F}$, 考虑随机变量
 \begin{equation*}
 	Z := \sup_{f \in \mathscr{F}} \left\{ \frac{1}{n} \sum_{i=1}^n f(X_i) \right\}. 
 \end{equation*}
-注意这里的$\sup$是对每一点$\bm{X} \in \mathcal{X}^n$取极大值. 
-若要考虑$\sup_{f \in \mathscr{F}} \left| \frac{1}{n} \sum_i f(X_i) \right|$, 只需考虑在函数类$\tilde{\mathscr{F}} := \mathscr{F} \cup (- \mathscr{F})$上考虑上确界即可: 
+对于$\sup_{f \in \mathscr{F}} \left| \frac{1}{n} \sum_i f(X_i) \right|$, 只需在函数类$\tilde{\mathscr{F}} := \mathscr{F} \cup (- \mathscr{F})$上考虑上确界即可: 
 \begin{equation*}
 	\sup_{f \in \mathscr{F}} \left| \frac{1}{n} \sum_{i=1}^n f(X_i) \right|
 	= \sup_{f \in \mathscr{F}} \left\{ \max \left\{ \frac{1}{n} \sum_{i=1}^n f(X_i), - \frac{1}{n} \sum_{i=1}^n f(X_i) \right\} \right\} 
-	= \sup_{\tilde{\mathscr{F}}} \left\{ \frac{1}{n} \sum_{i=1}^n f(X_i) \right\}
+	= \sup_{f \in \tilde{\mathscr{F}}} \left\{ \frac{1}{n} \sum_{i=1}^n f(X_i) \right\}.
 \end{equation*}
 
 我们把Hoeffding
@@ -115,7 +114,7 @@ $T_3$对应的则是控制随机变量$\frac{1}{n} \sum_i \mathcal{L}_{\theta_0}
 \end{theorem}
 
 \begin{proof}
-	为了简便, 我们使用非重尺度化的$Z = \sup_{f \in \mathscr{F}} \left\{ \sum_i f(X_i) \right\}$, 它是$\bm{X} = (X_1, \dots, X_n)$的泛函.  
+	为了简便, 我们使用非重尺度化的$Z = \sup_{f \in \mathscr{F}} \left\{ \sum_i f(X_i) \right\}$, 它是$\bm{X}_1^n$的泛函.  
 	
 	定义$Z_j \colon x_j \mapsto Z(X_1, \dots, X_{j-1}, x_j, X_{j+1}, \dots, X_n)$
 	
@@ -184,7 +183,7 @@ $\mathscr{F}$关于点集$\bm{x}_1^n$的Rademacher复杂度为
 		\mathbb{P} \left[ \|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}} \leq 2 \mathcal{R}_{\mathbb{P}_n}(\mathscr{F}) + \delta \right]
 		\geq 1 - \exp \left(- \frac{n \delta^2}{2 b^2} \right). 
 	\end{equation*}
-	于是如果函数类$\mathscr{F}$满足$\mathcal{R}_{\mathbb{P}_n}(\mathscr{F}) = o(1)$, 就可以得到$\|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}}$以指数速度几乎确定收敛到$0$, 即$\mathscr{F}$为$\mathbb{P}$上的Glivenko-Cantelli类. 
+	于是当函数类$\mathscr{F}$满足$\mathcal{R}_{\mathbb{P}_n}(\mathscr{F}) = o(1)$时, $\|\mathbb{P}_n - \mathbb{P}\|_{\mathscr{F}}$以指数速度几乎确定收敛到$0$, 即$\mathscr{F}$为$\mathbb{P}$上的Glivenko-Cantelli类. 
 \end{theorem}
 
 在证明之前, 我们给出一个函数类上确界期望的不等式, 它和Fatou不等式或者Jensen不等式类似:

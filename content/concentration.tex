@@ -46,16 +46,16 @@ $1$-范数-通常与维数$n$有关
 可以看到, Markov不等式 \eqref{eq:Markov'sInequality} 中尾部概率由$f$的增长速度所控制——这意味着选取增长速度最快的函数, 可以得到更有效的尾部概率不等式. 
 自然地, 我们考虑指数函数. 
 
-若中心化随机变量$X - \mathbb{E}[X]$在$0$的某个邻域$I$内有\textbf{矩生成函数}, 即在$\lambda \in I$上有$M(\lambda) := \mathbb{E}[e^{\lambda (X - \mathbb{E}X)}] < \infty$, 那么$\lambda \in I \cap [0, \infty)$时, 取$f(u) = e^{\lambda u}$可以得到下述的\textbf{Chernoff不等式}: 
+若中心化随机变量$X - \mathbb{E}[X]$在$0$的某个邻域$I$内有\textbf{矩生成函数}, 即在$\lambda \in I$上有$M(\lambda) := \mathbb{E}[e^{\lambda (X - \mathbb{E}[X])}] < \infty$, 那么$\lambda \in I \cap [0, \infty)$时, 取$f(u) = e^{\lambda u}$可以得到下述的\textbf{Chernoff不等式}: 
 \begin{equation*}
-	\mathbb{P}[X - \mathbb{E}X \geq t] 
-	\leq \frac{\mathbb{E}[e^{\lambda(X - \mathbb{E}X)}]}{e^{\lambda t}},\;
+	\mathbb{P}[X - \mathbb{E}[X] \geq t] 
+	\leq \frac{\mathbb{E}[e^{\lambda(X - \mathbb{E}[X])}]}{e^{\lambda t}},\;
 	\forall \lambda \in I \cap [0, \infty).
 \end{equation*}
 通过选取最优的参数$\lambda$, 我们可以得到\textbf{Chernoff界}\footnote{在最优的$k$下, 基于高阶矩的Markov不等式不会比Chernoff界中基于矩生成函数获得的界更差. 但在实际应用中, 由于矩生成函数计算的便利性, Chernoff界仍有着广泛的应用.}
 \begin{equation*}
-	\mathbb{P}[X \geq \mathbb{E}X + t]
-	\leq \exp \left[ \inf_{\lambda \in I \cap [0, \infty)} \left\{ \log \mathbb{E}[e^{\lambda(X - \mathbb{E}X)}] - \lambda t \right\} \right]. 
+	\mathbb{P}[X \geq \mathbb{E}[X] + t]
+	\leq \exp \left[ \inf_{\lambda \in I \cap [0, \infty)} \left\{ \log \mathbb{E}[e^{\lambda(X - \mathbb{E}[X])}] - \lambda t \right\} \right]. 
 \end{equation*}
 于是随机变量的集中不等式可以从其矩生成函数的界得到. 
 
@@ -143,7 +143,7 @@ $1$-范数-通常与维数$n$有关
 
 利用独立性和Chernoff方法, 容易看到偏差不等式关于次高斯参数具有可加性: 
 \begin{proposition}[Hoeffding界]\label{thm:HoeffdingBd}
-	设$\{X_i\}_{i=1}^n$为均值为$\mu_i$, 参数为$\sigma_i$的独立次高斯随机变量, 那么$\sum_i X_i$是$\sqrt{\sum_i \sigma_i^2}$-次高斯的, 于是我们有上偏差不等式
+	设随机变量序列$\{X_i\}_{i=1}^n$中$X_i$为均值为$\mu_i$, 参数为$\sigma_i$的独立次高斯随机变量, 那么$\sum_i X_i$是$\sqrt{\sum_i \sigma_i^2}$-次高斯的, 于是我们有上偏差不等式
 	\begin{equation*}
 		\mathbb{P} \left[ \sum_{i=1}^n (X_i - \mu_i) \geq t \right]
 		\leq \exp \left( - \frac{t^2}{2 \sum_{i=1}^n \sigma_i^2} \right ),\; 
@@ -169,7 +169,7 @@ $1$-范数-通常与维数$n$有关
 	\begin{equation*}
 		K''(\lambda) 
 		= \frac{\mathbb{E}[X^2 e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} - \left( \frac{\mathbb{E}[X e^{\lambda X}]}{\mathbb{E}[e^{\lambda X}]} \right)^2
-		= \mathbb{E}X_{\lambda}^2 - (\mathbb{E}X_{\lambda})^2
+		= \mathbb{E}[X_{\lambda}^2] - (\mathbb{E}[X_{\lambda}])^2
 		= \var X_{\lambda}.  
 	\end{equation*}
 	于是$K(\lambda)$的在原点的Taylor展开为$K(\lambda) = \lambda \mu + \frac{\lambda^2}{2} K''(\xi) \leq \lambda \mu + \frac{\lambda^2}{2} \left(\frac{b-a}{2}\right)^2$. 
@@ -196,17 +196,95 @@ $1$-范数-通常与维数$n$有关
 如果记$+\infty = \frac10$, 那么参数为$\sigma$的次高斯随机变量是$(\sigma, 0)$-次指数的——参数$\alpha$衡量了次指数随机变量与次高斯随机变量相差“多大”. 
 和次高斯随机变量类似, 我们利用Chernoff方法可以得到它的尾部不等式
 
-\begin{theorem}[次指数随机变量的上偏差不等式]\label{thm:UpperDeviationOfSubExpRV}
+\begin{proposition}[次指数随机变量的上偏差不等式]\label{prop:UpperDeviationOfSubExpRV}
 	设随机变量$X$是$(\nu, \alpha)$-次指数的, 那么
 	\begin{equation*}
-		\mathbb{P}[X \geq \mathbb{E}X + t] \leq 
+		\mathbb{P}[X \geq \mathbb{E}[X] + t] \leq 
 		\begin{cases}
 			e^{-\frac{t^2}{2 \nu^2}}, & 0 \leq t \leq \frac{\nu^2}{\alpha}, \\
 			e^{-\frac{t}{2 \alpha}}, & t > \frac{\nu^2}{\alpha}.
 		\end{cases}
 	\end{equation*}
-\end{theorem}
+\end{proposition}
 
+和次指数随机变量类似, 次指数随机变量也具有可加性, 只需相应的变换参数即可. 
+\begin{proposition}
+	设随机变量序列$\{X_i\}_{i=1}^n$中$X_i$为均值为$\mu_i$, 参数为$(\nu_i, \sigma_i)$的独立次指数随机变量, 那么$\sum_i X_i$是$(\nu_*, \alpha_*)$-次指数的, 其中
+	\begin{equation*}
+		\nu_* := \sqrt{\sum_{i=1}^n \nu_k^2}, \quad
+		\alpha_* := \max_{1 \leq i \leq n} \alpha_i. 
+	\end{equation*}
+\end{proposition}
+
+
+有时随机变量的矩生成函数无法得到, 我们可以通过控制随机变量的矩来来控制矩生成函数.   
+称期望为$\mu$, 方差为$\sigma^2$的随机变量$X$满足参数为$b$的\textbf{Bernstein条件}, 如果
+\begin{equation}\label{eq:BernsteinCondition}
+	\left|\mathbb{E}\left[(X - \mu)^k\right]\right|
+	\leq \frac{k!}{2} \sigma^2 b^{k-2}, \quad \forall k = 2,3,4, \dots
+\end{equation}
+例如当$X$绝对有界, 即$|X-\mu| \leq b$ a.s.时, 上述条件成立.
+此外, 也有很多无界随机变量满足Bernstein条件, 并且Bernstein条件可能会得到比Hoeffding界更紧的尾部概率界, 这些都让Bernstein条件有着广泛的应用. 
+
+当$X$满足Bernstein条件时, 对任意$|\lambda| < 1/b$, 我们有
+\begin{align}\label{eq:MGFofBernsteinCondition}
+	\mathbb{E}[e^{\lambda(X-\mu)}]
+	& = 1 + \frac{\lambda^2 \sigma^2}{2} + \sum_{k=3}^{\infty} \frac{\mathbb{E}[(X-\mu)^k]}{k!} \lambda^k \notag \\ 
+	&\leq 1 + \frac{\lambda^2 \sigma^2}{2} \sum_{k=0}^{\infty} (|\lambda| b)^k 
+	= 1 + \frac{\lambda^2 \sigma^2}{2(1 - |\lambda| b)}
+	\leq \exp \left( \frac{\lambda^2 \sigma^2}{2(1 - |\lambda| b)} \right). 
+\end{align}
+进一步地, 当$|\lambda| < 1/2b$时, $1 - |\lambda| b \geq 1/2$, 于是$\mathbb{E}[e^{\lambda(X-\mu)}] \leq e^{\frac{(\sqrt{2} \sigma)^2 \lambda^2}{2}}$, 即$X$为$(\sqrt{2} \sigma, 2b)$-次指数的. 
+应用命题\ref{prop:UpperDeviationOfSubExpRV}可以得到满足Bernstein条件的随机变量的尾部概率界, 但是如果直接从不等式\eqref{eq:MGFofBernsteinCondition}出发, 在Chernoff不等式中取$\lambda = \frac{t^2}{bt + \sigma^2} < \frac{1}{b}$,至少可以得到常数项更紧的尾部概率界: 
+\begin{proposition}[Bernstein界]
+	若随机变量$X$满足Bernstein条件\eqref{eq:BernsteinCondition}, 那么
+	\begin{equation}\label{eq:BernsteinBd}
+		\P[|X-\mu| \geq t] \leq 2 e^{-\frac{t^2}{2(\sigma^2 + bt)}}, \quad \forall t \geq 0. 
+	\end{equation}
+\end{proposition}
+\begin{remark}\label{rm:UsingDistributionMethod}
+	对于有界随机变量$|X - \mu| \leq b$, 引理\ref{lemma:SubGaussianParameterOfBddRV} 说明了$X$是$b$-次高斯的. 
+	而Bernstein界\eqref{eq:BernsteinBd}同时依赖于参数$\sigma$和$b$, 并且对于充分小的$t$, 随机变量的表现会和参数为$\sigma = \sqrt{\mathbb{E}[(X-\mu)^2]} \leq b$一致. 
+	于是Bernstein界不会比原先的结果差——这里我们利用了方差的信息. 
+	特别地, 对于方差小但是可能取到较大值的随机变量, 此时$\sigma \ll b$, 我们可以得到更紧的尾部概率界. 
+\end{remark}
+
+Bernstein条件成立的的一个充分条件是随机变量绝对有界, 然而如果只有单侧界时, 相应的我们可以得到单侧的结果. 
+\begin{proposition}[单侧Bernstein不等式]
+	若$X \leq b$ a.s., 那么它的中心化矩生成函数
+	\begin{equation*}
+		\mathbb{E}[e^{\lambda(X - \mathbb{E}[X])}] \leq \exp \left(\frac{\lambda^2 \mathbb{E}[X^2] / 2}{1 - b \lambda / 3}\right), \quad \forall \lambda \in \left[ 0, \frac{3}{b} \right). 
+	\end{equation*}
+	相应的, 给定$n$个满足$X_i \leq b$ a.s. 的独立随机变量, 我们有
+	\begin{equation*}
+		\P \left[ \sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \geq n \delta \right]
+		\leq \exp \left(- \frac{n \delta^2}{2\left( \frac{1}{n} \sum_i \mathbb{E}[X_i^2] + \frac{b \delta}{3} \right)} \right). 
+	\end{equation*}
+\end{proposition}
+\begin{proof}
+	定义函数$h(u) := \frac{2}{u^2} (e^u - u - 1)$, 于是当$\lambda \geq 0$时, 中心化矩生成函数
+	\begin{align*}
+		\E[e^{\lambda (X - \E[X])}] 
+		& = \left(1 + \lambda \mathbb{E}[X] + \frac{\lambda^2}{2} \mathbb{E}[X^2 h(\lambda X)]\right) e^{-\lambda \E[X]}
+		\leq  \left( 1 + \lambda \mathbb{E}[X] + \frac{\lambda^2}{2} \mathbb{E}[X^2] h(\lambda b) \right) e^{-\lambda \E[X]} \\
+		& \leq  \exp\left(\lambda \mathbb{E}[X] + \frac{\lambda^2}{2} \mathbb{E}[X^2] h(\lambda b)\right) \cdot e^{-\lambda \E[X]}
+		\leq \exp\left(\frac{\lambda^2}{2} \mathbb{E}[X^2] h(\lambda b)\right).
+	\end{align*}
+	而在$k \geq 2$时, 有$k! \geq 2 \cdot 3^{k-2}$, 由此可得在$\lambda b < 3$时成立
+	\begin{equation*}
+		h(\lambda b) 
+		= 2 \sum_{k=2}^{\infty} \frac{(\lambda b)^{k-2}}{k!} 
+		\leq \sum_{k=2}^{\infty} \left(\frac{\lambda b}{3}\right)^{k-2}
+		= \frac{1}{1 - \frac{\lambda b}{3}}. 
+	\end{equation*}
+%	要获得随机变量和的上偏差不等式, 只需取$\lambda = $.
+\end{proof}
+\begin{remark}
+	对于有下界的随机变量$X$, 我们只需把上述结果应用至$-X$即可
+\end{remark}
+
+
+最后, 我们给出一些次高斯随机变量的等价描述. 
 \begin{theorem}[次高斯随机变量的等价定义]
 	对任意均值为$0$的随机变量$X$, 下述几条命题等价: 
 	\begin{enumerate}[label=(\Roman*)]
@@ -252,7 +330,7 @@ $1$-范数-通常与维数$n$有关
 	=: \sum_{k=1}^n D_k.
 \end{equation*}
 
-我们先来证明一个一般的鞅差序列的Bernstein型不等式界. 
+我们先来证明一个一般的鞅差序列的Bernstein界. 
 \begin{lemma}[Azuma]
 	设鞅差序列$\{(D_k, \cF_k)\}_{k=1}^{\infty}$满足次指数条件
 	\begin{equation*}
@@ -325,9 +403,11 @@ $1$-范数-通常与维数$n$有关
 	于是由定理\ref{thm:Azuma–Hoeffding}可以得到集中不等式
 \end{proof}
 
+注意我们对随机向量$\bm X$仅做了各分量相互独立的要求, 这里的次高斯性更多的是函数$f$本身的性质——于是我们称\textbf{函数}$f$是$\sqrt{\sum_k L_k^2} / 2$-次高斯的. 
+
 \begin{example}
 	若函数$f$关于Hamming距离$d_H(\bm{X}, \bm{Y}) = \sum_k \I{\{x_k \neq y_k\}}$是$L$-Lipschitz的, 那么$f$满足参数为$(L, \dots, L)$的有界差不等式. 
-	于是对于各分量独立的随机向量$\bm{X}$, $f(\bm{X})$是$\frac{\sqrt{n} L}{2}$-次高斯的, 从而有$\mathbb{P}[|f(\bm{X}) - \mathbb{E}[f(\bm{X})]| \geq t] \leq 2 e^{-\frac{2 t^2}{n L^2}}$, $\forall t \geq 0$. 
+	于是$f$是$\frac{\sqrt{n} L}{2}$-次高斯的. 
 \end{example}
 
 \begin{example}[点集的Rademacher复杂度]\label{ex:RCofPtSet}
@@ -350,7 +430,7 @@ $1$-范数-通常与维数$n$有关
 		= a_k (\epsilon_k - \epsilon'_k)
 		\leq 2 |a_k|, 
 	\end{equation*}
-	两边同时对$\bm{a}$在集合$A$上取上确界有$f(\bm{\epsilon}) - f(\bm{\epsilon}') \leq 2 \sup_{\bm{a} \in A} |a_k|$, 交换$\bm{\epsilon}$和$\bm{\epsilon}'$的位置可以得到相同的结论. 
+	两边同时对$\bm{a}$在集合$A$上取上确界有$f(\bm{\epsilon}) - f(\bm{\epsilon}') \leq 2 \sup_{\bm{a} \in A} |a_k|$, 交换$\bm{\epsilon}$和$\bm{\epsilon}'$的位置可以得到相同的结论, 从而$f$是满足有界差不等式. 
 	
 	对于$k = 1, \dots, n$, 考虑鞅序列$Y_0 := \mathbb{E}[ f(\bm{\epsilon}) ]$,  $Y_k := \mathbb{E}[ f(\bm{\epsilon}) | \bm \epsilon_1^k ]$, 鞅差$D_k := Y_k - Y_{k-1}$, 随机变量 
 	\begin{align*}
@@ -363,7 +443,7 @@ $1$-范数-通常与维数$n$有关
 		= \max_{s, t \in \{-1, 1\}} \mathbb{E}[f(\bm{\epsilon}_1^k, s, \bm{\epsilon}_{k+1}^n) - f(\bm{\epsilon}_1^k, t, \bm{\epsilon}_{k+1}^n) | \bm{\epsilon}_1^{k-1}] 
 		\leq 2 \sup_{\bm{a} \in A} |a_k|. 
 	\end{equation*}
-	于是由定理\ref{thm:Azuma–Hoeffding}, $f(\bm{\epsilon})$是$\sqrt{\sum_i \sup_{\bm{a} \in A} a_i^2}$-次高斯的. 
+	于是由定理\ref{thm:Azuma–Hoeffding}, $Z = f(\bm{\epsilon})$是$\sqrt{\sum_i \sup_{\bm{a} \in A} a_i^2}$-次高斯的. 
 \end{example}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{熵方法}
@@ -380,8 +460,8 @@ $1$-范数-通常与维数$n$有关
 	\item 此外, 取$\Phi(u) = - \log u$, 随机变量$Z = e^{\lambda X}$时, 
 		\begin{equation*}
 			\mathcal{H}_\Phi(Z) 
-			= - \lambda \mathbb{E}X + \log \mathbb{E}[e^{\lambda X}] 
-			= \log \mathbb{E}[e^{\lambda(X - \mathbb{E}X)}], 
+			= - \lambda \mathbb{E}[X] + \log \mathbb{E}[e^{\lambda X}] 
+			= \log \mathbb{E}[e^{\lambda(X - \mathbb{E}[X])}], 
 		\end{equation*}
 		这样的熵对应的是中心化的累计生成函数, 可以用来计算尾部概率的Chernoff界. 
 \end{itemize}
@@ -470,7 +550,7 @@ $1$-范数-通常与维数$n$有关
 \begin{theorem}[Herbst方法]\label{thm:HerbstArgument}
 	若对任意的$\lambda \in I$ (这里$I$取$[0, \infty)$或者$\mathbb{R}$)总有熵$\mathcal{H}(e^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \mathbb{E}[e^{\lambda X}]$, 那么
 	\begin{equation*}
-		\mathbb{E}\left[e^{\lambda(X - \mathbb{E}X)}\right] 
+		\mathbb{E}\left[e^{\lambda(X - \mathbb{E}[X])}\right] 
 		\leq \exp \left( \frac{\lambda^2 \sigma^2}{2} \right),\; 
 		\forall \lambda \in I. 
 	\end{equation*}
@@ -484,11 +564,11 @@ $1$-范数-通常与维数$n$有关
 		G'(\lambda) \leq \frac{\sigma^2}{2},\; \forall \lambda \in I \backslash \{0\}. 
 	\end{equation*}
 	当$\lambda > 0$时, 对任意的$0 < \lambda_0 < \lambda$, 在区间$[\lambda_0, \lambda]$上积分有$G(\lambda) - G(\lambda_0) \leq \frac{\sigma^2 (\lambda - \lambda_0)}{2}$. 
-	由洛必达法则, $ \lim_{\lambda \downarrow 0} G(\lambda) = \lim_{\lambda \downarrow 0} \frac{M_X'(\lambda)}{M_X(\lambda)} = \mathbb{E}X$. 
+	由洛必达法则, $ \lim_{\lambda \downarrow 0} G(\lambda) = \lim_{\lambda \downarrow 0} \frac{M_X'(\lambda)}{M_X(\lambda)} = \mathbb{E}[X]$. 
 	于是令$\lambda_0 \to 0^+$有
 	\begin{equation*}
-		\log \mathbb{E}\left[e^{\lambda(X - \mathbb{E}X)}\right]
-		= \lambda(G(\lambda) - \mathbb{E}X)
+		\log \mathbb{E}\left[e^{\lambda(X - \mathbb{E}[X])}\right]
+		= \lambda(G(\lambda) - \mathbb{E}[X])
 		\leq \frac{\lambda^2 \sigma^2}{2} ,\; 
 		\forall \lambda \geq 0. 
 	\end{equation*}
@@ -526,18 +606,18 @@ $1$-范数-通常与维数$n$有关
 	若存在正常数$b$, $\sigma$使得
 	\begin{equation*}
 		\mathcal{H}(e^{\lambda X}) 
-		\leq \lambda^2 \left[ b M_X'(\lambda) + M_X(\lambda)(\sigma^2 - b \mathbb{E}X) \right],\;
+		\leq \lambda^2 \left[ b M_X'(\lambda) + M_X(\lambda)(\sigma^2 - b \mathbb{E}[X]) \right],\;
 		\forall \lambda \in [0, 1/b), 
 	\end{equation*}
 	那么$X$满足上界
 	\begin{equation*}
-		\log \mathbb{E}\left[ e^{\lambda(X - \mathbb{E}X)}\right] 
+		\log \mathbb{E}\left[ e^{\lambda(X - \mathbb{E}[X])}\right] 
 		\leq \sigma^2 \lambda^2 (1 - b \lambda)^{-1},\; 
 		\forall \lambda \in [0, 1/b). 
 	\end{equation*}
 	进一步地, 由Chernoff方法, $X$满足上偏差不等式
 	\begin{equation*}
-		\mathbb{P}[X \geq \mathbb{E}X + t] 
+		\mathbb{P}[X \geq \mathbb{E}[X] + t] 
 		\leq \exp \left(- \frac{t^2}{4 \sigma^2 + 2b t} \right),\;
 		\forall t \geq 0. 
 	\end{equation*}
@@ -546,17 +626,17 @@ $1$-范数-通常与维数$n$有关
 	类似地, 命题中的条件意味着
 	\begin{equation*}
 		G'(\lambda) 
-		\leq \sigma^2 - b \mathbb{E}X + b \cdot \frac{M_X'(\lambda)}{M_X(\lambda)}. 
+		\leq \sigma^2 - b \mathbb{E}[X] + b \cdot \frac{M_X'(\lambda)}{M_X(\lambda)}. 
 	\end{equation*}
 	在任意的区间$[\lambda_0, \lambda] \subseteq (0, 1/b)$上积分有
 	\begin{equation*}
 		G(\lambda) - G(\lambda_0) 
-		\leq (\sigma^2 - b \mathbb{E}X)(\lambda - \lambda_0) + b(\log M_X(\lambda) - \log M_X(\lambda_0)). 
+		\leq (\sigma^2 - b \mathbb{E}[X])(\lambda - \lambda_0) + b(\log M_X(\lambda) - \log M_X(\lambda_0)). 
 	\end{equation*}
-	再令$\lambda_0 \to 0^+$有$G(\lambda) - \mathbb{E}X \leq \lambda \sigma^2 + b \lambda (G(\lambda) - \mathbb{E}X)$, 于是
+	再令$\lambda_0 \to 0^+$有$G(\lambda) - \mathbb{E}[X] \leq \lambda \sigma^2 + b \lambda (G(\lambda) - \mathbb{E}[X])$, 于是
 	\begin{equation*}
-		\log \mathbb{E}\left[e^{\lambda(X - \mathbb{E}X)}\right]
-		= \lambda(G(\lambda) - \mathbb{E}X)
+		\log \mathbb{E}\left[e^{\lambda(X - \mathbb{E}[X])}\right]
+		= \lambda(G(\lambda) - \mathbb{E}[X])
 		\leq \frac{\lambda^2 \sigma^2}{1 - b \lambda} ,\; 
 		\forall \lambda \in [0, 1/b). 
 	\end{equation*}
@@ -564,12 +644,12 @@ $1$-范数-通常与维数$n$有关
 
 \subsubsection{熵的张量化}
 
-鞅方法虽然可以得到随机变量函数的集中不等式, 但是并没有利用充分各分量$X_k$的分布信息, 例如定理\ref{thm:Azuma–Hoeffding}中有界随机变量$X_k$的次高斯参数可能远小于$\frac{b_k - a_k}{2}$. 
-本节我们利用熵的张量化, 
+鞅方法虽然可以得到随机变量函数的集中不等式, 但是它要求随机变量有界, 或者要求函数满足有界差不等式, 并没有利用充分各分量$X_k$的分布信息. 
+就像我们在注\ref{rm:UsingDistributionMethod}中提到的那样, 即使有界的条件下, 利用分布可以得到更好的估计. 
+例如定理\ref{thm:Azuma–Hoeffding}中, 有界随机变量$X_k$的次高斯参数可能远小于$\frac{b_k - a_k}{2}$. 
 
-\sp 
-
-由于独立随机变量的联合分布是边缘分布的张量积, 我们可以计算每个随机变量对函数的贡献得到随机变量的函数熵的界\footnote{最为经典的例子是独立随机变量和的方差熵是随机变量的方差和.}, 这种被称为\textbf{熵的张量化}, 或者说, 熵具有次可加性.
+由于独立随机变量的联合分布是边缘分布的张量积, 我们可以计算每个随机变量对函数的贡献得到随机变量的函数熵的界\footnote{最为经典的例子是独立随机变量和的方差熵是随机变量的方差和.}——这样我们就利用了随机变量分布的信息. 
+这种方法被称为\textbf{熵的张量化}, 或者说, 熵具有次可加性.
 
 
 具体地, 设$f \colon \mathbb{R}^n \to \mathbb{R}$, 随机向量$\bm{X} = (X_1, \dots, X_n)$各分量独立. 
@@ -656,7 +736,7 @@ $1$-范数-通常与维数$n$有关
 	A^{\epsilon} := \left\{ x \in \R^n \colon \rho(x, A) < \epsilon \right\}
 \end{equation*}
 的体积(作为$\epsilon$的函数)最小的集合$A$一定是球体.  
-这种表述避免了表面积的概念, 并且可以推广至任意度量空间$(\mathcal{X}, \rho)$上. 
+这种表述绕过了表面积的概念, 并且可以推广到任意度量空间上. 
 它的经典证明基于数学家Minkowski的天才洞见. 
 
 Minkowski将空间的向量加法这一代数结构同凸体的体积这一几何结构联系在一起, 提出了\textbf{Minkowski和}的概念——
@@ -666,8 +746,8 @@ $\mathbb{R}^n$中的凸体$C$和$D$的Minkowski和定义为
 \end{equation*}
 并证明了混合体积的\textbf{Brunn-Minkowski不等式}
 \begin{equation*}
-	\left[ \vol(\lambda C + (1-\lambda) D)  \right]^{\frac1n}
-	\geq \lambda [\vol(C)]^{\frac1n} + (1-\lambda) [\vol(D)]^{\frac1n},\;
+	\left( \vol(\lambda C + (1-\lambda) D)  \right)^{\frac1n}
+	\geq \lambda (\vol(C))^{\frac1n} + (1-\lambda) (\vol(D))^{\frac1n},\;
 	\forall \lambda \in [0,1]. 
 \end{equation*}
 \begin{figure}[H]
@@ -693,20 +773,18 @@ $\mathbb{R}^n$中的凸体$C$和$D$的Minkowski和定义为
 	\end{tikzpicture}
 	\caption{正方形和圆的Minkowski和是一个具有圆角的正方形.}
 \end{figure}
-从这一定理出发, 很容易证明经典等周不等式: 对任意$A \subseteq \mathbb{R}^n$满足$\vol(A) = \vol(\B^n)$, 
+\noindent
+从这一定理出发, 很容易证明经典等周不等式: 记$\B^n$为$\R^n$中的单位球, 对任意$A \subseteq \mathbb{R}^n$满足$\vol(A) = \vol(\B^n)$, 
 \begin{align*}
-	[\vol(A^{\epsilon})]^{\frac1n}
-	&= [\vol(A + \epsilon \B^n)]^{\frac1n}
-	= (1+\epsilon) \left[\vol\left(\frac{1}{1+\epsilon} A + \frac{\epsilon}{1+\epsilon} \B^n\right)\right]^{\frac1n} \\
-	&\geq [\vol(A)]^{\frac1n} + \epsilon [\vol(\B^n)]^{\frac1n} 
-	= (1+\epsilon) [\vol(\B^n)]^{\frac1n} 
-	= \left[ \vol((\B^n)^{\epsilon}) \right]^{\frac1n}. 
+	(\vol(A^{\epsilon}))^{\frac1n}
+	&= (\vol(A + \epsilon \B^n))^{\frac1n}
+	= (1+\epsilon) \left(\vol\left(\frac{1}{1+\epsilon} A + \frac{\epsilon}{1+\epsilon} \B^n\right)\right)^{\frac1n} \\
+	&\geq (\vol(A))^{\frac1n} + \epsilon (\vol(\B^n))^{\frac1n} 
+	= (1+\epsilon) (\vol(\B^n))^{\frac1n} 
+	= \left( \vol((\B^n)^{\epsilon}) \right)^{\frac1n}. 
 \end{align*}
 
-
-本节和下一节我们考虑度量空间$(\mathcal{X}, \rho)$中的集中不等式, 这需要对度量空间赋予一个概率测度$\mathbb{P}$, 称三元组$(\mathcal{X}, \rho, \mathbb{P})$为\textbf{度量测度空间}. 
-
-\subsubsection{Lipschitz函数的集中性}
+本节和下一节我们考虑度量空间$(\mathcal{X}, \rho)$中的集中不等式, 这需要对度量空间赋予一个概率测度$\mathbb{P}$, 我们称三元组$(\mathcal{X}, \rho, \mathbb{P})$为\textbf{度量测度空间}. 
 
 等周不等式可以表述为确定满足$\mathbb{P}[A] \geq 1/2$、使得测度$\mathbb{P}[A^{\epsilon}]$最小的集合$A \subseteq \mathcal{X}$.
 我们引入$(\mathcal{X}, \rho, \mathbb{P})$上的集中度函数$\alpha \colon \mathbb{R}^* \to [0, 1/2]$
@@ -912,7 +990,7 @@ $\mathbb{R}^n$中的凸体$C$和$D$的Minkowski和定义为
 		= \int q(x_1, x_2) \log \frac{q(x_1, x_2)}{p(x_1, x_2)} \dd \nu(x_1, x_2) \\
 		=& \int q_1(x_1) q_{2|1}(x_2|x_1) \log \frac{q_1(x_1) q_{2|1}(x_2|x_1)}{p_1(x_1) p_{2|1}(x_2|x_1)} \dd \nu(x_1, x_2) \\
 		=& \int q_1(x_1) \log \frac{q_1(x_1)}{p_1(x_1)} \dd \nu_1(x_1) + \int q_1(x_1) \int q_{2|1}(x_2|x_1) \log \frac{q_{2|1}(x_2|x_1)}{p_{2|1}(x_2|x_1)} \dd \nu(x_1, x_2) \\
-		=& D(\mathbb{Q}_1 \| \mathbb{P}_1) + \E_{\Q_1} \left[ D\left(\Q_{2|1}(\;\cdot\; | \bm{X}_1) \| \P_{2|1}(\;\cdot\; | \bm{X}_1)\right) \right]. 
+		=& D(\mathbb{Q}_1 \| \mathbb{P}_1) + \mathbb{E}_{\Q_1} \left[ D\left(\Q_{2|1}(\;\cdot\; | \bm{X}_1) \| \P_{2|1}(\;\cdot\; | \bm{X}_1)\right) \right]. 
 	\end{align*}
 \end{proof}
 
