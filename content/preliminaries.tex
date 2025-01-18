@@ -63,7 +63,7 @@
 
 \subsubsection{矩生成函数、累计生成函数}
 
-对于随机变量$X$, 若函数$M_X(\lambda) := \E[e^{\lambda X}]$在$0$的开邻域$I$内存在, 则称$M_X$为$X$的\textbf{矩生成函数}(moment generating function).
+对于随机变量$X$, 若函数$M_X(\lambda) := \E[\mathrm{e}^{\lambda X}]$在$0$的开邻域$I$内存在, 则称$M_X$为$X$的\textbf{矩生成函数}(moment generating function).
 我们可以利用矩生成函数来导出$X$的各阶矩: 
 \begin{equation*}
 	\frac{\dd^n}{\dd \lambda^n} M_X(\lambda)
@@ -73,12 +73,12 @@
 于是$\E X^n = M_X^{(n)}(0)$. 
 随机变量$X$的\textbf{累计生成函数}(cumulant generating function)是它的矩生成函数的自然对数 
 \begin{equation*}
-	K_X(\lambda) := \log \E[e^{\lambda X}], 
+	K_X(\lambda) := \log \E[\mathrm{e}^{\lambda X}], 
 \end{equation*}
 它的一个优点是它是加性函数——对于互相独立的随机变量$X$和$Y$, 
 \begin{equation*}
 	K_{X+Y}(\lambda) 
-	= \log \left(\E[e^{\lambda X}] \cdot \E[e^{\lambda Y}]\right)
+	= \log \left(\E[\mathrm{e}^{\lambda X}] \cdot \E[\mathrm{e}^{\lambda Y}]\right)
 	= K_X(\lambda) + K_Y(\lambda). 
 \end{equation*}
  
@@ -140,14 +140,14 @@ Randon-Nikodym导数是定义密度和条件期望的关键.
 \end{example}
 
 \begin{example}[指数加权]
-	若随机变量$X$的矩生成函数$\E[e^{\lambda X}]$在某个开区间$I$存在, 考虑指数加权期望$\E_{\lambda}$
+	若随机变量$X$的矩生成函数$\E[\mathrm{e}^{\lambda X}]$在某个开区间$I$存在, 考虑指数加权期望$\E_{\lambda}$
 	\begin{equation*}
 		\E_{\lambda} [f(X)]
-		:= \frac{\E[f(X) e^{\lambda X}]}{\E[e^{\lambda X}]}
-		= \int f(X) \frac{e^{\lambda X}}{\E[e^{\lambda X}]} \dd \P 
+		:= \frac{\E[f(X) \mathrm{e}^{\lambda X}]}{\E[\mathrm{e}^{\lambda X}]}
+		= \int f(X) \frac{\mathrm{e}^{\lambda X}}{\E[\mathrm{e}^{\lambda X}]} \dd \P 
 	\end{equation*}
 	它借用了Gibbs分布的思想，用指数权重调整对随机变量的关注, 并将矩生成函数作为配分函数.  
-	也可以看作定义了新的概率测度$\P^{\lambda}$, 它关于$\P$的Randon-Nikodym导数即为$\frac{e^{\lambda X}}{\E[e^{\lambda X}]}$. 
+	也可以看作定义了新的概率测度$\P^{\lambda}$, 它关于$\P$的Randon-Nikodym导数即为$\frac{\mathrm{e}^{\lambda X}}{\E[\mathrm{e}^{\lambda X}]}$. 
 	这被用在引理\ref{lemma:SubGaussianParameterOfBddRV}、定理\ref{thm:VariationalRepresentationForEntropy}、引理\ref{lemma:GibbsVariation}等定理的证明. 
 \end{example}
 
@@ -299,7 +299,7 @@ Randon-Nikodym导数是定义密度和条件期望的关键.
 \end{example}
 
 
-\subsection{凸分析}
+\subsection{凸分析与凸优化}
 
 \subsubsection{Rademacher定理}
 
@@ -315,18 +315,21 @@ Fenchel共轭是Fourier变换在凸分析中的对应.
 \begin{equation}
 	f^*(u) = \sup_{x \in \mathcal{X}} \left\{ \langle x, u \rangle - f(x) \right\}. 
 \end{equation}
-通过定义可以看到Fenchel共轭满足\textbf{Fenchel-Young不等式}
+于是由定义, 对任意$x \in \cX$, $f^*(u) \geq \langle x, u \rangle - f(x)$, 从而有\textbf{Fenchel-Young不等式}
 \begin{equation}
-	f(x) + f^*(u) \geq \langle x, u \rangle. 
+	f(x) + f^*(u) \geq \langle x, u \rangle,\; \forall x, u \in \cX
 \end{equation}
 此外, $f^*$是凸的、下半连续的, 这是由于它是放射连续函数族$(\langle x, \cdot \rangle - f(x))_{x \in \mathcal{X}}$的上确界. 
 对偶$f = f^{**}$当且仅当$f$是凸的、下半连续函数
 
+\subsubsection{Lagrange乘数法}
 
+Lagrange乘数法是常用的约束优化方法\cite{burges:2004a}
 
+我们寻求极小化函数$f(\bm{x})$. 
+在单一等式约束$c(\bm{x}) = 0$的情况下, 最优解$\bm{x}^*$处一定有$\nabla f(\bm{x}^*) = \lambda \nabla c(\bm{x}^*)$, 其中$\lambda$称作(未确定的)Lagrange乘数——否则$\nabla c(\bm{x})$不与$\nabla f(\bm{x})$平行, 那么沿着$c(\bm{x}) = 0$的运动一定有
 
-
-
+与$\nabla c(\bm{x})$垂直的方向
 
 
 

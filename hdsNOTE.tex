@@ -1,9 +1,12 @@
 \documentclass[10pt]{ctexart}
 
 \RequirePackage[T]{dryNote}
+\RequirePackage{dryNotation}
 
 \usepackage{tabularx}
 \usepackage[perpage]{footmisc}
+
+\def\rme{\mathrm{e}}
 
 \def\Pr{\mathrm{Pr}}
 
@@ -20,7 +23,7 @@
 \author{干燥症}
 \date{\zhtoday}
 
-%\pagecolor{lightgray!40}		%--护眼
+\pagecolor{lightgray!40}		%--护眼
 
 \begin{document}
 
@@ -35,6 +38,7 @@
 \input{content/concentration.tex}
 \input{content/uniformLLM.tex}
 \input{content/metricEntropy.tex}
+\input{content/randMatrices.tex}
 
 \appendix
 %\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
