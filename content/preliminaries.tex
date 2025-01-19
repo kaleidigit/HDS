@@ -333,7 +333,18 @@ Lagrange乘数法是常用的约束优化方法\cite{burges:2004a}
 
 
 
+\subsection{矩阵}
 
+\subsubsection{矩阵范数}
+
+矩阵的Frobenius范数是$\vertiii{\bm{M}}_F = \sqrt{\sum_{ij} m_{ij}^2}$. 
+
+矩阵的\textbf{谱范数}或者\textbf{$\ell_2$算子范数}等价于最大奇异值
+\begin{equation*}
+	\vertiii{\bm{M}}_2 
+	= \max_{\|\bm{v}\|_2 = 1} \|\bm{M} \bm{v}\|_2
+	= \max_{\|\bm{v}\|_2 = 1} \max_{\|\bm{u}\|_2 = 1} \bm{u}^T \bm{M} \bm{v}. 
+\end{equation*}
 
 
 
