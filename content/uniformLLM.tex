@@ -420,14 +420,14 @@ hypothesis class/ concept class
 VC类在有限次集合运算下保持不变, 这被称为VC稳定性. 
 \begin{proposition}[VC稳定性]
 	若$\mathcal{S}$和$\mathcal{T}$是VC类, 那么下述集合类也是VC类: 
-	\begin{enumerate}[label=(\arabic*)]
+	\begin{enumerate}[label=(\alph*)]
 		\item $\mathcal{S}^c := \{S^c \colon S \in \mathcal{S}\}$;
 		\item $\mathcal{S} \sqcap \mathcal{T} := \{S \cap T \colon S \in \mathcal{S}, T \in \mathcal{T}\}$;
 		\item $\mathcal{S} \sqcup \mathcal{T} := \{S \cup T \colon S \in \mathcal{S}, T \in \mathcal{T}\}$.
 	\end{enumerate}
 \end{proposition}
 \begin{proof}
-	\begin{enumerate}[label=(\arabic*)]
+	\begin{enumerate}[label=(\alph*)]
 		\item 若点集$\bm{x}_1^n$可以被$\mathcal{S}$打散, 对任意$S \in \mathcal{S}$, 由于$S^c$会给$\bm{x}_1^n$和$S$完全相反的布尔值标签, 于是$\card(\mathcal{S}^c(\bm{x}_1^n)) = 2^n = \card(\mathcal{S}(\bm{x}_1^n))$, 即$\vc(\mathcal{S}^c) = \vc(\mathcal{S})$. 
 		\item 注意到对任意的$S \in \mathcal{S}, T \in \mathcal{T}$, 我们有$\I{S \cap T} = \I{S} \cdot \I{T}$, 结合引理\ref{lemma:Sauer-Shelah}, 
 			\begin{equation*}

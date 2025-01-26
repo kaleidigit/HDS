@@ -96,16 +96,42 @@ $1$-范数-通常与维数$n$有关
 	命题\ref{prop:oneSideBernsteinIneq}的证明则用到了更为复杂的构造.  
 \end{remark}
 
+\begin{remark}[方差的界]
+	如果有集中不等式$\mathbb{P}[|X - \mu| \geq t] \leq c_1 \mathrm{e}^{- c_2 t^2}$, 那么由引理\ref{lemma:trickOfExpectation}可得
+	\begin{equation*}
+		\var(X)
+		= \int_0^{\infty} (X - \mu)^2 \dd \P 
+		= \int_0^{\infty} \P[|X-\mu|^2 \geq t] \dd t 
+		\leq c_1 \int_0^{\infty} \mathrm{e}^{- c_2 t} \dd t
+		= \frac{c_1}{c_2}.
+	\end{equation*}
+\end{remark}
+
+我们称$m_X$为随机变量$X$的\textbf{中位数}, 如果有$\P[X \geq m_X] \geq \frac12$, $\P[X \leq m_X] \leq \frac12$. 
+注意中位数并不唯一: 例如对于等可能的Bernoulli分布$X \sim B(1, \frac12)$, 一切$m_X \in [0,1]$都是中位数. 
+下面的命题说明关于均值的集中不等式和关于中位数的均值不等式之间可以相互转化. %HDS:exercise2.14
+\begin{proposition}[关于均值的集中不等式和关于中位数的均值不等式]
+	\begin{align}
+		&\mathbb{P}[|X - \mathbb{E}[X]| \geq t] \leq c_1 \mathrm{e}^{- c_2 t^2}, \quad \forall t \geq 0, \label{eq:concentrationWRTMean} \\
+		&\mathbb{P}[|X - m_X| \geq t] \leq c_3 \mathrm{e}^{- c_4 t^2}, \quad \forall t \geq 0. \label{eq:concentrationWRTMedian} 
+	\end{align}
+	\begin{enumerate}[label=(\alph*)]
+		\item 如果存在正常数$c_1, c_2$使得\eqref{eq:concentrationWRTMean}成立, 那么有\eqref{eq:concentrationWRTMedian}, 其中$c_3 = 4c_1$, $c_4 = c_2 / 8$; 
+		\item 如果存在正常数$c_3, c_4$使得\eqref{eq:concentrationWRTMedian}成立, 那么有\eqref{eq:concentrationWRTMean}, 其中$c_1 = 2c_3$, $c_2 = c_4 / 2$. 
+	\end{enumerate}
+\end{proposition}
+
+
 类似的方法还可以用来得到次高斯随机变量最大值的上界. 
 \begin{theorem}[次高斯随机变量最大值的上界]\label{thm:UpperBdForMaximaOfSGRV}
 	设$\{X_k\}_{k=1}^n$为均值为$0$, 参数为$\sigma$的次高斯随机变量(对独立性未做要求). 
-	\begin{enumerate}[label=(\arabic*)]
+	\begin{enumerate}[label=(\alph*)]
 		\item $\mathbb{E} \left[ \max_k X_k \right] \leq \sigma \sqrt{2 \log n}$, $\forall n \geq 1$; 
 		\item $\mathbb{E} \left[ \max_k \left| X_k \right| \right] \leq \sigma \sqrt{2 \log (2n)} \leq 2 \sigma \sqrt{\log n}$, $\forall n \geq 2$. 
 	\end{enumerate}
 \end{theorem}
 \begin{proof}
-(1) 由Jensen不等式, 对任意$\lambda > 0$, 
+(a) 由Jensen不等式, 对任意$\lambda > 0$, 
 		\begin{align*}
 			& \exp \left(\lambda E \left[ \max_{1 \leq k \leq n} X_k \right] \right)
 			\leq E \left[ \exp \left( \lambda \max_{1 \leq i \leq n} X_k \right) \right] \\ 
@@ -115,7 +141,7 @@ $1$-范数-通常与维数$n$有关
 		\end{align*}
 		于是$\mathbb{E} \left[ \max_k X_k \right] \leq \inf_{\lambda > 0} \left\{ \frac{\log n}{\lambda} + \lambda \frac{\sigma^2}{2} \right\} = \sqrt{2 \sigma^2 \log n}$, $\forall n \geq 1$. 
 
-(2)由于上述结果的建立对独立性未做要求, 我们考虑$X_{n+k} := - X_k$, $i = k, \dots, n$, 有
+(b)由于上述结果的建立对独立性未做要求, 我们考虑$X_{n+k} := - X_k$, $i = k, \dots, n$, 有
 		\begin{equation*}
 			\max_{1 \leq k \leq n} |X_k| = \max_{1 \leq k \leq 2n} X_k, 
 		\end{equation*}
@@ -183,7 +209,7 @@ $1$-范数-通常与维数$n$有关
 
 一个基本的事实是, Gauss随机向量的Lipschitz函数的集中度与维数无关. 
 \begin{theorem}\label{thm:LipOfGaussianIsDimFree}
-	设$\bm{X} \in \mathbb{R}^n$为Gauss随机向量, $f \colon \mathbb{R}^n \to \mathbb{R}$关于$2$-范数是$L$-Lipschitz的, 那么$f(\bm{X})$为参数不大于$L$的次高斯随机变量. 
+	设$\bm{X} \in \mathbb{R}^n$为标准Gauss随机向量, $f \colon \mathbb{R}^n \to \mathbb{R}$关于$2$-范数是$L$-Lipschitz的, 那么$f(\bm{X})$为参数不大于$L$的次高斯随机变量. 
 \end{theorem}
 它的证明请参照附录, 这里我们对它的应用进行举例说明. 
 
@@ -625,7 +651,6 @@ $1$-范数-通常与维数$n$有关
 	\begin{equation*}
 		(g(X) - g(Y))^2 \leq (g'(X))^2 (X-Y)^2 \leq (b-a)^2 (g'(X))^2 \quad \text{a.s.}.
 	\end{equation*}
-	代入\eqref{eq:EntropyBoundForUnivariateFunctions}中可见引理成立. 
 \end{proof}
 
 \subsubsection{Herbst方法}
@@ -663,7 +688,7 @@ $1$-范数-通常与维数$n$有关
 \end{proof}
 
 \begin{remark}
-	反之, 若$X$为参数是$\sigma/2$-的次高斯随机变量, 那么有$\mathcal{H}(\mathrm{e}^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \mathbb{E}[\mathrm{e}^{\lambda X}]$. 
+	反之, 若$X$为参数是$\sigma/2$-的次高斯随机变量, 那么有$\mathcal{H}(\mathrm{e}^{\lambda X}) \leq \frac{\lambda^2 \sigma^2}{2} \cdot \mathbb{E}[\mathrm{e}^{\lambda X}]$, 于是我们得到了次高斯性质的另一种表述方式——虽然并不直观, 但是在了解了熵的张量化性质后, 我们将会清楚地看到熵这一工具在高维情形中的实用性. 
 	\begin{proof}
 		考虑随机变量$Z := \mathrm{e}^{\lambda X} / \mathbb{E}[\mathrm{e}^{\lambda X}]$, 那么
 		\begin{equation*}
@@ -772,8 +797,9 @@ $1$-范数-通常与维数$n$有关
 	注意到条件随机变量$g^k(\bm{X}_k^n)|\bm{X}^{\backslash k}$作为$X_k$的(单变量)函数满足
 	\begin{align*}
 		\mathbb{E}[\mathrm{e}^{g^k(\bm{X}_k^n)}| \bm{X}^{\backslash k}]
-		= \mathbb{E} \left[ \frac{\mathbb{E}[\mathrm{e}^{g(\bm{X})} | \bm{X}_k^n]}{\mathbb{E}[\mathrm{e}^{g(\bm{X})} | \bm{X}_{k+1}^n]} \bigg| \bm{X}^{\backslash k} \right]
-		= 1, 
+		= \frac{\mathbb{E}[\mathbb{E}[\mathrm{e}^{g(\bm{X})} | \bm{X}_k^n]|\bm{X}^{\backslash k}]}{\mathbb{E}[\mathbb{E}[\mathrm{e}^{g(\bm{X})} | \bm{X}_{k+1}^n]|\bm{X}^{\backslash k}]}
+		= \frac{\mathbb{E}[\mathbb{E}[\mathrm{e}^{g(\bm{X})} | \bm{X}_k^n]|\bm{X}_{k+1}^n]}{\mathbb{E}[\mathbb{E}[\mathrm{e}^{g(\bm{X})} | \bm{X}_{k+1}^n]]}
+		= 1. 
 	\end{align*}
 	另一方面, $\mathrm{e}^{\lambda f(\bm{X})} | \bm{X}^{\backslash k}$也可以看作$X_k$的函数, 于是由定理\ref{thm:VariationalRepresentationForEntropy}, 我们有
 	$\mathbb{E}[ g^k(\bm{X}_k^n) \mathrm{e}^{\lambda f(\bm{X})} | \bm{X}^{\backslash k} ] \leq \mathcal{H}_k(\mathrm{e}^{\lambda f(\bm{X})})$. 
@@ -810,7 +836,7 @@ $1$-范数-通常与维数$n$有关
 
 \begin{example}[点集的Rademacher复杂度']
 	我们给出$Z = f(\bm{\epsilon})$的比示例\ref{ex:RCofPtSet}中更紧的概率界. 
-	容易看到$f(\bm{x}) = \sup_{\bm{a} \in \mathcal{A}} \langle \bm{a}, \bm{x} \rangle$为凸函数: 对任意$\bm{x}, \bm{y} \in \R^n$, $\alpha \in (0,1)$, 
+	容易看到$f(\bm{x}) = \sup_{\bm{a} \in \mathcal{A}} \langle \bm{a}, \bm{x} \rangle$为凸函数: 对任意$\bm{x}, \bm{y} \in \mathcal{A}^n$, $\alpha \in (0,1)$, 
 	\begin{equation*}
 		f(\alpha \bm{x} + (1-\alpha) \bm{y})
 		= \sup_{\bm{a} \in \mathcal{A}} \langle \bm{a}, \alpha \bm{x} + (1-\alpha) \bm{y} \rangle
@@ -825,7 +851,7 @@ $1$-范数-通常与维数$n$有关
 \end{example}
 
 \begin{example}[随机矩阵的谱范数]
-	随机矩阵$\bm{X} \in \R^{n \times d}$的谱范数
+	随机矩阵$\bm{X} \in \mathcal{A}^{n \times d}$的谱范数
 	\begin{equation*}
 		\vertiii{\bm{X}}_2 = \max_{\|\bm{v}\|_2 = 1} \max_{\|\bm{u}\|_2 = 1} \bm{u}^T \bm{X} \bm{v}, 
 	\end{equation*}
@@ -848,37 +874,42 @@ $1$-范数-通常与维数$n$有关
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{等周不等式}
 
-经典的等周不等式断言, 欧氏空间$(\mathbb{R}^n, \rho)$中相同体积的子集中, 球的表面积最小. 
-一种等价表述是, 使得给定体积的子集$\cA$的(一致) \textbf{$\epsilon$-扩张}
+本节和下一节我们来研究度量空间$(\mathcal{X}, \rho)$中的集中不等式, 这需要对度量空间赋予一个概率测度$\mathbb{P}$, 我们称三元组$(\mathcal{X}, \rho, \mathbb{P})$为\textbf{度量测度空间}. 
+为了在几何空间中使用概率的研究范式, 我们常常引入测度$\P$意义下的服从均匀分布的随机变量$X$, 记做$X \sim \P$ ——此时$X$是值域为度量空间$\cX$中的随机变量, 且取值于某个子集$\cA$的概率就是集合$\cA$的测度. 
+
+
+\subsubsection{几何等周不等式}
+经典的等周不等式断言, 欧氏空间$(\mathbb{R}^n, \rho)$中相同体积的子集中, 欧氏球的表面积最小. 
+一种等价表述是, 使得给定体积的子集$\mathcal{A}$的(一致) \textbf{$\epsilon$-扩张}
 \begin{equation*}
-	\cA^{\epsilon} := \left\{ x \in \mathbb{R}^n \colon \rho(x, \cA) < \epsilon \right\}
+	\mathcal{A}_{\epsilon} := \left\{ x \in \mathbb{R}^n \colon \rho(x, \mathcal{A}) < \epsilon \right\}
 \end{equation*}
-的体积(作为$\epsilon$的函数)最小的集合$A$一定是球体.  
+的体积——作为$\epsilon$的函数——增长最慢的集合$\mathcal{A}$一定是球\footnote{当$\epsilon$充分小时, $\vol(\mathcal{A}_{\epsilon}) = \vol(\mathcal{A}) + \epsilon \cdot \area(\partial \mathcal{A}) + o(\epsilon)$, 从而说明了前一个命题.}. 
 这种表述绕过了表面积的概念, 并且可以推广到任意度量空间上. 
 它的经典证明基于数学家Minkowski的天才洞见. 
 
 Minkowski将空间的向量加法这一代数结构同凸体的体积这一几何结构联系在一起, 提出了\textbf{Minkowski和}的概念——
-$\mathbb{R}^n$中的凸集$\cC$和$\cD$的Minkowski和定义为
+$\mathbb{R}^n$中的凸集$\mathcal{C}$和$\mathcal{D}$的Minkowski和定义为
 \begin{equation*}
-	\cC + \cD = \{\bm{c} + \bm{d} \colon\: \bm{c} \in \cC,\; \bm{d} \in \cD\} 
+	\mathcal{C} + \mathcal{D} = \{\bm{c} + \bm{d} \colon\: \bm{c} \in \mathcal{C},\; \bm{d} \in \mathcal{D}\} 
 \end{equation*}
 并证明了混合体积的\textbf{Brunn-Minkowski不等式}
-\begin{equation*}
-	\left( \vol(\lambda \cC + (1-\lambda) \cD)  \right)^{\frac1n}
-	\geq \lambda (\vol(\cC))^{\frac1n} + (1-\lambda) (\vol(\cD))^{\frac1n},\;
+\begin{equation}\label{eq:BM1}
+	\left( \vol(\lambda \mathcal{C} + (1-\lambda) \mathcal{D})  \right)^{\frac1n}
+	\geq \lambda (\vol(\mathcal{C}))^{\frac1n} + (1-\lambda) (\vol(\mathcal{D}))^{\frac1n},\;
 	\forall \lambda \in [0,1]. 
-\end{equation*}
+\end{equation}
 \begin{figure}[H]
 	\centering
 	\begin{tikzpicture}
 		%--shape C
 		\draw[thick] (-1,1) rectangle (1,-1);
-		\node at (0,0) {\large $\cC$};
+		\node at (0,0) {\large $\mathcal{C}$};
 		
 		\node at (1.5,0) {\large $+$};
 		%--shape D
 		\draw[thick] (2.4,0) circle (0.4);
-		\node at (2.4,0) {\large $\cD$};
+		\node at (2.4,0) {\large $\mathcal{D}$};
 		
 		\node at (3.3,0) {\large $=$};
 		%--shape of Mikowski sum (C+D)
@@ -887,35 +918,63 @@ $\mathbb{R}^n$中的凸集$\cC$和$\cD$的Minkowski和定义为
 			\foreach \y in {-1,1}
 				\draw[thick, dashed] (\x, \y) circle (0.4);
 		\draw[rounded corners=0.4cm, thick] (3.8,1.4) rectangle (6.6,-1.4);
-		\node at (5.2,0) {\large $\cC+\cD$};
+		\node at (5.2,0) {\large $\mathcal{C}+\mathcal{D}$};
 	\end{tikzpicture}
 	\caption{正方形和圆的Minkowski和是一个具有圆角的正方形.}
 \end{figure}
 \noindent
-从这一定理出发, 很容易证明经典等周不等式: 记$\B^n$为$\mathbb{R}^n$中的单位球, 对任意$\cA \subseteq \mathbb{R}^n$满足$\vol(\cA) = \vol(\B^n)$, 
+从这一定理出发, 我们可以很容易地证明经典等周不等式: 对$\mathcal{A}^n$中任意体积和单位球$\mathbb{B}^n$相同的子集$\mathcal{A}$, 都有 
 \begin{align*}
-	(\vol(\cA^{\epsilon}))^{\frac1n}
-	&= (\vol(\cA + \epsilon \B^n))^{\frac1n}
-	= (1+\epsilon) \left(\vol\left(\frac{1}{1+\epsilon} \cA + \frac{\epsilon}{1+\epsilon} \B^n\right)\right)^{\frac1n} \\
-	&\geq (\vol(\cA))^{\frac1n} + \epsilon (\vol(\B^n))^{\frac1n} 
-	= (1+\epsilon) (\vol(\B^n))^{\frac1n} 
-	= \left( \vol((\B^n)^{\epsilon}) \right)^{\frac1n}. 
+	(\vol(\mathcal{A}_{\epsilon}))^{\frac1n}
+	&= (\vol(\mathcal{A} + \epsilon \mathbb{B}^n))^{\frac1n}
+	= (1+\epsilon) \left(\vol\left(\frac{1}{1+\epsilon} \mathcal{A} + \frac{\epsilon}{1+\epsilon} \mathbb{B}^n\right)\right)^{\frac1n} \\
+	&\geq (\vol(\mathcal{A}))^{\frac1n} + \epsilon (\vol(\mathbb{B}^n))^{\frac1n} 
+	= (1+\epsilon) (\vol(\mathbb{B}^n))^{\frac1n} 
+	= \left( \vol(\mathbb{B}^n_{\epsilon}) \right)^{\frac1n}. 
 \end{align*}
 
-本节和下一节我们考虑度量空间$(\mathcal{X}, \rho)$中的集中不等式, 这需要对度量空间赋予一个概率测度$\mathbb{P}$, 我们称三元组$(\mathcal{X}, \rho, \mathbb{P})$为\textbf{度量测度空间}. 
+由于对数函数$\log$为凹函数, 由Jensen不等式我们有
+\begin{equation*}
+	\log \left( \lambda (\vol(\mathcal{C}))^{\frac1n} + (1-\lambda) (\vol(\mathcal{D}))^{\frac1n} \right)
+	\geq \lambda \log \left( \vol(\mathcal{C}))^{\frac1n} \right) + (1-\lambda) \log \left( \vol(\mathcal{D}))^{\frac1n} \right), 
+\end{equation*}
+两面同取指数再代入不等式\eqref{eq:BM1}右侧可以得到Brunn-Minkowski不等式的\textbf{等价形式}
+\begin{equation}\label{eq:BM2}
+	\vol(\lambda \mathcal{C} + (1-\lambda) \mathcal{D})  
+	\geq (\vol(\mathcal{C}))^{\lambda} (\vol(\mathcal{D}))^{1-\lambda},\;
+	\forall \lambda \in [0,1].
+\end{equation}
+这样的形式可以推广至一般的泛函情形.
+\begin{theorem}[Prékopa-Leindler不等式]\label{thm:Prékopa-LeindlerIneq}
+	设非负可积函数$u,v,w$对于某个常数$\lambda \in [0,1]$满足
+	\begin{equation}\label{eq:Prékopa-LeindlerCondition}
+		w(\lambda \bm{x}) + (1-\lambda) \bm{y})
+		\geq [u(\bm(x)]^{\lambda} [v(\bm{y})]^{1-\lambda},
+		\quad \forall \bm{x}, \bm{y} \in \R^n, 
+	\end{equation}
+	那么
+	\begin{equation}\label{eq:Prékopa-Leindler}
+		\int w(\bm{x}) \dd \bm{x}
+		\geq \left( \int u(\bm{x}) \dd \bm{x} \right)^{\lambda} \left( \int v(\bm{x}) \dd \bm{x} \right)^{1-\lambda}. 
+	\end{equation}
+\end{theorem}
 
-等周不等式可以表述为确定满足$\mathbb{P}[A] \geq 1/2$、使得测度$\mathbb{P}[A^{\epsilon}]$最小的集合$A \subseteq \mathcal{X}$.
-我们引入$(\mathcal{X}, \rho, \mathbb{P})$上的集中度函数$\alpha \colon \mathbb{R}_{\geq 0} \to [0, 1/2]$
+
+\subsubsection{集中度与Lipschitz函数}
+
+在度量测度空间中, 等周不等式可以表述为确定满足$\mathbb{P}[\mathcal{A}] \geq 1/2$、使得测度$\mathbb{P}[\mathcal{A}_{\epsilon}]$最小的集合$\mathcal{A} \subseteq \mathcal{X}$.
+我们引入\textbf{集中度函数}$\alpha_{\mathbb{P}} \colon \mathbb{R}_{\geq 0} \to [0, 1/2]$
 \begin{equation*}
 	\alpha_{\mathbb{P}}(\epsilon)
-	:= \sup_{A \subseteq \mathcal{X} \colon \mathbb{P}[A] \geq 1/2} \left\{ 1 - \mathbb{P}[A^{\epsilon}] \right\}. 
+	:= \sup_{\mathcal{A} \subseteq \mathcal{X} \colon \mathbb{P}[\mathcal{A}] \geq 1/2} \left\{ 1 - \mathbb{P}[\mathcal{A}_{\epsilon}] \right\}
+	= \sup_{\mathcal{A} \subseteq \mathcal{X} \colon \mathbb{P}[\mathcal{A}] \geq 1/2} \P[ \overline{\cA_{\epsilon}} ]. 
 \end{equation*}
-于是等周不等式相当于确定$\alpha_{\mathbb{P}}$的上界. 
+特别地, 当我们使用$\alpha_{\cX}$这样的记号时, 我们考虑的概率测度$\P$是$\cX$上的均匀分布. 
 
 下面的定理说明, 集中度函数可以控制Lipschitz函数的尾部. 
 回忆$f(X)$的\textbf{中位数}是指满足$\mathbb{P}[f(X) \geq m_f] \geq 1/2$, $\mathbb{P}[f(X) \leq m_f] \geq 1/2$的某个常数$m_f$. 
 
-\begin{theorem}[Lévy不等式]
+\begin{theorem}[Lévy不等式]\label{thm:LévyIneq}
 	设$f \colon \mathcal{X} \to \mathbb{R}$关于$\rho$是$L$-Lipschitz连续的函数, $X \sim \mathbb{P}$, 有$\mathbb{P}[ |f(X) - m_f| \geq \epsilon] \leq 2 \alpha(\epsilon / L)$. 
 	特别地, 当$f$是Lipschitz连续函数时, 我们有
 	\begin{equation*}
@@ -923,46 +982,220 @@ $\mathbb{R}^n$中的凸集$\cC$和$\cD$的Minkowski和定义为
 	\end{equation*}
 \end{theorem}
 \begin{proof}
-	令$A := \{x \in \mathcal{X} \colon f(x) \leq m_f\}$, 于是$\mathbb{P}[A] \geq 1/2$. 
-	由扩张的定义, 对任意$x \in A^{\epsilon / L}$, 存在$y \in A$使得$\rho(x,y) < \epsilon / L$. 
-	于是$f(x) < f(y) + |f(x) - f(y)| < m_f + \varepsilon$, 进一步地, 我们有$\mathbb{P}[A^{\epsilon / L}] \leq \mathbb{P}[f(X) < m_f + \epsilon]$. 
-	取余集可以得到
+	令$\mathcal{A} := \{x \in \mathcal{X} \colon f(x) \leq m_f\}$, 于是$\mathbb{P}[\mathcal{A}] \geq 1/2$. 
+	由扩张的定义, 对任意$x \in A_{\epsilon / L}$, 存在$y \in \mathcal{A}$使得$\rho(x, y) < \epsilon / L$, 进一步地
+	\begin{equation*}
+		f(x) 
+		\leq f(y) + |f(x) - f(y)| 
+		\leq m_f + L \cdot \rho(x, y)
+		< m_f + \varepsilon, 
+		\quad \forall x \in A_{\epsilon / L}, 
+	\end{equation*}
+	这说明$A_{\epsilon / L} \subseteq \{x \in \cX \colon f(x) < m_f + \epsilon\}$, 于是$\mathbb{P}[\mathcal{A}_{\epsilon / L}] \leq \mathbb{P}[f(X) < m_f + \epsilon]$. 
+	再取余集可以得到上偏差不等式
 	\begin{equation*}
 		\mathbb{P}[f(X) \geq m_f + \epsilon] 
-		\leq 1 - \mathbb{P}[A^{\epsilon / L}] 
+		\leq 1 - \mathbb{P}[\mathcal{A}_{\epsilon / L}] 
 		\leq \alpha_{\mathbb{P}}(\epsilon / L). 
 	\end{equation*}
-	对$-f$运用相同的方法可以得到下偏差不等式, 结合起来可得集中不等式. 
+	对$-f$运用相同的方法可以得到下偏差不等式, 两者结合起来可得集中不等式. 
 \end{proof}
+
+\begin{example}[单位球面上的Lévy集中度]
+	单位球面$\mathbb{S}^{n-1}$上的Lipchitz函数都有着很好的集中性质——这是因为集中度$\alpha_{\mathbb{S}^{n-1}}(\epsilon)$随着$\epsilon$的增大会很快地减小. 
+	
+	对任意$\cA \subseteq \mathbb{S}^{n-1}$满足$\P[\cA] = \frac{1}{2}$, 我们考虑仿射凸体$\hat \cA := \{\alpha \bm{x} \colon \bm{x} \in \cA, \alpha \in [0,1] \}$. 
+	记$\cB = \mathbb{S}^{n-1} \backslash \cA_{\epsilon}$, 对应的仿射凸体为$\hat \cB := \{\beta \bm{x} \colon \bm{x} \in \cB, \beta \in [0,1] \}$. 
+	我们先说明
+	\begin{equation*}
+		\frac{\hat{\cA} + \hat{\cB}}{2} \subseteq \left(1 - \frac{t^2}{8} \right) \B^n. 
+	\end{equation*}
+	我们有$\rho(\bm{a}, \bm{b}) \geq \epsilon$, $\forall \bm{a} \in \cA, \bm{b} \in \cB$. 
+	对任意$\hat{\bm{a}} = \alpha \bm{a} \in \hat{\cA}$, $\hat{\bm{b}} = \beta \bm{b} \in \hat{\cB}$, 不妨假设$\alpha \leq \beta$, 由三角不等式,
+	\begin{equation*}
+		\left\| \frac{\hat{\bm{a}} + \hat{\bm{b}}}{2} \right\|_2
+		= \left\| \frac{\alpha \bm{a} + \beta \bm{b}}{2} \right\|_2 
+		\leq \left\| \frac{\alpha(\bm{a} + \bm{b})}{2} \right\|_2 + \frac{\beta - \alpha}{2} \|\bm{b}\|_2
+	\end{equation*}
+	记$\mu(\cD) := \frac{\vol(\cD)}{\vol(\B^n)}$为$\cD \subseteq \B^n$的正则化测度, 于是结合Brunn-Minkowski不等式\eqref{eq:BM2}
+	\begin{equation*}
+		\left(1 - \frac{t^2}{8} \right)^n 
+		= \mu \left(\left(1 - \frac{t^2}{8} \right) \B^n\right)
+		\geq \mu\left(\frac{\hat{\cA} + \hat{\cB}}{2}\right)
+		\geq \sqrt{\mu(\hat{\cA}) \cdot \mu(\hat{\cB})}
+		= \sqrt{\P[\cA] \cdot \P[\cB]}
+		= \sqrt{\P[\cB] / 2}. 
+	\end{equation*}
+	于是由任意性
+	\begin{equation*}
+		\alpha_{\mathbb{S}^{n-1}}(\epsilon)
+		\leq 2 \left(1 - \frac{t^2}{8} \right)^{2n}
+		\leq 2 \exp\left( - \frac{n t^2}{4} \right). 
+	\end{equation*}
+	
+	事实上, 球面上的集中度有上界$\alpha_{\mathbb{S}^{n-1}}(\epsilon) \leq \sqrt{\frac{\pi}{2}} \mathrm{e}^{-\frac{n \epsilon^2}{2}}$, 再由定理\ref{thm:LévyIneq}, 对任意Lipschitz函数, 
+	\begin{equation*}
+		\P[|f(X) - m_f| \geq \epsilon] \leq \sqrt{2 \pi} \mathrm{e}^{-\frac{n \epsilon^2}{2}}. 
+	\end{equation*} 
+	
+%	我们考虑$\mathbb{S}^{n-1}$上的测地度量$\rho(\bm{x}, \bm{y}) = \arccos \langle \bm{x}, \bm{y} \rangle$, $\P$为$\mathbb{S}^{n-1}$上的均匀分布. 
+%	记$H = \{\bm{x} \in \mathbb{S}^{n-1} \colon \rho(\bm{x}, \bm{y}) \leq \pi/2\}$为以$\bm{y}$为顶点的半球面, 显然有
+%	$\alpha_{\mathbb{S}^{n-1}}(\epsilon) \geq 1 - \P[H_{\epsilon}]$. 
+%	事实上, 球面上也有等周不等式: 球面$\mathbb{S}^{n-1}$上给定面积的子集中, 
+%	$\epsilon$-扩张的面积最小的是球冠$H = \{\bm{x} \in \mathbb{S}^{n-1} \colon \rho(\bm{x}, \bm{y}) \leq c\}$, 其中$c$为某个常数. 
+%	当我们取定$c = \pi/2$时, 对应的球冠是半球面, 从而集中度函数恰为$\alpha_{\mathbb{S}^{n-1}}(\epsilon) = 1 - \P[H_{\epsilon}]$.
+%\begin{figure}[H]
+%	\centering
+%	\begin{tikzpicture}
+%	% Define points
+%    \coordinate (O) at (0,0); 		% Origin
+%    \coordinate (P) at (0,.97);		% Point P
+%    \coordinate (Q) at (1.75,.97);	% Point Q
+%    \coordinate (R) at (2,0);		% Point R
+%    \coordinate (S) at (-1.75,.97);	% Point S, Q的对称点
+%    
+%    % Draw the circles and hemisphere
+%    \draw[thick] (O) circle (2); 		% S^{n-1}
+%    \draw[thick,dashed] (P) circle (1.75); 	% comparison sphere
+%    \fill[cyan] (180:2) arc (180:360:2cm and 2cm) -- cycle;
+%    
+%    % Annotation
+%	\draw (O) -- (Q) -- (R) -- cycle;
+%	\draw (O) -- (P);
+%	\draw (Q) -- (S);
+%	\markangle{Q}{O}{R}{$\theta$}{5}
+%	\markangle{O}{Q}{P}{$\theta$}{5}
+%	\node at (0,-1) {$H$};
+%	\node at (0,1.35) {$\overline{H_{\epsilon}}$};
+%	\node at (1.8,.4) {$\epsilon$};
+%	\node at (1,-.25) {$1$};
+%	\node at (-.3,.5) {$h$};
+%	\node at (.95,1.2) {$r$};
+%
+%	\end{tikzpicture}
+%	\caption{$1-\P[H_{\epsilon}]$的估计.}
+%\end{figure}
+%	\vspace{-.5cm}
+%	\noindent
+%	由几何知识我们有$\epsilon = 2 \sin(\frac{\theta}{2})$, 于是两个圆心间的距离为$h = \sin \theta = \epsilon \cos(\frac{\theta}{2}) \geq \sqrt{2} \epsilon$, 这是由于$\theta \in (0, \frac{\pi}{2})$
+%	
+%	这时$\overline{H_{\epsilon}}$的测度总是不大于标准化后虚线球面面积的一半, 于是
+%	\begin{equation*}
+%		\P[\overline{H_{\epsilon}}]
+%		\leq r^{n-1}
+%		= (1-(\sin \theta)^2)^{\frac{n-1}{2}}
+%		\leq \exp \left( \frac{- (n-1)(\sin \theta)^2}{2} \right)
+%	\end{equation*}
+\end{example}
+
 
 反之, Lipschitz函数的集中不等式也蕴含着等周不等式, 于是两种t对尾部的控制是等价的. 
 
 \begin{theorem}
-	若存在函数$\beta \colon \mathbb{R}_{\geq 0} \to [0, 1]$使得对任意的$(\mathcal{X}, \rho)$上的Lipschitz函数都有
+	设$X \sim \P$, 若存在函数$\beta \colon \mathbb{R}_{\geq 0} \to [0, 1]$使得对任意的$(\mathcal{X}, \rho)$上的Lipschitz函数都有
 	\begin{equation*}
-		\mathbb{P}[f(X) \geq \mathbb{E}f(X) + \epsilon] \leq \beta(\epsilon),\; \forall \epsilon \geq 0, 
+		\mathbb{P}[f(X) \geq \mathbb{E}[f(X)] + \epsilon] \leq \beta(\epsilon),\; \forall \epsilon \geq 0, 
 	\end{equation*}
 	那么$\alpha_{\mathbb{P}}(\epsilon) \leq \beta(\epsilon / 2)$. 
 \end{theorem}
 \begin{proof}
-	对任意$\mathcal{X}$中满足$\mathbb{P}[A] \geq 1/2$的可测集$A$, 构造$f_A(x) := \rho(x, A) \wedge \epsilon$. 
-	注意到在$A$上有$f_A = 0$, 在$A$外有$f_A \leq \epsilon$, 所以$\mathbb{E}f_A(X) \leq \epsilon (1 - \mathbb{P}[A]) \leq \epsilon / 2$. 
+	对任意$\mathcal{X}$中满足$\mathbb{P}[\mathcal{A}] \geq 1/2$的可测集$\mathcal{A}$, 构造$f_\mathcal{A}(x) := \rho(x, \mathcal{A}) \wedge \epsilon$. 
+	注意到在$\mathcal{A}$上有$f_\mathcal{A} = 0$, 在$\mathcal{A}$外有$f_\mathcal{A} \leq \epsilon$, 所以$\mathbb{E}[f_\mathcal{A}(X)] \leq \epsilon (1 - \mathbb{P}[\mathcal{A}]) \leq \epsilon / 2$. 
 	于是我们有
 	\begin{equation*}
-		1 - \mathbb{P}[A^\epsilon]
-		= \mathbb{P}[X \in \bar A^{\epsilon}]
-		= \mathbb{P}[f_A(X) \geq \epsilon] 
-		\leq \mathbb{P}\left[f_A(X) \geq \mathbb{E}f_A(X) + \frac{\epsilon}{2}\right]
+		1 - \mathbb{P}[\mathcal{A}_{\epsilon}]
+		= \mathbb{P}[X \in \bar{\mathcal{A}}_{\epsilon}]
+		= \mathbb{P}[f_\mathcal{A}(X) \geq \epsilon] 
+		\leq \mathbb{P}\left[f_\mathcal{A}(X) \geq \mathbb{E}[f_\mathcal{A}(X)] + \frac{\epsilon}{2}\right]
 		\leq \beta\left( \frac{\epsilon}{2} \right),  
 	\end{equation*}
-	再对满足条件$\mathbb{P}[A] \geq 1/2$的$A$取上确界即可. 
-	其中最后一个不等式是由于$f_A$是一个Lipschitz函数: 
+	再对满足条件$\mathbb{P}[\mathcal{A}] \geq 1/2$的$\mathcal{A}$取上确界即可. 
+	其中最后一个不等式是由于$f_\mathcal{A}$是一个Lipschitz函数: 
 	\begin{itemize}
-		\item 若$x, y \in A^{\epsilon}$, 则$|f_A(x) - f_A(y)| = |\rho(x, A) - \rho(y, A) | \leq  \rho(x, y)$; 
-		\item 若$x, y \in \bar A^{\epsilon}$, 则$|f_A(x) - f_A(y)| = |\epsilon - \epsilon| = 0 \leq \rho(x, y)$;
-		\item 若$x \in A^{\epsilon}$, $y \in \bar A^{\epsilon}$, 此时$\rho(x, A) \geq \rho(y, A) - \rho(x, y) \geq \epsilon - \rho(x, y)$, 则$|f_A(x) - f_A(y)| =  \epsilon - \rho(x, A) \leq \epsilon - (\epsilon - \rho(x, y)) = \rho(x, y)$.
+		\item 若$x, y \in \mathcal{A}_{\epsilon}$, 则$|f_\mathcal{A}(x) - f_\mathcal{A}(y)| = |\rho(x, \mathcal{A}) - \rho(y, \mathcal{A}) | \leq  \rho(x, y)$; 
+		\item 若$x, y \in \bar{\mathcal{A}}_{\epsilon}$, 则$|f_\mathcal{A}(x) - f_\mathcal{A}(y)| = |\epsilon - \epsilon| = 0 \leq \rho(x, y)$;
+		\item 若$x \in \mathcal{A}_{\epsilon}$, $y \in \bar{\mathcal{A}}_{\epsilon}$, 此时$\rho(x, \mathcal{A}) \geq \rho(y, \mathcal{A}) - \rho(x, y) \geq \epsilon - \rho(x, y)$, 则$|f_\mathcal{A}(x) - f_\mathcal{A}(y)| =  \epsilon - \rho(x, \mathcal{A}) \leq \epsilon - (\epsilon - \rho(x, y)) = \rho(x, y)$.
 	\end{itemize}
 \end{proof}
+
+\subsubsection{强对数凹分布的集中性}
+
+我们称函数$\psi \colon \R^n \to \R$是\textbf{$\gamma$-强凸}的, 如果存在某个$\gamma > 0$使得对任意$\lambda \in [0,1]$, $\bm{x}, \bm{y} \in \R^n$都有
+\begin{equation*}
+	\lambda \psi(\bm{x}) + (1-\lambda) \psi(\bm{y}) - \psi(\lambda \bm{x} + (1-\lambda) \bm{y})
+	\geq \frac{\gamma}{2} \lambda (1-\lambda) \|\bm{x} - \bm{y}\|_2^2, 
+\end{equation*}
+相应地, 称$-\psi$为$\gamma$-强凹的. 
+进一步地, 当$\psi$二次可微时, $\gamma$-强对数凸等价于Hessian矩阵$\nabla^2 \psi \succ \gamma \bm{I}$, 其中$\bm{I}$为单位矩阵. 
+
+若分布$\P$(关于Lebesgue测度)的密度$p$的对数$\log p$是$\gamma$-强凹的, 我们称分布$\P$为\textbf{参数为$\gamma$的强对数凹分布}. 
+例如, 协方差矩阵$\bm{\Sigma} \succ 0$的多元正态分布是强对数凹的: 
+\begin{equation*}
+	\nabla^2 \log p(\bm{x})
+	= \nabla^2 \left( -\frac{1}{2} (\bm{x} - \bm{\mu})^{\top} \bm{\Sigma}^{-1} (\bm{x} - \bm{\mu})  \right)
+	= - \bm{\Sigma}^{-1} 
+	\prec - \gamma I, 
+\end{equation*}
+其中$\lambda = \frac{1}{\lambda_{\max}(\bm{\Sigma})}$. 
+此外, 也有很多非正态分布也是强对数凹的, 这样的分布的Lipschitz函数是集中的. 
+
+\begin{theorem}
+	设$\mathbb{P}$为$\mathbb{R}^n$上参数为$\gamma$的强对数凹分布, $\bm{X} \sim \mathbb{P}$, 那么$L$-Lipschitz连续的函数$f \colon \mathbb{R}^n \to \mathbb{R}$满足
+	\begin{equation*}
+		\mathbb{P}[|f(\bm{X}) - \mathbb{E}[f(\bm{X})]| \geq t]
+		\leq 2 \mathrm{e}^{- \frac{\gamma t^2}{4 L^2}}.
+	\end{equation*}
+\end{theorem}
+\begin{proof}
+	只需证明$K$-Lipschitz连续的零均值函数$h$满足$\mathbb{E}_{\mathbb{P}}[\mathrm{e}^{h}] \leq \mathrm{e}^{K^2 / \gamma}$, 于是对于零均值、$\lambda L$-Lipschitz连续的函数$f - \mathbb{E}[f(\bm{X})]$, 我们都有
+	\begin{equation*}
+		\mathbb{E}[e^{\lambda(f(\bm{X}) - \mathbb{E}[f(\bm{X})])}] 
+		\leq \mathrm{e}^{\frac{L^2 \lambda^2}{\gamma}}, 
+		\forall \lambda \in \mathbb{R}.
+	\end{equation*}
+	于是$f(\bm{X}) - \mathbb{E}[f(\bm{X})]$是参数为$\sqrt{2 / \gamma} L$的次高斯随机变量, 从而有集中不等式成立. 
+	
+	我们定义$K$-Lipschitz连续的零均值函数$h$关于重尺度化$2$-范数下的下卷积
+	\begin{equation*}
+		g(\bm{y}) 
+		:= \inf_{\bm{x} \in \mathbb{R}^n} \left\{ h(\bm{x}) + \frac{\gamma}{4} \|\bm{x} - \bm{y}\|_2^2 \right\}
+	\end{equation*}
+	记分布$\mathbb{P}$的密度为$p(\bm{z})$, 于是$\psi(\bm{z}) := - \log p(\bm{z})$为$\gamma$-强凸函数. 
+	定义函数
+	\begin{equation*}
+		u(\bm{x}) := \exp(-h(\bm{x}) - \psi(\bm{x})), \quad
+		v(\bm{y}) := \exp(g(\bm{y}) - \psi(\bm{y})).  
+	\end{equation*}
+	于是对任意$\bm{x}, \bm{y} \in \mathbb{R}^n$, 我们有
+	\begin{align*}
+		&[u(\bm(x)]^{\frac12} [v(\bm{y})]^{\frac12}
+		= \exp\left( \frac{g(\bm{y}) - h(\bm{x})}{2} - \frac{\psi(\bm{x}) + \psi(\bm{y})}{2} \right) \\
+		\leq & \exp\left( \frac{1}{2} \left( g(\bm{y}) - h(\bm{x}) - \frac{\gamma}{4} \|\bm{x} - \bm{y}\|_2^2 \right) - \psi\left(\frac{\bm{x} + \bm{y}}{2}\right)  \right) \\
+		\leq & \exp\left(-\psi\left(\frac{\bm{x} + \bm{y}}{2}\right)\right) 
+		= p\left(\frac{\bm{x} + \bm{y}}{2}\right), 
+	\end{align*}
+	从而不等式\eqref{eq:Prékopa-LeindlerCondition}在$\lambda = \frac{1}{2}$时成立, 于是由Prékopa-Leindler不等式和Jensen不等式, 有
+	\begin{align*}
+		0 
+		&= \log \int p(\bm{x}) \dd \bm{x}
+		\geq \frac{1}{2} \log \int \mathrm{e}^{-h(\bm{x}) - \psi(\bm{x})} \dd \bm{x} + \frac{1}{2} \log \int \mathrm{e}^{g(\bm{y}) - \psi(\bm{y})} \dd \bm{y} \\
+		&= \frac{1}{2} \log \int \mathrm{e}^{-h(\bm{x})} \cdot p(\bm{x}) \dd \bm{x} + \frac{1}{2} \log \int \mathrm{e}^{g(\bm{y})} \cdot p(\bm{y}) \dd \bm{y} \\
+		&= \frac{1}{2} \log \mathbb{E}_{\mathbb{P}}[e^{-h}] + \frac{1}{2} \log \mathbb{E}_{\mathbb{P}}[e^{g}] 
+		\geq - \frac{1}{2} \mathbb{E}_{\mathbb{P}}[h] +  \frac{1}{2} \log \mathbb{E}_{\mathbb{P}}[e^{g}]
+		=  \frac{1}{2} \log \mathbb{E}_{\mathbb{P}}[e^{g}],  
+	\end{align*}
+	从而$\mathbb{E}_{\mathbb{P}}[e^{g}] \leq 1$. 
+	另一方面, 由于$h$是$K$-Lipschitz函数, 我们有
+	\begin{equation*}
+		g(\bm{y})
+		\geq h(\bm{y}) + \inf_{\bm{x} \in \mathbb{R}^n} \left\{ -K \|\bm{x} - \bm{y}\|_2 + \frac{\gamma}{4} \|\bm{x} - \bm{y}\|_2^2 \right\}
+		= h(\bm{y}) - \frac{K^2}{\gamma}. 
+	\end{equation*}
+	最后可以得到$\mathbb{E}_{\mathbb{P}}[e^h] \leq \mathbb{E}_{\mathbb{P}}[e^{g + \frac{K^2}{\gamma}}] = \mathrm{e}^{K^2 / \gamma}$. 
+\end{proof}
+\begin{remark}
+	定理\ref{thm:LipOfGaussianIsDimFree}可以看作本定理在参数为$\gamma = 1$时的一个特例, 但是常数上是最优的. 
+\end{remark}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -992,7 +1225,7 @@ $\mathbb{R}^n$中的凸集$\cC$和$\cD$的Minkowski和定义为
 于是Wasserstein距离也被称为\textbf{推土机距离}: 两个土堆的形状(分布$\mathbb{P}, \mathbb{Q}$)确定, 传输成本(距离$\rho$)确定, Wasserstein距离就是最优的搬运方案(最优的耦合$\M \in \mathcal{C}(\mathbb{Q}, \mathbb{P})$)下的传输成本, 等式右侧关于耦合的优化被称为最优传输问题. 
 
 \begin{example}[Hamming度量和全变差距离]\label{ex:HammingMetricAndTVDistance}
-	关于Hamming度量的Wasserstein距离$W_{\text{Ham}}(\mathbb{Q}, \mathbb{P})$等价于全变差距离$\|\mathbb{Q} - \mathbb{P}\|_{\text{TV}} := \sup_{A \subseteq \mathcal{X}} |\mathbb{Q}(A) - \mathbb{P}(A)|$, 再由Kantorovich–Rubinstein对偶, 我们有
+	关于Hamming度量的Wasserstein距离$W_{\text{Ham}}(\mathbb{Q}, \mathbb{P})$等价于全变差距离$\|\mathbb{Q} - \mathbb{P}\|_{\text{TV}} := \sup_{\cA \subseteq \mathcal{X}} |\mathbb{Q}(\cA) - \mathbb{P}(\cA)|$, 再由Kantorovich–Rubinstein对偶, 我们有
 	\begin{equation*}
 		\|\mathbb{Q} - \mathbb{P}\|_{\text{TV}}
 		= \inf_{\M \in \mathcal{C}(\mathbb{Q}, \mathbb{P})} \int_{\mathcal{X} \times \mathcal{X}} \I{\{x \neq x'\}} \dd \M(x, x')
@@ -1001,17 +1234,17 @@ $\mathbb{R}^n$中的凸集$\cC$和$\cD$的Minkowski和定义为
 	其中$X \sim \mathbb{P}$, $Y \sim \mathbb{Q}$. 
 	\begin{proof}
 	函数$f$关于Hamming度量Lipschitz连续等价于$f$值域在某个区间$[c, c+1]$中, 不失一般性地, 我们假定$c = 0$. 
-	记$\mathbb{Q}$和$\mathbb{P}$关于测度$\nu$的密度\footnote{这样的测度$\nu$是存在的, 例如$\mathbb{P}$和$\mathbb{Q}$都关于$(\mathbb{P} + \mathbb{Q})/2$绝对连续.}分别为$q$, $p$, 集合$A = \{x \in \mathcal{X} \colon q(x) \geq p(x)\} $, 于是有
+	记$\mathbb{Q}$和$\mathbb{P}$关于测度$\nu$的密度\footnote{这样的测度$\nu$是存在的, 例如$\mathbb{P}$和$\mathbb{Q}$都关于$(\mathbb{P} + \mathbb{Q})/2$绝对连续.}分别为$q$, $p$, 集合$\cA = \{x \in \mathcal{X} \colon q(x) \geq p(x)\} $, 于是有
 	\begin{equation*}
 		W_{\text{Ham}}(\mathbb{Q}, \mathbb{P})
 		= \sup_{f \colon \mathcal{X} \to [0, 1]} \int_{\mathcal{X}} f (q - p) \dd \nu 
-		\leq \int_A (\dd \mathbb{Q} - \dd \mathbb{P})
+		\leq \int_{\cA} (\dd \mathbb{Q} - \dd \mathbb{P})
 		\leq \|\mathbb{Q} - \mathbb{P}\|_{\text{TV}}. 
 	\end{equation*}
-	另一方面, 对任意可测集$B \subseteq \mathcal{X}$, 注意到示性函数$\mathbb{I}_B$是Lipschitz连续的, 于是
+	另一方面, 对任意可测集$\cB \subseteq \mathcal{X}$, 注意到示性函数$\mathbb{I}_B$是Lipschitz连续的, 于是
 	\begin{equation*}
-		\mathbb{Q}(B) - \mathbb{P}(B) 
-		= \int \mathbb{I}_B (\dd \mathbb{Q} - \dd \mathbb{P}) 
+		\mathbb{Q}(\cB) - \mathbb{P}(\cB) 
+		= \int \mathbb{I}_{\cB} (\dd \mathbb{Q} - \dd \mathbb{P}) 
 		\leq W_{\text{Ham}}(\mathbb{Q}, \mathbb{P}). 
 	\end{equation*}
 	于是有$\|\mathbb{Q} - \mathbb{P}\|_{\text{TV}} \leq W_{\text{Ham}}(\mathbb{Q}, \mathbb{P})$, 从而二者等价. 
@@ -1020,7 +1253,8 @@ $\mathbb{R}^n$中的凸集$\cC$和$\cD$的Minkowski和定义为
 
 \subsubsection{KL散度与传输成本不等式}
 
- $\mathbb{Q}$和$\mathbb{P}$之间的\textbf{Kullback–Leibler散度}(亦称相对熵)定义为
+在实践中, Wasserstein距离作为上确界是难以求出的, 我们转向便于计算的量以寻求控制它. 
+分布$\mathbb{Q}$和$\mathbb{P}$之间的\textbf{Kullback–Leibler散度}(亦称相对熵)定义为
 \begin{equation}
 	D(\mathbb{Q} \| \mathbb{P})
 	:= \begin{cases}
@@ -1044,8 +1278,8 @@ $\mathbb{R}^n$中的凸集$\cC$和$\cD$的Minkowski和定义为
 下述定理告诉我们, 在控制Lipschitz函数的矩生成函数时, 传输成本不等式成立. 
 
 \begin{theorem}[Bobkov-Götze]\label{thm:Bobkov-Götze}
-	设度量空间$\mathcal{X}, \rho$上的随机变量$X \sim \mathbb{P}$, 下列命题等价: 
-	\begin{enumerate}
+	设度量测度空间空间$(\mathcal{X}, \rho, \mathbb{P})$上的随机变量$X \sim \mathbb{P}$, 下列命题等价: 
+	\begin{enumerate}[label=(\alph*)]
 		\item 对任意Lipschitz连续的函数$f$, $f(X)$是$\sigma$-次高斯的;
 		\item 概率测度$\mathbb{P}$满足参数为$\sigma^2$的$\rho$-传输不等式, 即对任意概率测度$\mathbb{Q}$均成立
 			\begin{equation*}
@@ -1066,14 +1300,14 @@ $\mathbb{R}^n$中的凸集$\cC$和$\cD$的Minkowski和定义为
 	\begin{align*}
 		\log \mathbb{E}_{\mathbb{P}}[\mathrm{e}^f] - D(\mathbb{Q} \| \tilde{\mathbb{P}})
 		&= \log \mathbb{E}_{\mathbb{P}}[\mathrm{e}^f] - \int \log \frac{\dd \mathbb{Q}}{\dd \tilde{\mathbb{P}}} \dd \mathbb{Q} \\
-		&= \log \mathbb{E}_{\mathbb{P}}[\mathrm{e}^f] - \int \log \frac{\dd \mathbb{Q}}{\dd \mathbb{P}} \dd \mathbb{Q} + \int \log \frac{\dd \mathbb{Q}}{\dd \tilde{\mathbb{P}}} \dd \mathbb{Q} \\
+		&= \log \mathbb{E}_{\mathbb{P}}[\mathrm{e}^f] - \int \log \frac{\dd \mathbb{Q}}{\dd \mathbb{P}} \dd \mathbb{Q} + \int \log \frac{\dd \tilde{\mathbb{P}}}{\dd \mathbb{P}} \dd \mathbb{Q} \\
 		&= \mathbb{E}_{\mathbb{Q}}[f] - D(\mathbb{Q} \| \mathbb{P}). 
 	\end{align*}
 	于是两侧关于$\mathbb{Q}$的上确界相同, 特别是左侧中$- D(\mathbb{Q} \| \tilde{\mathbb{P}})$关于$\mathbb{Q}$的上确界为$0$.   
 \end{proof}
 
-\begin{proof}[\keben 定理\ref{thm:Bobkov-Götze}的证明]
-	由定义, 条件(1)等价于
+\begin{proof}[\keben 定理\ref{thm:Bobkov-Götze}的证明]%From APC550
+	由定义, 命题(a)等价于
 	\begin{equation*}
 		\log \mathbb{E}_{\mathbb{P}} [\exp(\lambda(f - \mathbb{E}_{\mathbb{P}}[f]))] \leq \frac{\lambda^2 \sigma^2}{2}, 
 		\quad \forall \lambda \in \mathbb{R},\; \|f\|_{\text{Lip}} \leq 1. 
@@ -1082,11 +1316,51 @@ $\mathbb{R}^n$中的凸集$\cC$和$\cD$的Minkowski和定义为
 	\begin{equation*}
 		\sup_{\lambda \in \mathbb{R}} \sup_{\|f\|_{\text{Lip} \leq 1}} \sup_{\mathbb{Q}} \left\{\lambda(\mathbb{E}_{\mathbb{Q}}[f] - \mathbb{E}_{\mathbb{P}}[f]) - D(\mathbb{Q} \| \mathbb{P}) -  \frac{\lambda^2 \sigma^2}{2} \right\} \leq 0. 
 	\end{equation*}
-	交换上确界的顺序并求出关于$f$和$\lambda$的上确界, 我们可以得到(2)的等价表述: 
+	交换上确界的顺序并求出关于$f$和$\lambda$的上确界, 我们可以得到(b)的等价表述: 
 	\begin{equation*}
 		\sup_{\mathbb{Q}} \left\{\frac{W_{\rho}(\mathbb{Q}, \mathbb{P})^2}{2 \sigma^2} - D(\mathbb{Q} \| \mathbb{P}) \right\} \leq 0
 	\end{equation*}
 \end{proof}
+
+\begin{theorem}[从传输成本到集中度]
+	设度量测度空间空间$(\mathcal{X}, \rho, \mathbb{P})$的概率测度$\mathbb{P}$满足参数为$\gamma$的$\rho$-传输不等式, 那么集中度满足
+	\begin{equation*}
+		\alpha_{\mathbb{P}}(t)
+		\leq 2 \exp \left(- \frac{t^2}{4 \gamma} \right). 
+	\end{equation*}
+\end{theorem}
+\begin{proof}
+	考虑$\cX$中任意满足$\P[\cA] \geq \frac{1}{2}$的子集$\cA$, 记$\cB := \overline{\cA_{\epsilon}}$. 
+	我们假设$\P[\cB] > 0$, 否则不等式自明. 
+	记$\P_{\cA}$, $\P_{\cB}$分别为$\P$在$\cA$和$\cB$上的条件分布, 对任意$\M \in \cC(\P_{\cA}, \P_{\cB})$, 结合距离的三角不等式, 我们有
+	\begin{align*}
+		\epsilon
+		& \leq \rho(\cA, \cB)
+		\leq \int_{\cA \times \cB} \rho(x, x') \dd \M(x, x')
+		\leq W_{\rho}(\P_{\cA}, \P_{\cB}) 
+		\leq W_{\rho}(\P_{\cA}, \P) + W_{\rho}(\P_{\cB}, \P) \\
+		& \leq \sqrt{2 \gamma D(\P_{\cA} \| \mathbb{P})} + \sqrt{2 \gamma D(\P_{\cA} \| \mathbb{P})} 
+		\leq \sqrt{4 \gamma (D(\P_{\cA} \| \mathbb{P}) + D(\P_{\cB} \| \mathbb{P}))}. 
+	\end{align*}
+	最后一个不等号成立是因为$(a+b)^2 \leq 2 (a^2 + b^2)$. 
+	注意到$\dd \P_{\cA} / \dd \P$在$\cA$上为$1 / \P[\cA]$, 在$\overline{\cA}$上为$0$, 于是
+	\begin{equation*}
+		D(\P_{\cA} \| \mathbb{P})
+		= \int \frac{\dd \P_{\cA}}{\dd \P}  \cdot \log \frac{\dd \P_{\cA}}{\dd \P} \dd \P 
+		= - \log \P[\cA]. 
+	\end{equation*}
+	类似地, $D(\P_{\cA} \| \mathbb{P}) = - \log \P[\cB]$, 于是我们有
+	\begin{equation*}
+		\epsilon^2 
+		\leq 4 \gamma (D(\P_{\cA} \| \mathbb{P}) + D(\P_{\cB} \| \mathbb{P}))
+		= - 4 \gamma \log (\P[\cA] \P[\cB]). 
+	\end{equation*}
+	等价地, $1 - \P[\cA_{\epsilon}] \leq 2 \exp \left( -\frac{\epsilon^2}{4 \gamma} \right)$. 
+	再由$\cA$的任意性, 可以得到$\P$的集中度的界. 
+	
+	
+\end{proof}
+
 
 \subsubsection{传输成本的张量化}
 定理\ref{thm:Bobkov-Götze}描述了任意度量空间$(\mathcal{X}, \rho)$上Lipschitz函数的次高斯性质, 但这并不是一个高维的结果, 而推广至高维的关键思想是张量化. 
@@ -1168,7 +1442,7 @@ $\mathbb{R}^n$中的凸集$\cC$和$\cD$的Minkowski和定义为
 	\end{equation}
 \end{theorem}
 \begin{proof}
-	考虑任意满足$\mathbb{P}[A] \geq \frac12$的集合$A$和$\epsilon > 0$, 只需证明$B := \bar A^{\epsilon}$的测度总是小于不等式\eqref{eq:ConcetrationByTransportationCost}的右侧. 
+	考虑任意满足$\mathbb{P}[A] \geq \frac12$的集合$A$和$\epsilon > 0$, 只需证明$B := \bar A_{\epsilon}$的测度总是小于不等式\eqref{eq:ConcetrationByTransportationCost}的右侧. 
 	若$\mathbb{P}[B] = 0$, 则不等式显然成立, 下面我们总假设$\mathbb{P}[B] > 0$. 
 	
 	考虑$\mathbb{P}_A$, $\mathbb{P}_B$为在$A$和$B$上的条件分布, $\M$为它们的任意耦合, 于是

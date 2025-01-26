@@ -37,6 +37,12 @@
 	\end{enumerate}
 \end{proof}
 
+\subsubsection{随机变量、分布}
+
+随机变量$X \colon (\mathcal{X}, \cA, \P) \to (\R, \mathcal{B})$的分布是$\R$上的前推测度
+\begin{equation*}
+	X_* \P (B) := \P \circ X^{-1} (B) = \P[X \in B]
+\end{equation*}
 
 \subsubsection{积分变换、Stieltjes积分}
 
@@ -87,25 +93,25 @@
 \begin{lemma}\label{lemma:trickOfExpectation}
 	若非负随机变量$X \in L^p$, $p > 0$, 则有
 	\begin{equation}
-		\E X^p = \int_0^{\infty} p x^{p-1} \P(X > x) \dd x. 
+		\E [X^p] = \int_0^{\infty} p x^{p-1} \P[X > x] \dd x. 
 	\end{equation}
 	特别的, 对于$X \geq 0$, 有
 	\begin{equation*}
-		\E X = \int_0^{\infty} \P(X > x) \dd x. 
+		\E [X] = \int_0^{\infty} \P[X > x] \dd x. 
 	\end{equation*}
 	进一步地, 若$X$取值范围为$\N$, 则有
 	\begin{equation*}
-		\E X = \sum_{k=0}^{\infty} \P(X \geq k). 
+		\E [X] = \sum_{k=0}^{\infty} \P[X \geq k]. 
 	\end{equation*}
 \end{lemma}
 \begin{proof}
 	\begin{align*}
-		\E X^p 
+		\E [X^p] 
 		&= \int_\Omega X^p \dd \P 
 		= \int_\Omega \int_0^Y p x^{p-1} \dd x \dd \P 
 		= \int_\Omega \int_0^{\infty} p x^{p-1} \I{\{X > x\}} \dd x \dd \P \\
 		&= \int_0^{\infty} p x^{p-1} \int_\Omega \I{\{X > x\}} \dd \P \dd x
-		= \int_0^{\infty} p x^{p-1} \P(X > x) \dd x.
+		= \int_0^{\infty} p x^{p-1} \P[X > x] \dd x.
 	\end{align*}
 \end{proof}
 
@@ -114,7 +120,7 @@
 
 Randon-Nikodym导数是定义密度和条件期望的关键. 
 
-\begin{theorem}[Radon-Nikodym 定理]
+\begin{theorem}[Radon-Nikodym定理]
 	设$\mu$, $\nu$为可测空间$(\mathcal{X}, \cA)$上的两个概率测度, $\nu$关于$\mu$\textbf{绝对连续}, 即对于满足$\mu(A) = 0$的$A \in \cA$, 一定有$\nu(A) = 0$, 记做$\nu \ll \mu$. 
 	存在$\mathcal{X}$上的非负函数$f$, 使得$\nu(A) = \int_A f \dd \mu$, 且$f$在$\mu$-a.e.意义下唯一, 记做$f = \frac{\dd \nu}{\dd \mu}$. 
 \end{theorem}
@@ -161,7 +167,7 @@ Randon-Nikodym导数是定义密度和条件期望的关键.
 	(1) $Y \in \cF$; \quad
 	(2) 对任意$A \in \cF$, $\E(Y;A) = \E(X;A)$. 
 \end{center}
-可以证明这样的的$Y$存在唯一(a.s.), 且$E|Y| < \infty$, 记做$\E(X|\cF)$. 
+由Radon-Nikodym定理, 可以证明这样的的$Y$存在唯一(a.s.), 且$E|Y| < \infty$, 记做$\E(X|\cF)$. 
 我们可以把$X | \cF$看作随机变量, 称为条件随机变量. 
 在这样的记号下, $X$等价于$X | \{\emptyset, \Omega\}$. 
 
