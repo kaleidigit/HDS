@@ -1,1 +1,94 @@
-\section{随机矩阵}
+\section{随机矩阵与协方差估计}
+
+协方差矩阵作为一类特殊的随机矩阵, 在统计中起着核心的作用. 
+
+设$\P$的是$\R^d$上的零均值分布, 其协方差矩阵$\bm{\Sigma} \in \cS^{d \times d}_+$为半正定矩阵.
+$\{\bm{x}_1, \dots, \bx_n\}$为$n$个来自分布$\P$的独立同分布样本, 样本协方差矩阵$\hat{\bm{\Sigma}} := \frac{1}{n} \sum_{i = 1}^n \bm{x}_i \bm{x}_i^\top =: \frac{1}{n} \bm{X}^\top \bm{X}$是协方差矩阵的经典无偏估计. 
+我们称随机矩阵$\bm{X} \in \R^{n \times d}$来自$\P$总体, 其第$i$行为$\bm{x}_i^\top$.  
+
+换而言之, 误差矩阵$\hat{\bm{\Sigma}} - \bm{\Sigma}$的均值为$0$. 
+本章我们希望得到误差矩阵的$\ell^2$算子范数的界, 这等价于估计误差矩阵的最大奇异值. 
+
+\subsection{Gauss随机向量的协方差估计}
+
+若我们考虑的总体分布为$\cN(0, \bm{\Sigma})$, 我们称对应的随机矩阵$\bm{X}$来自$\bm{\Sigma}$-Gauss总体, 样本协方差矩阵$\hat{\bm{\Sigma}} = \frac{1}{n} \bm{X}^\top \bm{X}$服从多元Wishart分布. 
+
+\begin{theorem}
+	设$\bm{X} \in \R^{n \times d}$来自$\bm{\Sigma}$-Gauss总体, 对任意$\delta > 0$, 最大奇异值$\sigma_{\max}(\bm{X})$满足上偏差不等式
+	\begin{equation*}
+		\P \left[ \frac{\sigma_{\max}(\bm{X})}{\sqrt{n}} \geq \lambda_{\max} (\sqrt{\bm{\Sigma}}) \cdot (1+\delta) + \sqrt{\frac{\tr(\bm{\Sigma})}{n}} \right]
+		\leq \mathrm{e}^{-\frac{n \delta^2}{2}}. 
+	\end{equation*}
+	若还有$n \geq d$, 最小奇异值$\sigma_{\min}(\bm{X})$满足类似的下偏差不等式
+	\begin{equation*}
+		\P \left[ \frac{\sigma_{\min}(\bm{X})}{\sqrt{n}} \geq \lambda_{\min} (\sqrt{\bm{\Sigma}}) \cdot (1-\delta) - \sqrt{\frac{\tr(\bm{\Sigma})}{n}} \right]
+		\leq \mathrm{e}^{-\frac{n \delta^2}{2}}. 
+	\end{equation*}
+\end{theorem}
+
+作为这一定理的应用, 我们先从标准Gauss分布的协方差估计谈起. 
+设随机矩阵$\bm{W} \in \R^{n \times d}$来自$\bm{I}_d$-Gauss总体, 且有$n \geq d$, 那么以概率大于$1 - 2 \mathrm{e}^{-\frac{n \delta^2}{2}}$地有
+\begin{equation*}
+	1 - \epsilon 
+	\leq \frac{\sigma_{\min}(\bm{W})}{\sqrt{n}} 
+	\leq \frac{\sigma_{\max}(\bm{W})}{\sqrt{n}}
+	\leq 1 + \epsilon,  
+\end{equation*}
+其中$\epsilon = \delta + \sqrt{\frac{d}{n}}$. 
+于是有相同的概率成立$(1-\epsilon)^2 \leq \sigma_j \left( \frac{1}{n} \bm{W}^\top \bm{W} \right) \leq (1+\epsilon)^2$, 从而
+\begin{align*}
+	\vertiii{\frac{1}{n} \bm{W}^\top \bm{W} - \bm{I}_d}_2
+	&= \max\left\{ \lambda_{\max} \left(\frac{1}{n} \bm{W}^\top \bm{W} - \bm{I}_d\right), \left|\lambda_{\min} \left(\frac{1}{n} \bm{W}^\top \bm{W} - \bm{I}_d\right)\right| \right\} \\
+	&= \max\{(1+\epsilon)^2 - 1, 1 - (1-\epsilon)^2\}
+	= 2 \epsilon + \epsilon^2. 
+\end{align*}
+进一步地, 设$\bm{X} \in \R^{n \times d}$来自$\bm{\Sigma}$-Gauss总体, 我们有$\bm{X} = \bm{W} \sqrt{\bm{\Sigma}}$, 于是
+\begin{align*}
+	\vertiii{\frac{1}{n} \bm{X}^\top \bm{X} - \bm{\Sigma}}_2
+	= \vertiii{\sqrt{\bm{\Sigma}} \left(\frac{1}{n} \bm{W}^\top \bm{W} - \bm{I}_d\right) \sqrt{\bm{\Sigma}}}_2
+	\leq \vertiii{\bm{\Sigma}}_2 \vertiii{\frac{1}{n} \bm{W}^\top \bm{W} - \bm{I}_d}_2,  
+\end{align*}
+从而对任意$\delta > 0$, 以概率大于$1 - 2 \mathrm{e}^{-\frac{n \delta^2}{2}}$地有
+\begin{equation*}
+	\frac{\vertiii{\hat{\bm{\Sigma}} - \bm{\Sigma}}_2}{\vertiii{\bm{\Sigma}}_2}
+	\leq 2 \delta + 2 \sqrt{\frac{d}{n}} + \left(\delta + \sqrt{\frac{d}{n}}\right)^2, 
+\end{equation*}
+即只要有$d/n$收敛到$0$, 就有相对误差$\vertiii{\hat{\bm{\Sigma}} - \bm{\Sigma}}_2 / \vertiii{\bm{\Sigma}}_2$依概率收敛到$0$. 
+
+
+\begin{proof}
+	为了简化记号, 我们记$\lambda_1 = \lambda_{\max}(\sqrt{\bm{\Sigma}})$, $\lambda_d = \lambda_{\min}(\sqrt{\bm{\Sigma}})$. 
+	如前所述, 记$\bm{X} = \bm{W} \sqrt{\bm{\Sigma}}$, 由Weyl不等式的推论\eqref{eq:Weyl}, 映射$\psi \colon \bm{W} \mapsto \frac{\sigma_{\max}(\bm{W} \sqrt{\bm{\Sigma}})}{\sqrt{n}}$关于矩阵的$\ell^2$范数是$\lambda_1 / \sqrt{n}$-Lipschitz的. 
+	再结合定理\ref{thm:LipOfGaussianIsDimFree}, 我们有
+	\begin{equation*}
+		\P \left[ \sigma_{\max}(\bm{X}) \geq \E[ \sigma_{\max}(\bm{X}) ] + \sqrt{n} \lambda_1 \delta \right] 
+		\leq \mathrm{e}^{-\frac{n \delta^2}{2}},  
+	\end{equation*}
+	于是只需证明$\E[ \sigma_{\max}(\bm{X}) ] \leq \sqrt{n} \lambda_1 + \sqrt{\tr(\bm{\Sigma})}$.
+	由最大奇异值的变分表示
+	\begin{equation*}
+		\sigma_{\max}(\bm{X}) 
+		= \max_{\bm{v'} \in \mathbb{S}^{d-1}} \| \bm{X} \bm{v}' \|_2
+	\end{equation*}
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

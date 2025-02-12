@@ -304,6 +304,67 @@ Randon-Nikodym导数是定义密度和条件期望的关键.
  	\end{equation*}
 \end{example}
 
+\subsection{矩阵}
+
+\subsubsection{特征值与奇异值}
+
+此外, 矩阵的最大和最小特征值有Rayleigh-Ritz变分表示
+\begin{equation*}
+	\lambda_{\max}(\bm{M}) = \max_{\|\bm{v}\|_2 = 1} \bm{v}^\top \bm{M} \bm{v}, \quad
+	\lambda_{\min}(\bm{M}) = \min_{\|\bm{v}\|_2 = 1} \bm{v}^\top \bm{M} \bm{v}. 
+\end{equation*}
+于是对于若$\bm{M}$为对称矩阵, 
+
+Weyl不等式的推论
+\begin{equation}\label{eq:Weyl}
+	\max_{k} \left|\sigma_k(\bm{M}) - \sigma_k(\bm{N})\right|
+	\leq \vertiii{\bm{M} - \bm{N}}_2
+\end{equation}
+
+\subsubsection{矩阵范数}
+
+矩阵的\textbf{Frobenius范数}是$\vertiii{\bm{M}}_F = \sqrt{\sum_{ij} m_{ij}^2}$. 
+\begin{equation*}
+	\vertiii{\bm{M}}_F^2 
+	= \tr(\bm{M}^\top \bm{M})
+	= \tr(\bm{M} \bm{M}^\top). 
+\end{equation*}
+设矩阵$\bm{M}$有奇异值分解$\bm{U}\bm{\Sigma}\bm{V}^\top$, $\bm{\sigma}(\bm{M}) = (\sigma_1(\bm{M}), \dots, \sigma_r(\bm{M})$为奇异值向量, 那么
+\begin{equation*}
+	\vertiii{\bm{M}}_F 
+	= \sqrt{\tr(\bm{U} \bm{\Sigma} \bm{\Sigma}^\top \bm{U}^\top)}
+	= \sqrt{\tr(\bm{\Sigma} \bm{\Sigma}^\top \bm{U}^\top \bm{U})}
+	= \sqrt{\sum_i \sigma_i(\bm{M})^2}
+	= \|\bm{\sigma}(\bm{M})\|_2. 
+\end{equation*}
+
+
+矩阵的$\ell_p$\textbf{算子范数}是由欧氏空间中的$\ell_p$向量范数所诱导的范数:
+\begin{equation*}
+	\vertiii{\bm{M}}_p
+	:= \sup_{\bm{v} \neq 0} \frac{\|\bm{M} \bm{v}\|_p}{\|\bm{v}\|_p}
+	= \sup_{\|\bm{v}\|_p = 1} \|\bm{M} \bm{v}\|_p. 
+\end{equation*}
+根据定义不难得出, 对任意的$\bm{x}$, 都有$\|\bm{M} \bm{x}\|_p \leq \vertiii{\bm{M}}_p \cdot \|\bm{x}\|_p$. 
+更进一步地, 算子范数具有\textbf{次可乘性}, 即
+\begin{equation*}
+	\vertiii{\bm{M} \bm{N}}_p
+	= \sup_{\|\bm{v}\|_p = 1} \|\bm{M} (\bm{N} \bm{v})\|_p
+	\leq \sup_{\|\bm{v}\|_p = 1} \vertiii{\bm{M}}_p \cdot \|\bm{N} \bm{v}\|_p
+	= \vertiii{\bm{M}}_p \cdot \vertiii{\bm{N}}_p. 
+\end{equation*}
+特别地, 矩阵的\textbf{谱范数}, 即\textbf{$\ell_2$算子范数}等价于最大奇异值: 由Rayleigh-Ritz变分表示
+\begin{equation*}
+	\vertiii{\bm{M}}_2^2 
+	= \sup_{\|\bm{v}\|_2 = 1} \|\bm{M} \bm{v}\|_2^2
+	= \sup_{\|\bm{v}\|_2 = 1} \bm{v}^\top \bm{M}^\top \bm{M} \bm{v}
+	= \lambda_{\max}(\bm{M}^\top \bm{M})
+	= \sigma_1(\bm{M})^2, 
+\end{equation*}
+于是若$\bm{\sigma}(\bm{M})$为$\bm{M}$的奇异值向量, 那么$\vertiii{\bm{M}}_2 = \|\bm{\sigma}(\bm{M})\|_{\infty}$. 
+
+\subsubsection{半正定矩阵}
+
 
 \subsection{凸分析与凸优化}
 
@@ -339,18 +400,7 @@ Lagrange乘数法是常用的约束优化方法\cite{burges:2004a}
 
 
 
-\subsection{矩阵}
 
-\subsubsection{矩阵范数}
-
-矩阵的Frobenius范数是$\vertiii{\bm{M}}_F = \sqrt{\sum_{ij} m_{ij}^2}$. 
-
-矩阵的\textbf{谱范数}或者\textbf{$\ell_2$算子范数}等价于最大奇异值
-\begin{equation*}
-	\vertiii{\bm{M}}_2 
-	= \max_{\|\bm{v}\|_2 = 1} \|\bm{M} \bm{v}\|_2
-	= \max_{\|\bm{v}\|_2 = 1} \max_{\|\bm{u}\|_2 = 1} \bm{u}^T \bm{M} \bm{v}. 
-\end{equation*}
 
 
 

@@ -1,8 +1,8 @@
 \section{一致大数定律}
 
-
-2. Talagrand不等式
-3. 假设类的引入(0-下水平集...
+%
+%2. Talagrand不等式
+%3. 假设类的引入(0-下水平集...
  
 设$\{X_i\}_{i=1}^n$是来自分布函数$F$的独立同分布样本, $F$经典的无偏估计是经验分布函数
 \begin{equation*}
@@ -413,9 +413,6 @@ hypothesis class/ concept class
 		\leq (n+1)^{\vc(\mathcal{S})}. 
 	\end{equation*}
 \end{lemma}
-\begin{proof}
-	
-\end{proof}
 
 VC类在有限次集合运算下保持不变, 这被称为VC稳定性. 
 \begin{proposition}[VC稳定性]
@@ -459,7 +456,7 @@ VC类在有限次集合运算下保持不变, 这被称为VC稳定性.
 \end{proof}
 
 \begin{example}[$\mathbb{R}^d$中的半平面]
-	$\mathbb{R}^n$中的半平面$H_{\bm{a},b} := \{\bm{x} \in \mathbb{R}^d \colon \langle \bm{a}, \bm{x} \rangle  \leq b\}$可以看作线性函数$l_{\bm{a},b}(\bm{x}) = \langle \bm{a}, \bm{x} \rangle - b$的$0$-下水平集. 
+	$\mathbb{R}^d$中的半平面$H_{\bm{a},b} := \{\bm{x} \in \mathbb{R}^d \colon \langle \bm{a}, \bm{x} \rangle  \leq b\}$可以看作线性函数$l_{\bm{a},b}(\bm{x}) = \langle \bm{a}, \bm{x} \rangle - b$的$0$-下水平集. 
 	全体线性函数构成类$\sL^d := \{l_{\bm{a},b} \colon (\bm{a}, b) \in \mathbb{R}^d \times \mathbb{R} \}$, 由线性代数的知识, 不难看出它是$d+1$维的线性空间, 于是$\mathcal{S}(\sL^d)$的VC维数不会大于$d+1$. 
 \end{example}
 
